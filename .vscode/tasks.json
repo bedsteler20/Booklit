@@ -1,0 +1,33 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": true
+			},
+
+			"label": "Sort Imports",
+			"type": "dart",
+			"command": "flutter",
+			"args": [
+				"pub",
+				"run",
+				"import_sorter:main",
+			],
+			"runOptions": {
+				 "instanceLimit": 1,
+				 "runOn": "folderOpen",
+
+			},
+			"options": {
+				
+			}
+		}
+	]
+}

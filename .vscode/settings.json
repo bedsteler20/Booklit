@@ -1,0 +1,28 @@
+{
+	"git.ignoreLimitWarning": true,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"**/*.crswap": true,
+		" **/*.g.dart": true,
+		"**/*.inject.dart": true,
+		"**/*.inject.summary ": true
+	},
+	"C_Cpp.errorSquiggles": "Disabled",
+	"cSpell.words": [
+		"Cindirect",
+		"fullscreen",
+		"jellyfin",
+		"lerp",
+		"Miniplayer",
+		"Plex",
+		"Plexlit",
+		"preload",
+		"routemaster",
+		"toggleable"
+	]
+}
