@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:build_context/build_context.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';

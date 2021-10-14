@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:build_context/src/build_context_impl.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/helpers/media_item_extention.dart';
 import 'package:plexlit/routes.dart';
 import 'flutter_helpers.dart';
@@ -15,21 +15,25 @@ class MediaRowWidget extends StatelessWidget {
   const MediaRowWidget({
     Key? key,
     required this.items,
+    required this.onShowMore,
     this.title = "null",
   }) : super(key: key);
 
   final List<MediaItem> items;
   final String title;
+  final void Function() onShowMore;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RowContainer(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          children: [
-            Text(title, style: Theme.of(context).textTheme.headline6),
-          ],
+        ListTile(
+          title: Text(title, style: Theme.of(context).textTheme.headline6),
+          dense: true,
+          trailing: IconButton(
+            icon: Icon(Icons.arrow_forward, color: context.primaryColor),
+            onPressed: onShowMore,
+          ),
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -42,10 +46,7 @@ class MediaRowWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: RawMaterialButton(
-                    onPressed: () => router.currentState?.pushNamed(
-                      item.route,
-                      arguments: {"title": item.title, 'id':item.id},
-                    ),
+                    onPressed: () => router.currentState?.pushNamed(item.route),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

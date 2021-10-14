@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:plexlit_api/plexlit_api.dart';
-import 'package:plexlit_api/src/model/plex/plex_media_server.dart';
+import 'package:plexlit_api/src/model/author.dart';
 
 part '../helpers/plex_helpers.dart';
 
@@ -11,7 +11,9 @@ class PlexApi extends PlexlitApiClient {
   String token;
   PlexDevice server;
   String clientId;
-  String libraryId;
+  MediaItem library;
+
+  String get libraryId => library.id;
 
   final _dio = Dio();
   static const type = PlexlitClientType.plex;
@@ -54,7 +56,7 @@ class PlexApi extends PlexlitApiClient {
   PlexApi({
     required this.server,
     required this.token,
-    required this.libraryId,
+    required this.library,
     required this.clientId,
   }) {
     _dio.options = BaseOptions(
@@ -177,6 +179,7 @@ class PlexApi extends PlexlitApiClient {
 
         return Audiobook(
           author: album["parentTitle"] ?? "",
+          authorId: album["parentRatingKey"],
           summary: album["summary"] ?? "",
           title: album["title"] ?? "",
           releaseDate: DateTime(album["year"] ?? 0),
@@ -200,10 +203,36 @@ class PlexApi extends PlexlitApiClient {
     //   });
   }
 
+  @override
+  Future<Author> getAuthor(String id, {int start = 50, int limit = 0}) async =>
+      await _dio.get("${server.address}/library/metadata/$id/children").then((v) {
+        List<MediaItem> books = [];
+
+        if (v.data["MediaContainer"]["Metadata"] != null) {
+          for (var x in v.data["MediaContainer"]["Metadata"]) {
+            books.add(MediaItem(
+              thumb: _makeLink(x["thumb"] ?? ""),
+              title: x["title"],
+              id: x["ratingKey"],
+              summary: x["summary"],
+              title2: x["parentTitle"],
+            ));
+          }
+        }
+
+        return Author(
+          id: id,
+          books: books,
+          name: v.data["MediaContainer"]["title2"],
+          summary: v.data["MediaContainer"]["summary"],
+          thumb: _makeLink(v.data["MediaContainer"]["thumb"] ?? "")!,
+        );
+      });
+
   /// Used for loading Client from disk
   factory PlexApi.fromMap(Map map) => PlexApi(
         clientId: map["clientId"],
-        libraryId: map["libraryId"],
+        library: MediaItem.fromMap(map["library"]),
         server: PlexDevice.fromMap(map["server"]),
         token: map["token"],
       );
@@ -212,7 +241,7 @@ class PlexApi extends PlexlitApiClient {
   @override
   Map toMap() => {
         "clientId": clientId,
-        "libraryId": libraryId,
+        "library": library.toMap(),
         "server": server.toMap(),
         "token": token,
       };

@@ -174,6 +174,8 @@ class PlexDevice {
             connections == null ? null : List<dynamic>.from(connections!.map((x) => x!.toMap())),
       };
   String get address => publicAddressMatches! ? connections![0]!.uri! : connections![1]!.uri!;
+  String get ipAddress =>
+      publicAddressMatches! ? connections![0]!.address! : connections![1]!.address!;
 
   Future<List<MediaItem>> library({required String token, required String clientId}) {
     return Dio(BaseOptions(

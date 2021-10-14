@@ -23,9 +23,9 @@ class ApiProvider implements ChangeNotifier {
 
   bool get hasClient => value.value != null;
 
-  void connect(PlexlitApiClient? i) {
+  void connect(PlexlitApiClient? i, {bool save = true}) {
     value.value = i;
-    if (i != null) Storage.saveClient(i);
+    if (i != null && save) Storage.saveClient(i);
     value.notifyListeners();
   }
 

@@ -18,12 +18,8 @@ import 'package:plexlit/screens/auth_screen.dart';
 import 'package:plexlit/screens/home_screen.dart';
 import 'package:plexlit/screens/library_screen.dart';
 import 'package:plexlit/screens/media_group_screen.dart';
+import 'package:plexlit/screens/settings/setting_screen.dart';
 import 'controllers/app_controllor.dart';
-
-// Package imports:
-
-
-
 
 final router = GlobalKey<NavigatorState>();
 final routeName = ValueNotifier<String>("/");
@@ -34,6 +30,7 @@ class AppRouter extends StatelessWidget {
   Route onGenerateRoute(BuildContext context, RouteSettings settings) {
     var name = settings.name ?? "/404";
     var args = settings.arguments;
+    var uri = Uri.parse(name);
 
     if (name == "/plex/servers") {
       args as Map;
@@ -69,44 +66,69 @@ class AppRouter extends StatelessWidget {
     if (context.read<ApiProvider>().value.value != null) {
       routeName.value = name;
 
-      if (name == "/") return MaterialPageRoute(builder: (_) => const HomeScreen());
+      if (uri.path == "/") return MaterialPageRoute(builder: (_) => const HomeScreen());
 
-      if (name == "/library") return MaterialPageRoute(builder: (_) => const LibraryScreen());
+      switch (uri.pathSegments[0]) {
+        case "library":
+          return MaterialPageRoute(
+            builder: (_) => const LibraryScreen(),
+          );
+        case "settings":
+          return MaterialPageRoute(
+            builder: (_) => const SettingsScreen(),
+          );
+        case "audiobooks":
+          return MaterialPageRoute(
+            builder: (_) => AudioBookScreen(uri.pathSegments[1]),
+          );
+        case "collections":
+          if (uri.pathSegments.length == 1) {
+            return MaterialPageRoute(
+              builder: (_) => MediaGroupScreen(
+                id: "",
+                query: (_, {int limit = 50, int start = 0}) async => await context
+                    .find<ApiProvider>()
+                    .server
+                    .getCollections(limit: limit, start: start),
+                title: "Collections",
+              ),
+            );
+          } else {
+            return MaterialPageRoute(
+              builder: (_) => MediaGroupScreen(
+                id: uri.pathSegments[1],
+                query: context.find<ApiProvider>().server.getCollection,
+                title: uri.queryParameters['title'] ?? "Null",
+              ),
+            );
+          }
 
-      if (name == "/audiobook") {
-        args as Map;
-        return MaterialPageRoute(
-          builder: (_) => AudioBookScreen(args['id']),
-        );
-      }
-
-      if (name == "/collection") {
-        args as Map;
-        return MaterialPageRoute(
-          builder: (_) => MediaGroupScreen(
-            id: args['id'],
-            query: context.find<ApiProvider>().server.getCollection,
-            title: args['title'],
-          ),
-        );
-      }
-
-      if (name == "/genre") {
-        args as Map;
-        return MaterialPageRoute(
-          builder: (_) => MediaGroupScreen(
-            id: args['id'],
-            query: context.find<ApiProvider>().server.getGenre,
-            title: args['title'],
-          ),
-        );
+        case "genres":
+          if (uri.pathSegments.length == 1) {
+            return MaterialPageRoute(
+              builder: (_) => MediaGroupScreen(
+                id: "",
+                query: (_, {int limit = 50, int start = 0}) async =>
+                    await context.find<ApiProvider>().server.getGenres(limit: limit, start: start),
+                title: "Genres",
+              ),
+            );
+          } else {
+            return MaterialPageRoute(
+              builder: (_) => MediaGroupScreen(
+                id: uri.pathSegments[1],
+                query: context.find<ApiProvider>().server.getGenre,
+                title: uri.queryParameters['title'] ?? "Null",
+              ),
+            );
+          }
+        default:
+          return MaterialPageRoute(builder: (_) => const HomeScreen());
       }
     } else {
       routeName.value = "/login";
       return MaterialPageRoute(builder: (_) => const AuthScreen());
     }
-
-    return MaterialPageRoute(builder: (_) => const AuthScreen());
   }
 
   @override

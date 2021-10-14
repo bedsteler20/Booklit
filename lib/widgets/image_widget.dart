@@ -25,7 +25,6 @@ class ImageWidget extends StatelessWidget {
   final double asspectRatio;
   final IconData? icon;
 
-
   Widget buildError(BuildContext context) {
     return Container(
       height: height,
@@ -66,12 +65,15 @@ class ImageWidget extends StatelessWidget {
       width: width,
       errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        return Material(
-          elevation: elevation,
-          borderRadius: BorderRadius.circular(borderRadius),
-          child: ClipRRect(
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Material(
+            elevation: 10,
             borderRadius: BorderRadius.circular(borderRadius),
-            child: child,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(borderRadius),
+              child: child,
+            ),
           ),
         );
       },

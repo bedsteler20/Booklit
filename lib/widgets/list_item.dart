@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:build_context/src/build_context_impl.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
@@ -29,7 +28,7 @@ class ListItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: RawMaterialButton(
-          onPressed: () => router.currentState?.pushNamed(item.route, arguments: {"id": item.id}),
+          onPressed: () => router.currentState?.pushNamed(item.route),
           child: Row(
             children: [
               /*----Image----*/

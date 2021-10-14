@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:plexlit/routes.dart';
 
 class Navbar extends StatefulWidget {
-  const Navbar({Key? key}) : super(key: key);
-
+  const Navbar({Key? key, this.direction = Axis.horizontal}) : super(key: key);
+  final Axis direction;
   @override
   State<Navbar> createState() => _NavbarState();
 }
@@ -30,8 +30,17 @@ class _NavbarState extends State<Navbar> {
       case 1:
         router.currentState?.pushNamedAndRemoveUntil("/library", (route) => true);
         break;
+      case 2:
+        router.currentState?.pushNamedAndRemoveUntil("/settings", (route) => true);
+        break;
     }
   }
+
+  List<BottomNavigationBarItem> items = const [
+    BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.library_books_outlined), label: "Library"),
+    BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: "Settings"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +48,30 @@ class _NavbarState extends State<Navbar> {
         valueListenable: routeName,
         builder: (context, _, __) {
           if (isVisible) {
-            return BottomNavigationBar(
-              currentIndex: currentIndex,
-              onTap: onChange,
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "Home"),
-                BottomNavigationBarItem(icon: Icon(Icons.library_books_outlined), label: "Library"),
-              ],
-            );
+            if (widget.direction == Axis.vertical) {
+              return SizedBox(
+                width: 80,
+                child: NavigationRail(
+                  destinations: items.map((e) => e.toDestination()).toList(),
+                  selectedIndex: currentIndex,
+                  onDestinationSelected: onChange,
+                ),
+              );
+            } else {
+              return BottomNavigationBar(
+                currentIndex: currentIndex,
+                onTap: onChange,
+                items: items,
+              );
+            }
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
         });
   }
+}
+
+extension on BottomNavigationBarItem {
+  NavigationRailDestination toDestination() =>
+      NavigationRailDestination(icon: icon, label: Text(label ?? ""), selectedIcon: activeIcon);
 }

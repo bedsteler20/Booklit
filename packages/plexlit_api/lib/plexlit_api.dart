@@ -10,3 +10,4 @@ export 'src/model/media_list.dart';
 export 'src/model/audiobook.dart';
 export 'src/auth/plex_auth.dart';
 export 'src/model/plex/plex_media_server.dart';
+export 'src/model/author.dart';

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:build_context/src/build_context_impl.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';

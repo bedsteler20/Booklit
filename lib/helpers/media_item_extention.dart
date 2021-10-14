@@ -8,13 +8,13 @@ extension MediaItemGenraExt on MediaItem {
   String get route {
     switch (type) {
       case MediaItemType.collection:
-        return "/collection";
+        return Uri(path: "/collections/$id", queryParameters: toMap()).toString();
       case MediaItemType.genre:
-        return "/genre";
+        return Uri(path: "/genres/$id", queryParameters: toMap()).toString();
       case MediaItemType.audioBook:
-        return "/audiobook";
+        return Uri(path: "/audiobooks/$id", queryParameters: toMap()).toString();
       default:
-        return "/404";
+        return "unknown";
     }
   }
 

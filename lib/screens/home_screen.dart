@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:plexlit/routes.dart';
 
 // Package imports:
 import 'package:plexlit_api/plexlit_api.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final client = context.find<ApiProvider>().server;
+    final client = context.find<ApiProvider>().server;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -33,6 +34,7 @@ class HomeScreen extends StatelessWidget {
                   return MediaRowWidget(
                     items: snap.data!,
                     title: "Collections",
+                    onShowMore: () => router.currentState?.pushNamed("/collections"),
                   );
                 } else {
                   return const Text("Loading");
@@ -47,7 +49,8 @@ class HomeScreen extends StatelessWidget {
                 } else if (snap.hasData) {
                   return MediaRowWidget(
                     items: snap.data!,
-                    title: "Genras",
+                    title: "Genres",
+                    onShowMore: () => router.currentState?.pushNamed("/genres"),
                   );
                 } else {
                   return const Text("Loading");

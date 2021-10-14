@@ -4,6 +4,7 @@ class Audiobook {
     required this.author,
     required this.id,
     required this.chapters,
+    required this.authorId,
     this.thumb,
     this.summary,
     this.releaseDate,
@@ -14,6 +15,7 @@ class Audiobook {
   String title;
   String author;
   String id;
+  String authorId;
   Uri? thumb;
   String? summary;
   DateTime? releaseDate;

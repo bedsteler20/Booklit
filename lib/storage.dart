@@ -28,9 +28,10 @@ class Storage {
     plexClients = await Hive.openBox("plex_clients");
     _misc = await Hive.openBox("misc");
     _tokens = await Hive.openBox("tokens");
+    // plexClients.clear();
   }
 
-  static Future<List<PlexlitApiClient>> loadClients() async {
+  static List<PlexlitApiClient> loadClients() {
     List<PlexlitApiClient> _clients = [];
     for (var item in plexClients.values) _clients.add(PlexApi.fromMap(item));
 

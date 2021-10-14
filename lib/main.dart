@@ -1,10 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 // Package imports:
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:plexlit/core/hive_settings.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +32,7 @@ void main() async {
 
   await Storage.init();
 
-  var client = await Storage.loadClients();
+  var client = Storage.loadClients();
   // var client = [PlexApi(
   //   server: (await PlexApi.findServers(
   //     clientId: "6yrtyeh6z0iuo48edcp8ofb9",

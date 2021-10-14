@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:plexlit_api/plexlit_api.dart';
+import 'package:plexlit_api/src/model/author.dart';
 import 'package:plexlit_api/src/model/plex/plex_media_server.dart';
 
 /// Creates Api Clients
@@ -16,6 +17,7 @@ abstract class PlexlitApiClient {
   external final Future<List<MediaItem>> Function({int start, int limit}) getGenres;
   external final Future<List<MediaItem>> Function(String id, {int start, int limit}) getGenre;
   external final Future<Audiobook> Function(String id) getAudioBook;
+  Future<Author> getAuthor(String id, {int start, int limit});
 
   /// Reports player position to server
   Future<void> reportTimelinePosition(Audiobook book,

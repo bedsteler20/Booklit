@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:build_context/build_context.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
@@ -14,6 +13,7 @@ import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/service/service.dart';
 import 'package:plexlit/widgets/widgets.dart';
+import 'package:provider/src/provider.dart';
 
 class AudioBookScreen extends StatelessWidget {
   const AudioBookScreen(this.id, {Key? key}) : super(key: key);
@@ -84,7 +84,7 @@ class AudioBookScreen extends StatelessWidget {
             allowHalfRating: true,
             itemCount: 5,
             itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            onRatingUpdate: (x){},
+            onRatingUpdate: (x) {},
             itemBuilder: (context, _) => const Icon(
               Icons.star,
               color: Colors.amber,
@@ -102,6 +102,21 @@ class AudioBookScreen extends StatelessWidget {
                 )
               ],
             ),
+          FutureBuilderPlus<Author>(
+            key: key,
+            future: context.read<ApiProvider>().server.getAuthor(data.authorId, limit: 10),
+            loading: (_) => const LoadingWidget(),
+            error: (_, __) => const Text("error"),
+            completed: (_, author) {
+              List<MediaItem> books = [];
+
+              return MediaRowWidget(
+                onShowMore: () {},
+                items: author.books.where((e) => e.id != data.id).toList(),
+                title: "More by ${data.author}",
+              );
+            },
+          )
         ],
       );
     } else {
@@ -145,47 +160,65 @@ class AudioBookScreen extends StatelessWidget {
                       Icons.star,
                       color: Colors.amber,
                     ),
-                    onRatingUpdate: (x){},
+                    onRatingUpdate: (x) {},
                   ),
                 ],
               ),
               Expanded(
-                child: ColumnContainer(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      data.title,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.headline5!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1.75,
-                          fontSize: context.isLandscape ? 32 : null),
-                    ),
-                    Text(
-                      data.author,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.caption!.copyWith(fontSize: 16),
-                    ),
-                    if (data.summary?.isNotEmpty ?? false)
-                      ColumnContainer(
-                        width: double.infinity.clamp(1, 700),
-                        padding: const EdgeInsets.only(top: 30),
-                        children: [
-                          Text(
-                            "Summery",
-                            style: context.textTheme.subtitle1!.copyWith(fontSize: 20),
-                          ),
-                          const Divider(),
-                          ExpandText(
-                            data.summary!,
-                            maxLines: 10,
-                            style: context.textTheme.subtitle1!.copyWith(fontSize: 16),
-                          )
-                        ],
+                child: SingleChildScrollView(
+                  child: ColumnContainer(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        data.title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.headline5!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.75,
+                            fontSize: context.isLandscape ? 32 : null),
                       ),
-                  ],
+                      Text(
+                        data.author,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.caption!.copyWith(fontSize: 16),
+                      ),
+                      if (data.summary?.isNotEmpty ?? false)
+                        ColumnContainer(
+                          width: double.infinity.clamp(1, 700),
+                          padding: const EdgeInsets.only(top: 30),
+                          children: [
+                            Text(
+                              "Summery",
+                              style: context.textTheme.subtitle1!.copyWith(fontSize: 20),
+                            ),
+                            const Divider(),
+                            ExpandText(
+                              data.summary!,
+                              maxLines: 10,
+                              style: context.textTheme.subtitle1!.copyWith(fontSize: 16),
+                            )
+                          ],
+                        ),
+                      FutureBuilderPlus<Author>(
+                        key: key,
+                        future:
+                            context.read<ApiProvider>().server.getAuthor(data.authorId, limit: 10),
+                        loading: (_) => const LoadingWidget(),
+                        error: (_, __) => const Text("error"),
+                        completed: (_, author) {
+                          List<MediaItem> books = [];
+
+                          return MediaRowWidget(
+                            onShowMore: () {},
+                            items: author.books.where((e) => e.id != data.id).toList(),
+                            title: "More by ${data.author}",
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -16,6 +16,8 @@ import 'package:plexlit/theme/google_theme.dart';
 import 'package:plexlit/widgets/miniplayer.dart';
 import 'package:plexlit/widgets/navbar.dart';
 
+final _navBarKey = GlobalKey();
+
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
@@ -55,7 +57,15 @@ class _AppLayoutState extends State<AppLayout> {
       return Scaffold(
         body: Stack(
           children: [
-            AppRouter(),
+            Padding(
+              padding: EdgeInsets.only(left: context.isSmallTablet ? 80 : 0),
+              child: AppRouter(),
+            ),
+            if (context.isSmallTablet)
+              Navbar(
+                direction: Axis.vertical,
+                key: _navBarKey,
+              ),
             Consumer<AudioPlayerService>(
               builder: (context, snap, _) {
                 if (snap.audioBook == null) return const SizedBox();
@@ -73,7 +83,12 @@ class _AppLayoutState extends State<AppLayout> {
             ),
           ],
         ),
-        bottomNavigationBar: const Navbar(),
+        bottomNavigationBar: context.isSmallTablet
+            ? null
+            : Navbar(
+                direction: Axis.horizontal,
+                key: _navBarKey,
+              ),
       );
     });
   }

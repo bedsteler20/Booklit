@@ -24,7 +24,7 @@ class GridItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: RawMaterialButton(
-          onPressed: () => router.currentState?.pushNamed(item.route, arguments: {"id":item.id}),
+          onPressed: () => router.currentState?.pushNamed(item.route),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

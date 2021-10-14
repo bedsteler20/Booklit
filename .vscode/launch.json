@@ -10,13 +10,6 @@
 			"type": "dart",
 			"program": "lib/main.dart"
 		},
-		{
-			"name": "plexlit (profile mode)",
-			"request": "launch",
-			"type": "dart",
-			"flutterMode": "profile",
-			"program": "lib/main.dart"
-			
-		},
+
 	]
 }

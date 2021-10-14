@@ -7,7 +7,6 @@ import 'package:plexlit/modules/plex/plex_server_picker.dart';
 
 // Package imports:
 
-
 // Project imports:
 
 class AuthScreen extends StatelessWidget {
@@ -16,12 +15,12 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            PlexLoginButton(
-            )
+          children: const [
+            PlexLoginButton(),
           ],
         ),
       ),

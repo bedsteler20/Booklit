@@ -120,13 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  build_context:
-    dependency: "direct main"
-    description:
-      name: build_context
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   build_daemon:
     dependency: transitive
     description:
@@ -426,6 +419,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  flutter_settings_screens:
+    dependency: "direct main"
+    description:
+      name: flutter_settings_screens
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2-null-safety"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -457,13 +457,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  group_list_view:
-    dependency: "direct main"
-    description:
-      name: group_list_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
   hive:
     dependency: "direct main"
     description:
@@ -786,6 +779,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
+  shared_preferences:
+    dependency: transitive
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.8"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
+  shared_preferences_macos:
+    dependency: transitive
+    description:
+      name: shared_preferences_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
+  shared_preferences_platform_interface:
+    dependency: transitive
+    description:
+      name: shared_preferences_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  shared_preferences_web:
+    dependency: transitive
+    description:
+      name: shared_preferences_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   shelf:
     dependency: transitive
     description:
@@ -1017,4 +1052,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.15.0-167.0.dev <3.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=2.5.0"

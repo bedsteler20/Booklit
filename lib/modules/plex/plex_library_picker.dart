@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:build_context/src/build_context_impl.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/src/provider.dart';
 
@@ -35,7 +34,7 @@ class PlexLibraryPicker extends StatelessWidget {
         loading: (ctx) => const Center(child: LoadingWidget()),
         error: (ctx, e) => const Center(child: Text("Error")),
         completed: (context, servers) {
-          MediaItem? libraryId;
+          MediaItem? library;
 
           return StatefulBuilder(builder: (context, setState) {
             return Scaffold(
@@ -45,24 +44,24 @@ class PlexLibraryPicker extends StatelessWidget {
                   var item = servers[index];
                   return RadioListTile<MediaItem>(
                     title: Text(item.title),
-                    groupValue: libraryId,
+                    groupValue: library,
                     value: item,
                     onChanged: (v) {
-                      if (v != null) setState(() => libraryId = v);
+                      if (v != null) setState(() => library = v);
                     },
                   );
                 },
               ),
               floatingActionButton: ElevatedButton(
                 child: const Text("Done"),
-                onPressed: libraryId == null
+                onPressed: library == null
                     ? null
                     : () {
                         context.read<ApiProvider>().connect(
                               PlexApi(
                                 server: server,
                                 token: token,
-                                libraryId: libraryId!.id,
+                                library: library!,
                                 clientId: clientId,
                               ),
                             );
