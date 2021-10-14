@@ -122,6 +122,15 @@ class AppRouter extends StatelessWidget {
               ),
             );
           }
+          case "author":
+            return MaterialPageRoute(
+              builder: (_) => MediaGroupScreen(
+                id: "",
+                query: (_, {int limit = 50, int start = 0}) async =>
+                    (await context.find<ApiProvider>().server.getAuthor(uri.pathSegments[1])).books,
+                title: "Genres",
+              ),
+            );
         default:
           return MaterialPageRoute(builder: (_) => const HomeScreen());
       }

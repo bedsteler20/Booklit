@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 export 'package:build_config/build_config.dart';
 
-import 'package:flutter/material.dart';
 
 extension MediaQueryExt on BuildContext {
   T find<T>({bool listen = false}) => Provider.of<T>(this, listen: listen);

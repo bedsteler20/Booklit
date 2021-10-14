@@ -1,13 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:plexlit/helpers/context.dart';
 
 // Package imports:
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/routes.dart';
 import 'package:plexlit/storage.dart';

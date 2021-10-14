@@ -4,14 +4,15 @@ import 'dart:ui';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
 import 'audio_player/controlls.dart';
 import 'flutter_helpers.dart';
 import 'image_widget.dart';
+
+// Package imports:
+
 
 class MiniplayerWidget extends StatelessWidget {
   const MiniplayerWidget({

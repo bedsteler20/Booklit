@@ -24,6 +24,7 @@ class MediaRowWidget extends StatelessWidget {
   final void Function() onShowMore;
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty) return const SizedBox();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -216,6 +216,7 @@ class PlexApi extends PlexlitApiClient {
               id: x["ratingKey"],
               summary: x["summary"],
               title2: x["parentTitle"],
+              type: MediaItemType.audioBook,
             ));
           }
         }

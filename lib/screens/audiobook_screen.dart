@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:plexlit/routes.dart';
 import 'package:plexlit_api/plexlit_api.dart';
+import 'package:provider/src/provider.dart';
 
 // Project imports:
 import 'package:plexlit/controllers/app_controllor.dart';
@@ -13,7 +15,6 @@ import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/service/service.dart';
 import 'package:plexlit/widgets/widgets.dart';
-import 'package:provider/src/provider.dart';
 
 class AudioBookScreen extends StatelessWidget {
   const AudioBookScreen(this.id, {Key? key}) : super(key: key);
@@ -211,7 +212,7 @@ class AudioBookScreen extends StatelessWidget {
                           List<MediaItem> books = [];
 
                           return MediaRowWidget(
-                            onShowMore: () {},
+                            onShowMore: () => router.currentState?.pushNamed("/author/${author.id}"),
                             items: author.books.where((e) => e.id != data.id).toList(),
                             title: "More by ${data.author}",
                           );

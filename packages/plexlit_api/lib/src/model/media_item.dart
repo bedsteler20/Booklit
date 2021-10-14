@@ -33,4 +33,9 @@ class MediaItem {
   }
 }
 
-enum MediaItemType { audioBook, collection, genre }
+enum MediaItemType {
+  audioBook,
+  collection,
+  genre,
+  author,
+}

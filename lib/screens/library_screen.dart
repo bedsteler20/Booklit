@@ -77,7 +77,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           scrollDirection: Axis.vertical,
           controller: scrollController,
           slivers: [
-            if (gridMode)
+            if (context.isSmallTablet)
               SliverGrid(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 160,

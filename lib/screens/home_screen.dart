@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:plexlit/routes.dart';
 
 // Package imports:
 import 'package:plexlit_api/plexlit_api.dart';
@@ -8,6 +7,7 @@ import 'package:plexlit_api/plexlit_api.dart';
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit/routes.dart';
 import 'package:plexlit/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
