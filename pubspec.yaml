@@ -39,6 +39,7 @@ dependencies:
   flutter_settings_screens: ^0.3.2-null-safety
   rxdart: ^0.27.2
   just_audio_libwinmedia: ^0.0.4
+  audio_service: ^0.18.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2

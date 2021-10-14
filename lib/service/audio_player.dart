@@ -2,73 +2,92 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:just_audio/just_audio.dart';
-import 'package:plexlit_api/plexlit_api.dart';
+import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit_api/plexlit_api.dart' hide MediaItem;
 
 // Project imports:
 import 'package:plexlit/helpers/audiobook_extention.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/storage.dart';
+import 'package:provider/src/provider.dart';
 
-class AudioPlayerService extends AudioPlayer implements ChangeNotifier {
-  //final audio = AudioPlayer();
+class AudioPlayerService {
+  static final _audio = AudioPlayer();
+
+  /// [Listenable] value that represents the currently playing audiobook
+  final current = ValueNotifier<Audiobook?>(null);
+
+  final chapter = ValueNotifier<Chapter?>(null);
+
+  final playerState = ValueNotifier<PlayerState>(PlayerState(false, ProcessingState.buffering));
+
+  final speed = ValueNotifier<double>(1.0);
+
+  /// Only on Android
+  final skipSilence = ValueNotifier<bool>(false);
+
+  /// The duration of the current audio or null if unknown.
+  final duration = ValueNotifier<Duration>(const Duration(seconds: 60));
+
+  /// The current position of the player.
+  final position = ValueNotifier<Duration>(const Duration());
+
+  /// The position up to which buffered audio is available.
+  final bufferedPosition = ValueNotifier<Duration>(const Duration());
 
   late final BuildContext context;
-  late final Timer progressTracker;
-  final _audioBook = ValueNotifier<Audiobook?>(null);
 
-  Audiobook? get audioBook => _audioBook.value;
+  Future<void> play() => _audio.play();
 
-  set audioBook(Audiobook? book) {
+  Future<void> pause() => _audio.pause();
+
+  Future<void> setSkipSilence(bool b) => _audio.setSkipSilenceEnabled(b);
+
+  Future<void> setSpeed(double speed) => _audio.setSpeed(speed);
+
+  Future<void> seek(Duration? position, {int? chapterIndex}) async {
+    _audio.seek(position, index: chapterIndex);
+  }
+
+  Future<void> load(Audiobook? book) async {
     if (book == null) throw "Cant play audio book if it is null";
-    setAudioSource(book.toAudioSource());
-    _audioBook.value = book;
+    await _audio.setAudioSource(
+      book.toAudioSource(),
+      preload: false,
+      initialIndex: Storage.progress.get(book.id)?["index"],
+      initialPosition: Duration(milliseconds: Storage.progress.get(book.id)?["position"] ?? 0),
+    );
 
-    // Load progress
-    if (Storage.progress.containsKey(book.id)) {
-      seek(Duration(seconds: Storage.progress.get(book.id) ?? 0));
-    }
+    chapter.value = book.chapters[0];
+    current.value = book;
   }
 
   Future<AudioPlayerService> init() async {
-    // Start progress tracker
-    progressTracker = Timer.periodic(const Duration(seconds: 10), (timer) {
-      if (audioBook == null) return;
-      context
-          .find<PlexlitApiClient>()
-          .reportTimelinePosition(audioBook!, isPaused: !playing, position: position);
-      Storage.progress.put(audioBook!.id, position.inSeconds);
-    });
+    _audio.currentIndexStream.listen((e) => chapter.value = current.value?.chapters[e ?? 0]);
+    _audio.durationStream.listen((e) => duration.value = e ?? const Duration());
+    _audio.bufferedPositionStream.listen((e) => bufferedPosition.value = e);
+    _audio.playerStateStream.listen((e) => playerState.value = e);
+    _audio.speedStream.listen((e) => speed.value = e);
+    _audio.skipSilenceEnabledStream.listen((e) => skipSilence.value = e);
+    _audio.positionStream.listen((e) => position.value = e);
+
+    _audio.positionStream
+        .timeout(const Duration(seconds: 5))
+        .listen((e) => Storage.progress.put(current.value?.id ?? "null", {
+              "position": _audio.position.inMilliseconds,
+              "index": _audio.currentIndex,
+            }));
 
     return this;
   }
 
-  @override
-  Future<void> seek(Duration? position, {int? index}) async {
-    super.seek(position, index: index);
-    if (position == null && audioBook == null) return;
-    Storage.progress.put(audioBook!.id, position!.inSeconds);
-  }
-
-  Chapter? get currentChapter => audioBook?.chapters[currentIndex ?? 0];
-  Stream<Chapter?> get currentChapterStream =>
-      currentIndexStream.map((e) => audioBook?.chapters[e ?? 0]);
-
-  @override
   Future<void> dispose() async {
-    _audioBook.dispose();
-    super.dispose();
+    current.dispose();
+    _audio.dispose();
   }
-
-  @override
-  void notifyListeners() => _audioBook.notifyListeners();
-  @override
-  void addListener(void Function() listener) => _audioBook.addListener(listener);
-  @override
-  void removeListener(void Function() listener) => _audioBook.removeListener(listener);
-  @override
-  bool get hasListeners => _audioBook.hasListeners;
 }

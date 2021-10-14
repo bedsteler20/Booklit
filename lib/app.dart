@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:adaptive_navigation/adaptive_navigation.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -66,9 +67,11 @@ class _AppLayoutState extends State<AppLayout> {
                 direction: Axis.vertical,
                 key: _navBarKey,
               ),
-            Consumer<AudioPlayerService>(
-              builder: (context, snap, _) {
-                if (snap.audioBook == null) return const SizedBox();
+
+            ValueListenableBuilder<Audiobook?>(
+              valueListenable: context.read<AudioPlayerService>().current,
+              builder: (context, audiobook, _) {
+                if (audiobook == null) return const SizedBox();
                 return Miniplayer(
                   valueNotifier: context.find<AppController>().miniPlayerHeight,
                   controller: context.find<AppController>().miniplayerController,

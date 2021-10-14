@@ -69,7 +69,7 @@ class AudioBookScreen extends StatelessWidget {
               icon: const Icon(Icons.play_arrow_rounded),
               label: const Text("Play"),
               onPressed: () {
-                context.find<AudioPlayerService>().audioBook = data;
+                context.find<AudioPlayerService>().load(data);
                 context.find<AppController>().miniplayerController.animateToHeight(
                       duration: const Duration(milliseconds: 200),
                       state: PanelState.MIN,
@@ -141,7 +141,7 @@ class AudioBookScreen extends StatelessWidget {
                       icon: const Icon(Icons.play_arrow_rounded),
                       label: const Text("Play"),
                       onPressed: () {
-                        context.find<AudioPlayerService>().audioBook = data;
+                        context.find<AudioPlayerService>().load(data);
                         context.find<AppController>().miniplayerController.animateToHeight(
                               duration: const Duration(milliseconds: 200),
                               state: PanelState.MIN,
@@ -212,7 +212,8 @@ class AudioBookScreen extends StatelessWidget {
                           List<MediaItem> books = [];
 
                           return MediaRowWidget(
-                            onShowMore: () => router.currentState?.pushNamed("/author/${author.id}"),
+                            onShowMore: () =>
+                                router.currentState?.pushNamed("/author/${author.id}"),
                             items: author.books.where((e) => e.id != data.id).toList(),
                             title: "More by ${data.author}",
                           );

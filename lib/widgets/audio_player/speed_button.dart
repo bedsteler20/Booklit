@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
+import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
 import '../flutter_helpers.dart';
 
 // Package imports:
-
 
 class SpeedButton extends StatelessWidget {
   const SpeedButton({Key? key}) : super(key: key);
@@ -16,75 +16,24 @@ class SpeedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final player = context.find<AudioPlayerService>();
 
-    return StreamBuilder<double>(
-      stream: player.speedStream,
-      builder: (context, AsyncSnapshot<double> snapshot) {
+    return ValueListenableBuilder<double>(
+      valueListenable: player.speed,
+      builder: (context, speed, _) {
         return MaterialButton(
-          onPressed: () => showDialog(context: context, builder: dialog),
+          onPressed: () => showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
           minWidth: 70,
           padding: const EdgeInsets.all(8),
           shape: const CircleBorder(),
           child: Padding(
             padding: const EdgeInsets.all(9.0),
             child: Text(
-              (snapshot.data ?? 1.0).toStringAsFixed(2) + "x",
+              (speed).toStringAsFixed(2) + "x",
               textScaleFactor: 1.25,
               style: context.textTheme.button!.copyWith(color: context.textTheme.caption!.color),
             ),
           ),
         );
       },
-    );
-  }
-
-  Widget dialog(BuildContext context) {
-    final player = context.find<AudioPlayerService>();
-
-    return StreamBuilder<double>(
-      stream: player.speedStream,
-      builder: (context, snapshot) => SimpleDialog(
-        title: const Text("Plackback Speed"),
-        children: [
-          const Divider(),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                (snapshot.data ?? 1.0).toStringAsFixed(2) + "x",
-                style: context.textTheme.headline3!.copyWith(color: context.theme.colorScheme.onSurface),
-              ),
-            ),
-          ),
-          Slider(
-            value: snapshot.data ?? 1,
-            onChanged: (val) => null,
-            min: 0.5,
-            max: 3,
-            divisions: 50,
-          ),
-          const Divider(),
-
-          // Skip Scilence Switch
-          StreamBuilder<bool>(
-            stream: player.skipSilenceEnabledStream,
-            builder: (context, snapshot) => RowContainer(
-              padding: const EdgeInsets.all(12.0),
-              children: [
-                Expanded(
-                    child: Text(
-                  "Skip Silence",
-                  style: context.textTheme.button,
-                )),
-                Switch(
-                  activeColor: context.theme.colorScheme.primary,
-                  value: snapshot.data ?? false,
-                  onChanged: (val) => null,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:plexlit/service/service.dart';
+import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
+import 'package:plexlit/widgets/widgets.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
@@ -17,15 +20,38 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsGroup(title: "Settings", children: [
-      const SizedBox(height: 8),
-      ListTile(
-        leading: const Icon(Icons.library_add_outlined, size: 32),
-        title: const Text("Library"),
-        subtitle: const Text("The library or server to scan"),
-        onTap: () => ClientPicker.open(context),
-      )
-    ]);
+    final player = context.read<AudioPlayerService>();
+    return Column(
+      children: [
+        SettingsGroup(title: "Settings", children: [
+          const SizedBox(height: 8),
+          ListTile(
+            leading: const Icon(Icons.library_add_outlined, size: 32),
+            title: const Text("Library"),
+            subtitle: const Text("The library or server to scan"),
+            onTap: () => ClientPicker.open(context),
+          ),
+        ]),
+        SettingsGroup(title: "Player", children: [
+          ListTile(
+            title: const Text("Playback Speed"),
+            trailing: const SpeedButton(),
+            onTap: () => showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
+          ),
+          if (context.isAndroid)
+            ValueListenableBuilder<bool>(
+              valueListenable: player.skipSilence,
+              builder: (context, val, _) {
+                return SwitchListTile(
+                  title: const Text("Skip Silence"),
+                  value: val,
+                  onChanged: (n) => player.skipSilence.value = n,
+                );
+              },
+            ),
+        ]),
+      ],
+    );
   }
 }
 

@@ -14,14 +14,11 @@ class PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final player = context.find<AudioPlayerService>();
-    return StreamBuilder<PlayerState>(
-      stream: player.playerStateStream,
-      builder: (context, snapshot) {
-        final state = snapshot.data?.processingState;
-        final playing = snapshot.data?.playing;
-        final buffering = state == ProcessingState.loading || state == ProcessingState.buffering;
+    return ValueListenableBuilder<PlayerState>(
+      valueListenable: player.playerState,
+      builder: (context, state,_) {
 
-        if (buffering) {
+        if (state.processingState==ProcessingState.buffering) {
           return MaterialButton(
             minWidth: 0,
             onPressed: player.play,
@@ -34,7 +31,7 @@ class PlayButton extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             shape: const CircleBorder(),
           );
-        } else if (playing != true) {
+        } else if (!state.playing) {
           return MaterialButton(
             minWidth: 0,
             onPressed: player.play,

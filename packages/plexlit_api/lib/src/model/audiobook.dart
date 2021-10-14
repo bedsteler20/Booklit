@@ -23,6 +23,32 @@ class Audiobook {
   int? viewCount;
   List<Chapter> chapters;
   Duration length;
+
+  Map toMap() => {
+        "title": title,
+        "authorId": authorId,
+        "author": author,
+        "thumb": thumb.toString(),
+        "summary": summary,
+        "userRating": userRating,
+        "viewCount": viewCount,
+        "releaseDate": releaseDate?.toIso8601String(),
+        "length": length,
+        "chapters": chapters.map((e) => e.toMap()).toList(),
+      };
+
+  factory Audiobook.fromMap(Map map) => Audiobook(
+        title: map["title"],
+        author: map["author"],
+        id: map["id"],
+        chapters: (map["chapters"] as List).map((e) => Chapter.fromMap(e)).toList(),
+        authorId: map["authorId"],
+        releaseDate: DateTime.tryParse(map["releaseDate"]),
+        summary: map["summary"],
+        thumb: Uri.tryParse(map["thumb"]),
+        userRating: map["userRating"],
+        viewCount: map["viewCount"],
+      );
 }
 
 class Chapter {
@@ -40,4 +66,22 @@ class Chapter {
   Duration? start;
   Duration? end;
   Duration length;
+
+  Map toMap() => {
+        "id": id,
+        "name": name,
+        "start": start?.inMilliseconds,
+        "end": end?.inMilliseconds,
+        "length": length.inMilliseconds,
+        "url": url.toString(),
+      };
+
+  factory Chapter.fromMap(Map map) => Chapter(
+        id: map["id"],
+        length: Duration(milliseconds: map["length"]),
+        name: map["name"],
+        url: Uri.parse(map["url"]),
+        end: map["end"] == null ? null : Duration(milliseconds: map["end"]),
+        start: map["start"] == null ? null : Duration(milliseconds: map["start"]),
+      );
 }

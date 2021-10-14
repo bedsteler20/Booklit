@@ -19,11 +19,11 @@ class SeekButton extends StatelessWidget {
         shape: const CircleBorder(),
         onPressed: () {
           // Prevents progress bar from going off screen
-          final newTime = player.position + Duration(seconds: time);
+          final newTime = player.position.value + Duration(seconds: time);
           if (newTime.inSeconds < 0) {
-            player.seek(const Duration(seconds: 0));
-          } else if (newTime.inSeconds > player.duration!.inSeconds) {
-            player.seek(player.duration);
+            player.seek(const Duration());
+          } else if (newTime.inSeconds > player.duration.value.inSeconds) {
+            player.seek(player.duration.value);
           } else {
             player.seek(newTime);
           }

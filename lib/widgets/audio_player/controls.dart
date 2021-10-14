@@ -13,8 +13,8 @@ import 'speed_button.dart';
 import 'timeline.dart';
 
 /// Buttons, Timeline & title widget
-class AudioPlayerControlls extends StatelessWidget {
-  const AudioPlayerControlls({Key? key}) : super(key: key);
+class AudioPlayerControls extends StatelessWidget {
+  const AudioPlayerControls({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +47,14 @@ class AudioPlayerControlls extends StatelessWidget {
       width: context.width * 0.8,
       padding: const EdgeInsets.only(top: 50, bottom: 25),
       child: Center(
-        child: StreamBuilder<Chapter?>(
-          stream: player.currentChapterStream,
-          builder: (context, snapshot) {
+        child: ValueListenableBuilder<Chapter?>(
+          valueListenable: player.chapter,
+          builder: (context, chapter, _) {
             return Text(
-              snapshot.data?.name ?? "Chapter Null",
+              chapter?.name ?? "Chapter Null",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: context.textTheme.bodyText1!.copyWith(fontSize: 24),
+              style: context.bodyText1!.copyWith(fontSize: 24),
             );
           },
         ),

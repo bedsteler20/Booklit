@@ -2,12 +2,12 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +56,7 @@ void main() async {
         ListenableProvider<ApiProvider>(create: (context) => ApiProvider(client.lastOrNull)),
         ListenableProvider(create: (context) => MiniplayerController()),
         ListenableProvider(create: (context) => AppController(context)),
-        ListenableProvider(create: (context) => audioPlayer),
+        Provider(create: (context) => audioPlayer),
       ],
       child: Builder(
         builder: (context) {

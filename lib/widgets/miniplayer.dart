@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
-import 'audio_player/controlls.dart';
+import 'audio_player/controls.dart';
 import 'flutter_helpers.dart';
 import 'image_widget.dart';
 
@@ -56,7 +56,7 @@ class MiniplayerWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: ImageWidget(
-                    url: player.audioBook?.thumb,
+                    url: player.current.value?.thumb,
                     borderRadius: 5,
                   ),
                 ),
@@ -71,13 +71,13 @@ class MiniplayerWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     children: [
                       Text(
-                        player.audioBook!.title,
+                        player.current.value!.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
                       ),
                       Text(
-                        player.audioBook!.author,
+                        player.current.value!.author,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.textTheme.caption!.copyWith(fontSize: 16),
@@ -96,7 +96,7 @@ class MiniplayerWidget extends StatelessWidget {
             onVerticalDragUpdate: (_) {},
             child: Opacity(
               opacity: percentage < 0.3 ? 0.0 : percentage,
-              child: const AudioPlayerControlls(),
+              child: const AudioPlayerControls(),
             ),
           ),
         ),

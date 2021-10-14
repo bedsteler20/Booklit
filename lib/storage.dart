@@ -14,7 +14,7 @@ class Storage {
 
   /// Stores the progress of audiobooks
   /// keys are the books id
-  static late Box<int> progress;
+  static late Box progress;
 
   /// Stores API tokens
   static late Box _tokens;
