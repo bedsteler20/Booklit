@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:plexlit/helpers/context.dart';
 import 'package:provider/src/provider.dart';
 
 // Project imports:
@@ -18,13 +20,6 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int currentIndex = 0;
 
-  bool get isVisible {
-    if (routeName.value == "/login") return false;
-    if (routeName.value == "/plex/servers") return false;
-    if (routeName.value == "/plex/librarys") return false;
-    return true;
-  }
-
   void onChange(int i) {
     context
         .read<MiniplayerController>()
@@ -32,13 +27,13 @@ class _NavbarState extends State<Navbar> {
     setState(() => currentIndex = i);
     switch (i) {
       case 0:
-        router.currentState?.pushNamedAndRemoveUntil("/", (route) => true);
+        context.to("/");
         break;
       case 1:
-        router.currentState?.pushNamedAndRemoveUntil("/library", (route) => true);
+        context.to("/library");
         break;
       case 2:
-        router.currentState?.pushNamedAndRemoveUntil("/settings", (route) => true);
+        context.to("/settings");
         break;
     }
   }
@@ -81,29 +76,21 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: routeName,
-        builder: (context, _, __) {
-          if (isVisible) {
-            if (widget.direction == Axis.vertical) {
-              return SizedBox(
-                width: 80,
-                child: NavigationRail(
-                  destinations: navRailItems,
-                  selectedIndex: currentIndex,
-                  onDestinationSelected: onChange,
-                ),
-              );
-            } else {
-              return NavigationBar(
-                onDestinationSelected: onChange,
-                selectedIndex: currentIndex,
-                destinations: navBarItems,
-              );
-            }
-          } else {
-            return const SizedBox();
-          }
-        });
+    if (widget.direction == Axis.vertical) {
+      return SizedBox(
+        width: 80,
+        child: NavigationRail(
+          destinations: navRailItems,
+          selectedIndex: currentIndex,
+          onDestinationSelected: onChange,
+        ),
+      );
+    } else {
+      return NavigationBar(
+        onDestinationSelected: onChange,
+        selectedIndex: currentIndex,
+        destinations: navBarItems,
+      );
+    }
   }
 }

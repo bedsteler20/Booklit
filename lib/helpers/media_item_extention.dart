@@ -1,20 +1,30 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:plexlit/routes.dart';
 
 // Package imports:
 import 'package:plexlit_api/plexlit_api.dart';
 
 extension MediaItemGenraExt on MediaItem {
-  String get route {
+  void goTo() {
+    var x = Uri(
+      path: _typePath,
+      queryParameters: toMap(),
+    ).toString();
+
+    router.go(x);
+  }
+
+  String get _typePath {
     switch (type) {
       case MediaItemType.collection:
-        return Uri(path: "/collections/$id", queryParameters: toMap()).toString();
+        return "/collection/$id";
       case MediaItemType.genre:
-        return Uri(path: "/genres/$id", queryParameters: toMap()).toString();
+        return "/genre/$id";
       case MediaItemType.audioBook:
-        return Uri(path: "/audiobooks/$id", queryParameters: toMap()).toString();
+        return "/audiobook/$id";
       default:
-        return "unknown";
+        return "/unknown";
     }
   }
 

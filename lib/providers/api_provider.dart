@@ -10,12 +10,13 @@ import 'package:plexlit/model/exeptions.dart';
 import 'package:plexlit/storage.dart';
 
 class ApiProvider implements ChangeNotifier {
-  final PlexlitApiClient? _initialValue;
-  late final value = ValueNotifier<PlexlitApiClient?>(_initialValue);
+  static final value = ValueNotifier<PlexlitApiClient?>(null);
 
-  ApiProvider([this._initialValue]);
+  ApiProvider([PlexlitApiClient? _initialValue]) {
+    value.value = _initialValue;
+  }
 
-  PlexlitApiClient get server {
+  static PlexlitApiClient get server {
     if (value.value == null) throw PlexlitExceptions.noApiClientFound;
 
     return value.value!;
@@ -23,7 +24,7 @@ class ApiProvider implements ChangeNotifier {
 
   bool get hasClient => value.value != null;
 
-  void connect(PlexlitApiClient? i, {bool save = true}) {
+  static void connect(PlexlitApiClient? i, {bool save = true}) {
     value.value = i;
     if (i != null && save) Storage.saveClient(i);
     value.notifyListeners();

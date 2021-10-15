@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:plexlit/routes.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 export 'package:build_config/build_config.dart';
-
 
 extension MediaQueryExt on BuildContext {
   T find<T>({bool listen = false}) => Provider.of<T>(this, listen: listen);
@@ -14,6 +14,18 @@ extension MediaQueryExt on BuildContext {
   double get height => mediaQuerySize.height;
   double get width => mediaQuerySize.width;
 
+  to(
+    String name, {
+    Map<String, String> queryParams = const {},
+    Object? extra,
+  }) =>
+      router.go(
+        Uri(
+          path: name,
+          queryParameters: queryParams,
+        ).toString(),
+        extra: extra,
+      );
 
   Size get mediaQuerySize => MediaQuery.of(this).size;
 
@@ -208,4 +220,3 @@ extension ModalRouteExt<T> on BuildContext {
 
   RouteSettings? get routeSettings => modalRoute?.settings;
 }
-

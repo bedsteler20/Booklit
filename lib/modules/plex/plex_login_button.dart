@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as chrome;
+import 'package:go_router/go_router.dart';
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:url_launcher/url_launcher.dart' as browser;
 import 'package:uuid/uuid.dart';
@@ -44,10 +46,13 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
       await api.checkPin().then((token) {
         if (token != null) {
           timer.cancel();
-          router.currentState?.pushReplacementNamed("/plex/servers", arguments: {
-            "clientId": clientId,
-            "token": token,
-          });
+          context.to(
+            "/plex/servers",
+            // arguments: {
+            //   "clientId": clientId,
+            //   "token": token,
+            // },
+          );
         }
       });
     });

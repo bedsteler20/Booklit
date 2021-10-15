@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:go_router/go_router.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +65,7 @@ class ClientPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final clients = Storage.loadClients();
+    context.watch<ApiProvider>();
 
     return SimpleDialog(
       title: const Text("Servers"),
@@ -76,10 +78,10 @@ class ClientPicker extends StatelessWidget {
               title: Text(e.library.title),
               subtitle: Text("${e.server.name!} - ${e.server.ipAddress}"),
               // Selected if type is [PlexApi] & server address match
-              selected: e.runtimeType == context.watch<ApiProvider>().server.runtimeType &&
+              selected: e.runtimeType == ApiProvider.server.runtimeType &&
                   e.server.address ==
-                      (context.watch<ApiProvider>().server as PlexApi).server.address,
-              onTap: () => context.read<ApiProvider>().connect(e, save: false),
+                      (ApiProvider.server as PlexApi).server.address,
+              onTap: () => ApiProvider.connect(e, save: false),
             );
           default:
             return const SizedBox();
@@ -90,7 +92,7 @@ class ClientPicker extends StatelessWidget {
           leading: const Icon(Icons.add),
           onTap: () {
             Navigator.pop(context);
-            router.currentState?.pushNamed("/login");
+            context.to("/login");
           },
         )),
     );

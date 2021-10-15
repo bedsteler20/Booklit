@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/src/provider.dart';
 
@@ -57,15 +59,15 @@ class PlexLibraryPicker extends StatelessWidget {
                 onPressed: library == null
                     ? null
                     : () {
-                        context.read<ApiProvider>().connect(
-                              PlexApi(
-                                server: server,
-                                token: token,
-                                library: library!,
-                                clientId: clientId,
-                              ),
-                            );
-                        router.currentState?.pushReplacementNamed("/");
+                        ApiProvider.connect(
+                          PlexApi(
+                            server: server,
+                            token: token,
+                            library: library!,
+                            clientId: clientId,
+                          ),
+                        );
+                        context.to("/");
                       },
               ),
             );

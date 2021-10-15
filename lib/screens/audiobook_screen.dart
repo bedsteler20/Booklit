@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/src/provider.dart';
@@ -121,7 +122,7 @@ class AudioBookScreen extends StatelessWidget {
             ),
           FutureBuilderPlus<Author>(
             key: key,
-            future: context.read<ApiProvider>().server.getAuthor(data.authorId, limit: 10),
+            future: ApiProvider.server.getAuthor(data.authorId, limit: 10),
             loading: (_) => const LoadingWidget(),
             error: (_, __) => const Text("error"),
             completed: (_, author) {
@@ -229,8 +230,7 @@ class AudioBookScreen extends StatelessWidget {
                         ),
                       FutureBuilderPlus<Author>(
                         key: key,
-                        future:
-                            context.read<ApiProvider>().server.getAuthor(data.authorId, limit: 10),
+                        future: ApiProvider.server.getAuthor(data.authorId, limit: 10),
                         loading: (_) => const LoadingWidget(),
                         error: (_, __) => const Text("error"),
                         completed: (_, author) {
@@ -240,8 +240,7 @@ class AudioBookScreen extends StatelessWidget {
                             width: double.infinity.clamp(1, 700),
                             child: Card(
                               child: MediaRowWidget(
-                                onShowMore: () =>
-                                    router.currentState?.pushNamed("/author/${author.id}"),
+                                onShowMore: () => context.to("/author/${author.id}"),
                                 items: author.books.where((e) => e.id != data.id).toList(),
                                 title: "More by ${data.author}",
                               ),
@@ -263,7 +262,7 @@ class AudioBookScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilderPlus<Audiobook>(
-      future: context.find<ApiProvider>().server.getAudioBook(id),
+      future: ApiProvider.server.getAudioBook(id),
       completed: (ctx, data) {
         return CustomScrollView(
           slivers: [

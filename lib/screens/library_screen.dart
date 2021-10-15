@@ -26,7 +26,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   bool gridMode = false;
   final scrollController = ScrollController();
 
-  PlexlitApiClient get client => context.find<ApiProvider>().server;
+  PlexlitApiClient get client => ApiProvider.server;
 
   @override
   void initState() {

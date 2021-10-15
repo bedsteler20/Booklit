@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
@@ -50,11 +52,14 @@ class PlexServerPicker extends StatelessWidget {
                 child: const Text("Next"),
                 onPressed: selected == null
                     ? null
-                    : () => router.currentState?.pushReplacementNamed("/plex/librarys", arguments: {
-                          "clientId": clientId,
-                          "server": selected,
-                          "token": token,
-                        }),
+                    : () => context.to(
+                          "/plex/librarys",
+                          // arguments: {
+                          //   "clientId": clientId,
+                          //   "server": selected,
+                          //   "token": token,
+                          // },
+                        ),
               ),
             );
           });

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:adaptive_navigation/adaptive_navigation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
@@ -49,8 +50,8 @@ class _AppLayoutState extends State<AppLayout> {
   }
 
   onDestinationSelected(int i) {
-    if (i == 0) router.currentState?.pushReplacementNamed("/");
-    if (i == 1) router.currentState?.pushReplacementNamed("/library");
+    if (i == 0) context.to("/home");
+    if (i == 1) context.to("/library");
   }
 
   @override
@@ -61,7 +62,7 @@ class _AppLayoutState extends State<AppLayout> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: context.isSmallTablet ? 80 : 0),
-              child: AppRouter(),
+              child: const AppRouter(),
             ),
             if (context.isSmallTablet)
               Navbar(

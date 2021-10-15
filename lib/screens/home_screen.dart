@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:go_router/go_router.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:sliver_header_delegate/sliver_header_delegate.dart';
 
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final client = context.find<ApiProvider>().server;
+    final client = ApiProvider.server;
 
     return Scaffold(
       body: CustomScrollView(
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                   return MediaRowWidget(
                     items: snap.data!,
                     title: "Collections",
-                    onShowMore: () => router.currentState?.pushNamed("/collections"),
+                    onShowMore: () => context.to("/collections"),
                   );
                 } else {
                   return const Text("Loading");
@@ -52,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                   return MediaRowWidget(
                     items: snap.data!,
                     title: "Genres",
-                    onShowMore: () => router.currentState?.pushNamed("/genres"),
+                    onShowMore: () => context.to("/genres"),
                   );
                 } else {
                   return const Text("Loading");
@@ -68,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   return MediaRowWidget(
                     items: snap.data!,
                     title: "Genres",
-                    onShowMore: () => router.currentState?.pushNamed("/genres"),
+                    onShowMore: () => context.to("/genres"),
                   );
                 } else {
                   return const Text("Loading");
@@ -84,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                   return MediaRowWidget(
                     items: snap.data!,
                     title: "Genres",
-                    onShowMore: () => router.currentState?.pushNamed("/genres"),
+                    onShowMore: () => context.to("/genres"),
                   );
                 } else {
                   return const Text("Loading");

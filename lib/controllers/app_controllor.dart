@@ -52,15 +52,4 @@ class AppController with ChangeNotifier {
   //   ],
   // );
 
-  void onNavbarChanged(int i) {
-    switch (i) {
-      case 0:
-        router.currentState?.pushReplacementNamed("/");
-        break;
-      case 1:
-        router.currentState?.pushReplacementNamed("/library");
-        break;
-      default:
-    }
-  }
 }
