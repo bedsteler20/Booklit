@@ -16,7 +16,7 @@ class SeekButton extends StatelessWidget {
     return MaterialButton(
         minWidth: 70,
         padding: const EdgeInsets.all(8),
-        shape: const CircleBorder(),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onPressed: () {
           // Prevents progress bar from going off screen
           final newTime = player.position.value + Duration(seconds: time);

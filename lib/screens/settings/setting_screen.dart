@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:plexlit/service/service.dart';
-import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
-import 'package:plexlit/widgets/widgets.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/routes.dart';
+import 'package:plexlit/service/service.dart';
 import 'package:plexlit/storage.dart';
+import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
+import 'package:plexlit/widgets/widgets.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);

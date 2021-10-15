@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:plexlit/routes.dart';
 import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/src/provider.dart';
 
@@ -13,6 +12,7 @@ import 'package:provider/src/provider.dart';
 import 'package:plexlit/controllers/app_controllor.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit/routes.dart';
 import 'package:plexlit/service/service.dart';
 import 'package:plexlit/widgets/widgets.dart';
 
@@ -42,7 +42,7 @@ class AudioBookScreen extends StatelessWidget {
                   children: [
                     Text(
                       data.title,
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.headline5!.copyWith(
                           fontWeight: FontWeight.w500,
@@ -54,6 +54,22 @@ class AudioBookScreen extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.caption!.copyWith(fontSize: 16),
+                    ),
+                    const SizedBox(height: 13),
+                    RatingBar.builder(
+                      itemSize: 24,
+                      ignoreGestures: true,
+                      initialRating: data.userRating / 2,
+                      minRating: 0.5,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      onRatingUpdate: (x) {},
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
                     ),
                   ],
                 ),
@@ -77,31 +93,31 @@ class AudioBookScreen extends StatelessWidget {
               },
             ),
           ),
-          RatingBar.builder(
-            ignoreGestures: true,
-            initialRating: data.userRating / 2,
-            minRating: 0.5,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            onRatingUpdate: (x) {},
-            itemBuilder: (context, _) => const Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-          ),
           if (data.summary?.isNotEmpty ?? false)
-            ColumnContainer(
+            Container(
               width: double.infinity.clamp(1, 700),
               padding: const EdgeInsets.only(top: 30),
-              children: [
-                ExpandText(
-                  data.summary!,
-                  maxLines: 6,
-                  style: context.textTheme.subtitle1!.copyWith(fontSize: 16),
-                )
-              ],
+              child: Card(
+                child: ListTile(
+                  isThreeLine: true,
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      "Summery",
+                      style: context.headline6?.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade200,
+                      ),
+                    ),
+                  ),
+                  subtitle: ExpandText(
+                    data.summary! + "\n ",
+                    maxLines: 6,
+                    style: context.textTheme.subtitle1!.copyWith(fontSize: 16),
+                  ),
+                ),
+              ),
             ),
           FutureBuilderPlus<Author>(
             key: key,
@@ -186,21 +202,30 @@ class AudioBookScreen extends StatelessWidget {
                         style: context.textTheme.caption!.copyWith(fontSize: 16),
                       ),
                       if (data.summary?.isNotEmpty ?? false)
-                        ColumnContainer(
+                        Container(
                           width: double.infinity.clamp(1, 700),
                           padding: const EdgeInsets.only(top: 30),
-                          children: [
-                            Text(
-                              "Summery",
-                              style: context.textTheme.subtitle1!.copyWith(fontSize: 20),
+                          child: Card(
+                            child: ListTile(
+                              isThreeLine: true,
+                              title: Container(
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                child: Text(
+                                  "Summery",
+                                  style: context.headline6?.copyWith(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade200,
+                                  ),
+                                ),
+                              ),
+                              subtitle: ExpandText(
+                                data.summary! + "\n ",
+                                maxLines: 6,
+                                style: context.textTheme.subtitle1!.copyWith(fontSize: 16),
+                              ),
                             ),
-                            const Divider(),
-                            ExpandText(
-                              data.summary!,
-                              maxLines: 10,
-                              style: context.textTheme.subtitle1!.copyWith(fontSize: 16),
-                            )
-                          ],
+                          ),
                         ),
                       FutureBuilderPlus<Author>(
                         key: key,
@@ -209,13 +234,18 @@ class AudioBookScreen extends StatelessWidget {
                         loading: (_) => const LoadingWidget(),
                         error: (_, __) => const Text("error"),
                         completed: (_, author) {
-                          List<MediaItem> books = [];
+                          if (author.books.isEmpty) return SizedBox();
 
-                          return MediaRowWidget(
-                            onShowMore: () =>
-                                router.currentState?.pushNamed("/author/${author.id}"),
-                            items: author.books.where((e) => e.id != data.id).toList(),
-                            title: "More by ${data.author}",
+                          return Container(
+                            width: double.infinity.clamp(1, 700),
+                            child: Card(
+                              child: MediaRowWidget(
+                                onShowMore: () =>
+                                    router.currentState?.pushNamed("/author/${author.id}"),
+                                items: author.books.where((e) => e.id != data.id).toList(),
+                                title: "More by ${data.author}",
+                              ),
+                            ),
                           );
                         },
                       ),

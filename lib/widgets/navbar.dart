@@ -1,6 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:miniplayer/miniplayer.dart';
+import 'package:provider/src/provider.dart';
+
 // Project imports:
 import 'package:plexlit/routes.dart';
 
@@ -22,6 +26,9 @@ class _NavbarState extends State<Navbar> {
   }
 
   void onChange(int i) {
+    context
+        .read<MiniplayerController>()
+        .animateToHeight(state: PanelState.MIN, duration: const Duration(milliseconds: 100));
     setState(() => currentIndex = i);
     switch (i) {
       case 0:
@@ -36,10 +43,40 @@ class _NavbarState extends State<Navbar> {
     }
   }
 
-  List<BottomNavigationBarItem> items = const [
-    BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: "Home"),
-    BottomNavigationBarItem(icon: Icon(Icons.library_books_outlined), label: "Library"),
-    BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: "Settings"),
+  List<NavigationDestination> navBarItems = [
+    NavigationDestination(
+      icon: Icon(Icons.home_outlined, color: Colors.grey.shade400),
+      label: "Home",
+      selectedIcon: const Icon(Icons.home_rounded, color: Colors.black),
+    ),
+    NavigationDestination(
+      icon: Icon(Icons.library_books_outlined, color: Colors.grey.shade400),
+      label: "Library",
+      selectedIcon: const Icon(Icons.library_books_rounded, color: Colors.black),
+    ),
+    NavigationDestination(
+      icon: Icon(Icons.settings_outlined, color: Colors.grey.shade400),
+      label: "Settings",
+      selectedIcon: const Icon(Icons.settings_rounded, color: Colors.black),
+    ),
+  ];
+
+  List<NavigationRailDestination> navRailItems = const [
+    NavigationRailDestination(
+      icon: Icon(Icons.home_outlined),
+      label: Text("Home"),
+      selectedIcon: Icon(Icons.home),
+    ),
+    NavigationRailDestination(
+      icon: Icon(Icons.library_books_outlined),
+      label: Text("Library"),
+      selectedIcon: Icon(Icons.library_books),
+    ),
+    NavigationRailDestination(
+      icon: Icon(Icons.settings_outlined),
+      label: Text("Settings"),
+      selectedIcon: Icon(Icons.settings),
+    ),
   ];
 
   @override
@@ -52,16 +89,16 @@ class _NavbarState extends State<Navbar> {
               return SizedBox(
                 width: 80,
                 child: NavigationRail(
-                  destinations: items.map((e) => e.toDestination()).toList(),
+                  destinations: navRailItems,
                   selectedIndex: currentIndex,
                   onDestinationSelected: onChange,
                 ),
               );
             } else {
-              return BottomNavigationBar(
-                currentIndex: currentIndex,
-                onTap: onChange,
-                items: items,
+              return NavigationBar(
+                onDestinationSelected: onChange,
+                selectedIndex: currentIndex,
+                destinations: navBarItems,
               );
             }
           } else {
@@ -69,9 +106,4 @@ class _NavbarState extends State<Navbar> {
           }
         });
   }
-}
-
-extension on BottomNavigationBarItem {
-  NavigationRailDestination toDestination() =>
-      NavigationRailDestination(icon: icon, label: Text(label ?? ""), selectedIcon: activeIcon);
 }

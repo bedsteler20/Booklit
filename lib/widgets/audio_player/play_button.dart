@@ -16,11 +16,10 @@ class PlayButton extends StatelessWidget {
     final player = context.find<AudioPlayerService>();
     return ValueListenableBuilder<PlayerState>(
       valueListenable: player.playerState,
-      builder: (context, state,_) {
-
-        if (state.processingState==ProcessingState.buffering) {
+      builder: (context, state, _) {
+        if (state.processingState == ProcessingState.buffering) {
           return MaterialButton(
-            minWidth: 0,
+            minWidth: 90,
             onPressed: player.play,
             color: Theme.of(context).colorScheme.primary,
             child: const SizedBox(
@@ -29,11 +28,11 @@ class PlayButton extends StatelessWidget {
               child: CircularProgressIndicator(color: Colors.white),
             ),
             padding: const EdgeInsets.all(12),
-            shape: const CircleBorder(),
+            // shape: const CircleBorder(),
           );
         } else if (!state.playing) {
           return MaterialButton(
-            minWidth: 0,
+            minWidth: 90,
             onPressed: player.play,
             color: Theme.of(context).colorScheme.primary,
             child: const Icon(
@@ -41,13 +40,15 @@ class PlayButton extends StatelessWidget {
               size: 40,
             ),
             padding: const EdgeInsets.all(8),
-            shape: const CircleBorder(),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+
+            // shape: const CircleBorder(),
           );
 
           // Displayed when playing
-        } else if (state != ProcessingState.completed) {
+        } else if (state.processingState != ProcessingState.completed) {
           return MaterialButton(
-            minWidth: 0,
+            minWidth: 90,
             onPressed: player.pause,
             color: Theme.of(context).colorScheme.primary,
             child: const Icon(
@@ -55,13 +56,13 @@ class PlayButton extends StatelessWidget {
               size: 40,
             ),
             padding: const EdgeInsets.all(8),
-            shape: const CircleBorder(),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           );
 
           //Displayed when  audiobook has ended
         } else {
           return MaterialButton(
-            minWidth: 0,
+            minWidth: 90,
             onPressed: () => player.seek(Duration.zero),
             color: Theme.of(context).colorScheme.primary,
             child: const Icon(
@@ -69,7 +70,9 @@ class PlayButton extends StatelessWidget {
               size: 40,
             ),
             padding: const EdgeInsets.all(8),
-            shape: const CircleBorder(),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+
+            // shape: const CircleBorder(),
           );
         }
       },

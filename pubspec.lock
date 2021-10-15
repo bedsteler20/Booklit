@@ -450,6 +450,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   graphs:
     dependency: transitive
     description:
@@ -702,6 +709,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+  path_to_regexp:
+    dependency: transitive
+    description:
+      name: path_to_regexp
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   pedantic:
     dependency: transitive
     description:
@@ -854,6 +868,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliver_header_delegate:
+    dependency: "direct main"
+    description:
+      name: sliver_header_delegate
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   sliver_tools:
     dependency: transitive
     description:

@@ -2,19 +2,19 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit_api/plexlit_api.dart' hide MediaItem;
+import 'package:provider/src/provider.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/audiobook_extention.dart';
 import 'package:plexlit/helpers/context.dart';
+import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/storage.dart';
-import 'package:provider/src/provider.dart';
 
 class AudioPlayerService {
   static final _audio = AudioPlayer();
@@ -59,8 +59,8 @@ class AudioPlayerService {
     await _audio.setAudioSource(
       book.toAudioSource(),
       preload: false,
-      initialIndex: Storage.progress.get(book.id)?["index"],
-      initialPosition: Duration(milliseconds: Storage.progress.get(book.id)?["position"] ?? 0),
+      // initialIndex: Storage.progress.get(book.id)?["index"],
+      // initialPosition: Duration(milliseconds: Storage.progress.get(book.id)?["position"] ?? 0),
     );
 
     chapter.value = book.chapters[0];

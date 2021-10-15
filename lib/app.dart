@@ -14,6 +14,7 @@ import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/routes.dart';
 import 'package:plexlit/service/audio_player.dart';
 import 'package:plexlit/theme/google_theme.dart';
+import 'package:plexlit/theme/material_you_theme.dart';
 import 'package:plexlit/widgets/miniplayer.dart';
 import 'package:plexlit/widgets/navbar.dart';
 
@@ -25,7 +26,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: GThemeGenerator.generateDark(),
+      theme: materialYouTheme(),
       home: const AppLayout(),
     );
   }
@@ -67,7 +68,6 @@ class _AppLayoutState extends State<AppLayout> {
                 direction: Axis.vertical,
                 key: _navBarKey,
               ),
-
             ValueListenableBuilder<Audiobook?>(
               valueListenable: context.read<AudioPlayerService>().current,
               builder: (context, audiobook, _) {

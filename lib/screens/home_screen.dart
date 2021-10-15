@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:plexlit_api/plexlit_api.dart';
+import 'package:sliver_header_delegate/sliver_header_delegate.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
@@ -22,9 +23,10 @@ class HomeScreen extends StatelessWidget {
     final client = context.find<ApiProvider>().server;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate([
             FutureBuilder<List<MediaItem>>(
               future: client.getCollections(),
               builder: (ctx, snap) {
@@ -35,6 +37,38 @@ class HomeScreen extends StatelessWidget {
                     items: snap.data!,
                     title: "Collections",
                     onShowMore: () => router.currentState?.pushNamed("/collections"),
+                  );
+                } else {
+                  return const Text("Loading");
+                }
+              },
+            ),
+            FutureBuilder<List<MediaItem>>(
+              future: client.getGenres(),
+              builder: (ctx, snap) {
+                if (snap.hasError) {
+                  return const Text("Error");
+                } else if (snap.hasData) {
+                  return MediaRowWidget(
+                    items: snap.data!,
+                    title: "Genres",
+                    onShowMore: () => router.currentState?.pushNamed("/genres"),
+                  );
+                } else {
+                  return const Text("Loading");
+                }
+              },
+            ),
+            FutureBuilder<List<MediaItem>>(
+              future: client.getGenres(),
+              builder: (ctx, snap) {
+                if (snap.hasError) {
+                  return const Text("Error");
+                } else if (snap.hasData) {
+                  return MediaRowWidget(
+                    items: snap.data!,
+                    title: "Genres",
+                    onShowMore: () => router.currentState?.pushNamed("/genres"),
                   );
                 } else {
                   return const Text("Loading");
@@ -71,8 +105,8 @@ class HomeScreen extends StatelessWidget {
             //     }
             //   },
             // ),
-          ],
-        ),
+          ])),
+        ],
       ),
     );
   }

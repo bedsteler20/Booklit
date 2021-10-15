@@ -13,14 +13,12 @@ import 'image_widget.dart';
 
 // Package imports:
 
-
 class MiniplayerWidget extends StatelessWidget {
   const MiniplayerWidget({
     Key? key,
     required this.height,
     required this.percentage,
   }) : super(key: key);
-
 
   final double height;
   final double percentage;
@@ -33,22 +31,22 @@ class MiniplayerWidget extends StatelessWidget {
 
   // Calculations
 
-
   @override
   Widget build(BuildContext context) {
     var player = context.find<AudioPlayerService>();
-  double textOpacity = (1 - (percentage * 2)).clamp(0, 1);
-  var alignment = Alignment.lerp(Alignment.bottomLeft, Alignment.topCenter, percentage)!;
+    double textOpacity = (1 - (percentage * 2)).clamp(0, 1);
+    var alignment = Alignment.lerp(Alignment.bottomLeft, Alignment.topCenter, percentage)!;
 
     return ColumnContainer(
       constraints: BoxConstraints(maxHeight: height),
-      color: context.theme.bottomNavigationBarTheme.backgroundColor,
+      color: context.theme.navigationBarTheme.backgroundColor,
       children: [
         AnimatedAlign(
           alignment: alignment,
           duration: animationDiration,
           child: Container(
-            constraints: BoxConstraints(maxHeight: height.clamp(0, context.height.clamp(0, context.height / 2.5))),
+            constraints: BoxConstraints(
+                maxHeight: height.clamp(0, context.height.clamp(0, context.height / 2.5))),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
