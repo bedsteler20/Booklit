@@ -1,46 +1,23 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:plexlit/repository/repository.dart';
 
 // Package imports:
-import 'package:plexlit_api/plexlit_api.dart';
-import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:plexlit/model/exeptions.dart';
 import 'package:plexlit/storage.dart';
 
-class ApiProvider implements ChangeNotifier {
-  static final value = ValueNotifier<PlexlitApiClient?>(null);
+class Repo with ChangeNotifier {
+  PlexlitApiClient? _repo;
 
-  ApiProvider([PlexlitApiClient? _initialValue]) {
-    value.value = _initialValue;
+  PlexlitApiClient? get data => _repo;
+
+  bool get hasClient => _repo != null;
+
+  void connect(PlexlitApiClient? i, {bool save = true}) {
+    if (i == null) return;
+    _repo = i;
+    if (save) Storage.saveClient(i);
+    notifyListeners();
   }
-
-  static PlexlitApiClient get server {
-    if (value.value == null) throw PlexlitExceptions.noApiClientFound;
-
-    return value.value!;
-  }
-
-  bool get hasClient => value.value != null;
-
-  static void connect(PlexlitApiClient? i, {bool save = true}) {
-    value.value = i;
-    if (i != null && save) Storage.saveClient(i);
-    value.notifyListeners();
-  }
-
-  @override
-  void addListener(VoidCallback listener) => value.addListener(listener);
-
-  @override
-  dispose() => value.dispose();
-
-  @override
-  void notifyListeners() => value.notifyListeners();
-  @override
-  void removeListener(VoidCallback listener) => value.removeListener(listener);
-
-  @override
-  bool get hasListeners => value.hasListeners;
 }

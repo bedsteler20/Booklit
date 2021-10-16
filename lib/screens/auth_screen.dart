@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:plexlit/modules/plex/plex_login_button.dart';
-import 'package:plexlit/modules/plex/plex_server_picker.dart';
+import 'package:plexlit/auth/auth.dart';
+
+// Project imports:
 
 // Package imports:
 

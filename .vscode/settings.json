@@ -10,7 +10,8 @@
 		"**/*.crswap": true,
 		" **/*.g.dart": true,
 		"**/*.inject.dart": true,
-		"**/*.inject.summary ": true
+		"**/*.inject.summary ": true,
+		"lib/generated_plugin_registrant.dart": true
 	},
 	"C_Cpp.errorSquiggles": "Disabled",
 	"cSpell.words": [
@@ -23,6 +24,9 @@
 		"Plexlit",
 		"preload",
 		"routemaster",
-		"toggleable"
-	]
+		"ryanheise",
+		"toggleable",
+		"vrouter"
+	],
+
 }

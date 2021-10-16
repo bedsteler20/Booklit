@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 const _background = Color.fromARGB(255, 32, 26, 28);
 
 materialYouTheme() => ThemeData(
-    // brightness: Brightness.dark,
+    buttonColor: const Color.fromARGB(255, 255, 175, 210),
+    cardColor: const Color.fromARGB(255, 43, 33, 37),
+    cardTheme: CardTheme(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
+    primaryColor: const Color.fromARGB(255, 255, 175, 210),
     colorScheme: const ColorScheme.dark(
       primary: Color.fromARGB(255, 255, 175, 210),
       secondary: Color.fromARGB(255, 255, 175, 210),
@@ -22,4 +27,7 @@ materialYouTheme() => ThemeData(
     appBarTheme: const AppBarTheme(
       backgroundColor: _background,
       elevation: 0,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ));

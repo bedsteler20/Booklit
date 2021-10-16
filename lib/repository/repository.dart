@@ -1,12 +1,11 @@
+// Dart imports:
 import 'dart:io';
 
+// Package imports:
 import 'package:dio/dio.dart';
-import 'package:plexlit_api/plexlit_api.dart';
-import 'package:plexlit_api/src/model/author.dart';
-import 'package:plexlit_api/src/model/plex/plex_media_server.dart';
+import 'package:plexlit/model/model.dart';
 
-/// Creates Api Clients
-class PlexlitConnection {}
+export 'plex/plex.dart';
 
 /// The client api implemented by various servers.
 abstract class PlexlitApiClient {
@@ -26,6 +25,8 @@ abstract class PlexlitApiClient {
   }
 
   external Map toMap();
+
+  Uri? transcodeImage(Uri? uri, {required int height, required int width}) => uri;
 }
 
 enum PlexlitClientType {

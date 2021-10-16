@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:go_router/go_router.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:plexlit/helpers/context.dart';
 import 'package:provider/src/provider.dart';
+import 'package:vrouter/src/core/extended_context.dart';
 
 // Project imports:
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/routes.dart';
 
 class Navbar extends StatefulWidget {
-  const Navbar({Key? key, this.direction = Axis.horizontal}) : super(key: key);
+  const Navbar({Key? key, this.direction = Axis.horizontal})
+      : super(key: key ?? const ValueKey("Navbar"));
   final Axis direction;
   @override
   State<Navbar> createState() => _NavbarState();
@@ -27,13 +29,13 @@ class _NavbarState extends State<Navbar> {
     setState(() => currentIndex = i);
     switch (i) {
       case 0:
-        context.to("/");
+        context.vRouter.to("/", isReplacement: true);
         break;
       case 1:
-        context.to("/library");
+        context.vRouter.to("/library", isReplacement: true);
         break;
       case 2:
-        context.to("/settings");
+        context.vRouter.to("/settings", isReplacement: true);
         break;
     }
   }

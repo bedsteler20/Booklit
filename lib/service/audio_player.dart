@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:plexlit_api/plexlit_api.dart' hide MediaItem;
+import 'package:plexlit/model/model.dart';
 import 'package:provider/src/provider.dart';
 
 // Project imports:
@@ -56,15 +56,15 @@ class AudioPlayerService {
 
   Future<void> load(Audiobook? book) async {
     if (book == null) throw "Cant play audio book if it is null";
+    chapter.value = book.chapters[0];
+    current.value = book;
+
     await _audio.setAudioSource(
       book.toAudioSource(),
-      preload: false,
+      preload: true,
       // initialIndex: Storage.progress.get(book.id)?["index"],
       // initialPosition: Duration(milliseconds: Storage.progress.get(book.id)?["position"] ?? 0),
     );
-
-    chapter.value = book.chapters[0];
-    current.value = book;
   }
 
   Future<AudioPlayerService> init() async {

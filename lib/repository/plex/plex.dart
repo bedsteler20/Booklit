@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:plexlit_api/plexlit_api.dart';
-import 'package:plexlit_api/src/model/author.dart';
+import 'package:plexlit/model/model.dart';
 
-part '../helpers/plex_helpers.dart';
+import '../repository.dart';
+
+part 'helpers.dart';
 
 class PlexApi extends PlexlitApiClient {
   String token;
@@ -182,11 +183,14 @@ class PlexApi extends PlexlitApiClient {
           authorId: album["parentRatingKey"],
           summary: album["summary"] ?? "",
           title: album["title"] ?? "",
-          releaseDate: DateTime(album["year"] ?? 0),
+          releaseDate: DateTime.tryParse(album["originallyAvailableAt"] ?? ""),
           thumb: _makeLink(album["thumb"]),
           chapters: await chapters(),
           userRating: album["userRating"] ?? 0.0,
           id: id,
+          publisher: album["studio"],
+          // series: makeMediaList(album["Collection"])
+          // .firstWhere((e) => e.type == MediaItemType.series),
         );
       };
 
@@ -254,5 +258,10 @@ class PlexApi extends PlexlitApiClient {
     for (var i in devices) {
       if (i.clientIdentifier == server.clientIdentifier) server = i;
     }
+  }
+
+  @override
+  Uri? transcodeImage(Uri? uri, {required int height, required int width}) {
+    return uri?.replace(query: uri.query + "&height=$height&width=$width");
   }
 }

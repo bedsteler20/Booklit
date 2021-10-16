@@ -2,17 +2,12 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:go_router/go_router.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit_api/plexlit_api.dart';
-import 'package:provider/src/provider.dart';
+import 'package:plexlit/model/model.dart';
+import 'package:plexlit/repository/repository.dart';
 
 // Project imports:
-import 'package:plexlit/controllers/app_controllor.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/routes.dart';
-import 'package:plexlit/screens/home_screen.dart';
-import 'package:plexlit/storage.dart';
+import 'package:plexlit/globals.dart';
+import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/widgets/widgets.dart';
 
 class PlexLibraryPicker extends StatelessWidget {
@@ -59,7 +54,7 @@ class PlexLibraryPicker extends StatelessWidget {
                 onPressed: library == null
                     ? null
                     : () {
-                        ApiProvider.connect(
+                        repository.connect(
                           PlexApi(
                             server: server,
                             token: token,

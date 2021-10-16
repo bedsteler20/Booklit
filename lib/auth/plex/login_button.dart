@@ -7,16 +7,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as chrome;
-import 'package:go_router/go_router.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit_api/plexlit_api.dart';
 import 'package:url_launcher/url_launcher.dart' as browser;
 import 'package:uuid/uuid.dart';
 
 // Project imports:
-import 'package:plexlit/modules/plex/plex_server_picker.dart';
-import 'package:plexlit/routes.dart';
-import 'package:plexlit/storage.dart';
+import 'package:plexlit/helpers/context.dart';
+
+import 'plex_auth.dart';
 
 class PlexLoginButton extends StatefulWidget {
   const PlexLoginButton({

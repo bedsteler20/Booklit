@@ -1,10 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:plexlit/model/model.dart';
 
 // Package imports:
-import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/widgets/widgets.dart';
@@ -26,12 +27,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
   bool gridMode = false;
   final scrollController = ScrollController();
 
-  PlexlitApiClient get client => ApiProvider.server;
-
   @override
   void initState() {
     super.initState();
-    client.getAudiobooks(limit: _querySize, start: 0).then((value) {
+    repository.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
       children.addAll(value);
       if (value.length < _querySize) isComplete = true;
       isLoading = false;
@@ -44,12 +43,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
         if (scrollController.position.pixels + 100 >= scrollController.position.maxScrollExtent) {
           if (!isLoading && !isComplete) {
             isLoading = true;
-            client.getAudiobooks(limit: _querySize, start: children.length).then((value) {
-              children.addAll(value);
-              if (value.length < _querySize) isComplete = true;
-              isLoading = false;
-              setState(() {});
-            });
+            repository.data!.getAudiobooks(limit: _querySize, start: children.length).then(
+              (value) {
+                children.addAll(value);
+                if (value.length < _querySize) isComplete = true;
+                isLoading = false;
+                setState(() {});
+              },
+            );
           }
         }
       },
@@ -59,7 +60,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Future<void> refresh() async {
     if (!isLoading) {
       isLoading = true;
-      client.getAudiobooks(limit: _querySize, start: 0).then((value) {
+      repository.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
         children = value;
         if (value.length < _querySize) isComplete = true;
         isLoading = false;
@@ -77,13 +78,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
           scrollDirection: Axis.vertical,
           controller: scrollController,
           slivers: [
+            SliverAppBar(
+              title: const Text("Library"),
+            ),
             if (context.isSmallTablet)
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 160,
-                  childAspectRatio: 4 / 5,
+              SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 250,
+                    childAspectRatio: 4 / 5,
+                  ),
+                  delegate: SliverChildListDelegate(children.map((e) => GridItem(e)).toList()),
                 ),
-                delegate: SliverChildListDelegate(children.map((e) => GridItem(e)).toList()),
               )
             else
               SliverList(

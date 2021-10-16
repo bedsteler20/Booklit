@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
+import 'package:plexlit/helpers/context.dart';
+
 // Package imports:
 
 class ImageWidget extends StatelessWidget {
@@ -49,6 +52,7 @@ class ImageWidget extends StatelessWidget {
       return Material(
         elevation: 10,
         borderRadius: BorderRadius.circular(8.0),
+        color: context.theme.cardColor,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: SizedBox(

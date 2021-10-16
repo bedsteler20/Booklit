@@ -1,31 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:plexlit/routes.dart';
+import 'package:plexlit/model/model.dart';
 
 // Package imports:
-import 'package:plexlit_api/plexlit_api.dart';
+import 'package:vrouter/src/core/extended_context.dart';
 
-extension MediaItemGenraExt on MediaItem {
-  void goTo() {
-    var x = Uri(
-      path: _typePath,
-      queryParameters: toMap(),
-    ).toString();
+// Project imports:
+import 'package:plexlit/routes.dart';
 
-    router.go(x);
-  }
-
-  String get _typePath {
-    switch (type) {
-      case MediaItemType.collection:
-        return "/collection/$id";
-      case MediaItemType.genre:
-        return "/genre/$id";
-      case MediaItemType.audioBook:
-        return "/audiobook/$id";
-      default:
-        return "/unknown";
-    }
+extension MediaItemGenreExt on MediaItem {
+  void goTo(BuildContext context) {
+    context.vRouter.to("/${type.string}/$id", queryParameters: toMap());
+    // router.go(x);
   }
 
   IconData? get icon {

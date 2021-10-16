@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
-import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
 import 'package:plexlit/controllers/app_controllor.dart';
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/helpers/media_item_extention.dart';
+import 'package:plexlit/model/model.dart';
 import 'package:plexlit/routes.dart';
 import 'image_widget.dart';
 import 'shimmr.dart';
@@ -29,7 +30,7 @@ class ListItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
         child: RawMaterialButton(
-          onPressed: item.goTo,
+          onPressed: () => item.goTo(context),
           child: Row(
             children: [
               /*----Image----*/
@@ -38,7 +39,11 @@ class ListItem extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: ImageWidget(
-                    url: item.thumb,
+                    url: repository.data!.transcodeImage(
+                      item.thumb,
+                      height: imageSize.toInt(),
+                      width: imageSize.toInt(),
+                    ),
                     height: imageSize,
                     width: imageSize,
                   ),

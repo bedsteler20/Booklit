@@ -2,10 +2,13 @@
 //
 //     final plexMediaServer = plexMediaServerFromMap(jsonString);
 
+// Dart imports:
 import 'dart:convert';
 
+// Package imports:
 import 'package:dio/dio.dart';
-import 'package:plexlit_api/plexlit_api.dart';
+
+import 'media_item.dart';
 
 class PlexDevice {
   PlexDevice({
@@ -188,7 +191,13 @@ class PlexDevice {
     )).get("/library/sections").then((res) {
       List<MediaItem> i = [];
       for (var x in res.data["MediaContainer"]["Directory"]) {
-        if (x["type"] == "artist") i.add(MediaItem(title: x["title"], id: x["key"]));
+        if (x["type"] == "artist") {
+          i.add(MediaItem(
+            title: x["title"],
+            id: x["key"],
+            type: MediaItemType.library,
+          ));
+        }
       }
       return i;
     });

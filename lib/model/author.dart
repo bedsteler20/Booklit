@@ -1,4 +1,6 @@
-import 'package:plexlit_api/src/model/media_item.dart';
+// Package imports:
+
+import 'media_item.dart';
 
 class Author {
   Author({

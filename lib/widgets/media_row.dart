@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
-import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/helpers/media_item_extention.dart';
+import 'package:plexlit/model/model.dart';
 import 'package:plexlit/routes.dart';
 import 'flutter_helpers.dart';
 import 'image_widget.dart';
@@ -48,14 +49,18 @@ class MediaRowWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: RawMaterialButton(
-                    onPressed: item.goTo,
+                    onPressed: () => item.goTo(context),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 4),
                         Center(
                           child: ImageWidget(
-                            url: item.thumb,
+                            url: repository.data!.transcodeImage(
+                              item.thumb,
+                              height: 150,
+                              width: 150,
+                            ),
                             icon: item.icon,
                             width: 150,
                             height: 150,

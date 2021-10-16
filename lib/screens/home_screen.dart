@@ -2,14 +2,11 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:go_router/go_router.dart';
-import 'package:plexlit_api/plexlit_api.dart';
-import 'package:sliver_header_delegate/sliver_header_delegate.dart';
+import 'package:plexlit/model/model.dart';
 
 // Project imports:
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/routes.dart';
 import 'package:plexlit/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,15 +18,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final client = ApiProvider.server;
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          const SliverAppBar(
+            title: Text(
+              "Home",
+              textScaleFactor: 1.35,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
           SliverList(
               delegate: SliverChildListDelegate([
-            FutureBuilder<List<MediaItem>>(
-              future: client.getCollections(),
+          FutureBuilder<List<MediaItem>>(
+              future: repository.data!.getCollections(),
               builder: (ctx, snap) {
                 if (snap.hasError) {
                   return const Text("Error");
@@ -45,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             FutureBuilder<List<MediaItem>>(
-              future: client.getGenres(),
+              future: repository.data!.getGenres(),
               builder: (ctx, snap) {
                 if (snap.hasError) {
                   return const Text("Error");
@@ -61,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             FutureBuilder<List<MediaItem>>(
-              future: client.getGenres(),
+              future: repository.data!.getGenres(),
               builder: (ctx, snap) {
                 if (snap.hasError) {
                   return const Text("Error");
@@ -77,7 +79,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             FutureBuilder<List<MediaItem>>(
-              future: client.getGenres(),
+              future: repository.data!.getGenres(),
               builder: (ctx, snap) {
                 if (snap.hasError) {
                   return const Text("Error");

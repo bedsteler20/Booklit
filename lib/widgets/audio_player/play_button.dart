@@ -21,25 +21,26 @@ class PlayButton extends StatelessWidget {
           return MaterialButton(
             minWidth: 90,
             onPressed: player.play,
-            color: Theme.of(context).colorScheme.primary,
+            color: context.buttonColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: const SizedBox(
               height: 32,
               width: 32,
               child: CircularProgressIndicator(color: Colors.white),
             ),
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             // shape: const CircleBorder(),
           );
         } else if (!state.playing) {
           return MaterialButton(
             minWidth: 90,
             onPressed: player.play,
-            color: Theme.of(context).colorScheme.primary,
+            color: context.buttonColor,
             child: const Icon(
               Icons.play_arrow_rounded,
               size: 40,
             ),
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(10),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
 
             // shape: const CircleBorder(),
@@ -50,12 +51,12 @@ class PlayButton extends StatelessWidget {
           return MaterialButton(
             minWidth: 90,
             onPressed: player.pause,
-            color: Theme.of(context).colorScheme.primary,
+            color: context.buttonColor,
             child: const Icon(
               Icons.pause_rounded,
               size: 40,
             ),
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(10),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           );
 
@@ -64,12 +65,12 @@ class PlayButton extends StatelessWidget {
           return MaterialButton(
             minWidth: 90,
             onPressed: () => player.seek(Duration.zero),
-            color: Theme.of(context).colorScheme.primary,
+            color: context.buttonColor,
             child: const Icon(
               Icons.replay_rounded,
               size: 40,
             ),
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(10),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
 
             // shape: const CircleBorder(),

@@ -1,3 +1,6 @@
+// Project imports:
+import 'media_item.dart';
+
 class Audiobook {
   Audiobook({
     required this.title,
@@ -10,6 +13,9 @@ class Audiobook {
     this.releaseDate,
     this.userRating = 0,
     this.viewCount,
+    this.publisher,
+    this.series,
+    
   }) : length = Duration(milliseconds: chapters.fold(0, (p, e) => p += e.length.inMilliseconds));
 
   String title;
@@ -18,11 +24,13 @@ class Audiobook {
   String authorId;
   Uri? thumb;
   String? summary;
+  String? publisher;
   DateTime? releaseDate;
   double userRating;
   int? viewCount;
   List<Chapter> chapters;
   Duration length;
+  MediaItem? series;
 
   Map toMap() => {
         "title": title,
@@ -35,6 +43,7 @@ class Audiobook {
         "releaseDate": releaseDate?.toIso8601String(),
         "length": length,
         "chapters": chapters.map((e) => e.toMap()).toList(),
+        "publisher": publisher
       };
 
   factory Audiobook.fromMap(Map map) => Audiobook(
@@ -48,6 +57,7 @@ class Audiobook {
         thumb: Uri.tryParse(map["thumb"]),
         userRating: map["userRating"],
         viewCount: map["viewCount"],
+        publisher: map["publisher"],
       );
 }
 

@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:plexlit/model/model.dart';
 
 // Package imports:
-import 'package:plexlit_api/plexlit_api.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
@@ -30,11 +30,9 @@ class AudioPlayerControls extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: const [
-            SpeedButton(),
             SeekButton(time: -30),
             PlayButton(),
             SeekButton(time: 30),
-            SpeedButton(),
           ],
         ),
       ],
@@ -52,9 +50,10 @@ class AudioPlayerControls extends StatelessWidget {
           builder: (context, chapter, _) {
             return Text(
               chapter?.name ?? "Chapter Null",
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: context.bodyText1!.copyWith(fontSize: 24),
+              textAlign: TextAlign.center,
             );
           },
         ),

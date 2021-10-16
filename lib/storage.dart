@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:plexlit_api/plexlit_api.dart';
+import 'package:plexlit/repository/repository.dart';
 import 'package:uuid/uuid.dart';
 
 /// Manages Hive box's

@@ -1,15 +1,17 @@
-part of '../modules/plex.dart';
+part of 'plex.dart';
 
 extension PlexApiHelpers on PlexApi {
   List<MediaItem> makeMediaList(Response<dynamic> res) {
     if (res.data["MediaContainer"]["Metadata"] != null) {
       return (res.data["MediaContainer"]["Metadata"] as List).map((item) {
+        String title = (item["title"] as String).replaceAll("Series: ", "");
+
         return MediaItem(
           thumb: _makeLink(item["thumb"]),
-          title: item["title"],
+          title: title,
           id: item["ratingKey"],
           title2: item["parentTitle"],
-          type: _pickType(item["type"]),
+          type: _pickType(item)!,
           summary: item["summary"],
         );
       }).toList();
@@ -18,7 +20,7 @@ extension PlexApiHelpers on PlexApi {
         return MediaItem(
           title: item["title"],
           id: item["key"],
-          type: _pickType(item["type"]),
+          type: _pickType(item)!,
         );
       }).toList();
     }
@@ -27,9 +29,12 @@ extension PlexApiHelpers on PlexApi {
   }
 
   MediaItemType? _pickType(dynamic e) {
-    if (e == "collection") return MediaItemType.collection;
-    if (e == "album") return MediaItemType.audioBook;
-    if (e == "genre") return MediaItemType.genre;
+    if (e["type"] == "collection" && (e["title"] as String).startsWith("Series: ")) {
+      return MediaItemType.series;
+    }
+    if (e["type"] == "collection") return MediaItemType.collection;
+    if (e["type"] == "album") return MediaItemType.audioBook;
+    if (e["type"] == "genre") return MediaItemType.genre;
   }
 
   Uri? _makeLink(String str) {

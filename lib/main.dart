@@ -6,16 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
-import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:plexlit_api/plexlit_api.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:plexlit/controllers/app_controllor.dart';
-import 'package:plexlit/core/hive_settings.dart';
-import 'package:plexlit/helpers/context.dart';
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/list.dart';
 import 'package:plexlit/providers/providers.dart';
 import 'package:plexlit/service/service.dart';
@@ -37,25 +33,16 @@ void main() async {
 
   await Storage.init();
 
-  var client = Storage.loadClients();
-  // var client = [PlexApi(
-  //   server: (await PlexApi.findServers(
-  //     clientId: "6yrtyeh6z0iuo48edcp8ofb9",
-  //     token: "owdaU7utu_pYqeM35mYf",
-  //   ))[0],
-  //   token: "owdaU7utu_pYqeM35mYf",
-  //   libraryId: "5",
-  //   clientId: "6yrtyeh6z0iuo48edcp8ofb9",
-  // )];
+  repository.connect(Storage.loadClients().lastOrNull);
 
   final audioPlayer = await AudioPlayerService().init();
 
   runApp(MultiProvider(
       providers: [
         Provider(create: (context) => ConnectivityProvider()),
-        ListenableProvider<ApiProvider>(create: (context) => ApiProvider(client.lastOrNull)),
+        ListenableProvider<Repo>(create: (context) => repository),
         ListenableProvider(create: (context) => MiniplayerController()),
-        ListenableProvider(create: (context) => AppController(context)),
+        // ListenableProvider(create: (context) => AppController(context)),
         Provider(create: (context) => audioPlayer),
       ],
       child: Builder(
