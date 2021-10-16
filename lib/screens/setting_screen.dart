@@ -11,7 +11,7 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/service/service.dart';
-import 'package:plexlit/storage.dart';
+import 'package:plexlit/core/storage.dart';
 import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
 import 'package:plexlit/widgets/widgets.dart';
 
@@ -68,7 +68,7 @@ class ClientPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clients = Storage.loadClients();
+    final clients = storage.loadClients();
     context.watch<Repo>();
 
     return SimpleDialog(

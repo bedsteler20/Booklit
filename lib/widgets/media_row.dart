@@ -9,7 +9,6 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/helpers/media_item_extention.dart';
 import 'package:plexlit/model/model.dart';
-import 'package:plexlit/routes.dart';
 import 'flutter_helpers.dart';
 import 'image_widget.dart';
 

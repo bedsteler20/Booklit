@@ -10,19 +10,19 @@ import 'package:uuid/uuid.dart';
 
 /// Manages Hive box's
 class Storage {
-  static late Box<Map<dynamic, dynamic>> plexClients;
+   late Box<Map<dynamic, dynamic>> plexClients;
 
   /// Stores the progress of audiobooks
   /// keys are the books id
-  static late Box progress;
+   late Box progress;
 
   /// Stores API tokens
-  static late Box _tokens;
+   late Box _tokens;
 
   /// Used for random stuff and things
-  static late Box _misc;
+   late Box _misc;
 
-  static Future init() async {
+   Future init() async {
     await Hive.initFlutter();
     progress = await Hive.openBox("progress");
     plexClients = await Hive.openBox("plex_clients");
@@ -31,14 +31,14 @@ class Storage {
     // plexClients.clear();
   }
 
-  static List<PlexlitApiClient> loadClients() {
+   List<PlexlitApiClient> loadClients() {
     List<PlexlitApiClient> _clients = [];
     for (var item in plexClients.values) _clients.add(PlexApi.fromMap(item));
 
     return _clients;
   }
 
-  static void saveClient(PlexlitApiClient client) async {
+   void saveClient(PlexlitApiClient client) async {
     switch (client.runtimeType) {
       case PlexApi:
         plexClients.add(client.toMap());
@@ -48,7 +48,7 @@ class Storage {
     }
   }
 
-  static String get clientId {
+   String get clientId {
     if (_misc.containsKey("client_id")) {
       return _misc.get("client_id");
     } else {

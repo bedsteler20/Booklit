@@ -6,7 +6,6 @@ import 'package:plexlit/model/model.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 
 // Project imports:
-import 'package:plexlit/routes.dart';
 
 extension MediaItemGenreExt on MediaItem {
   void goTo(BuildContext context) {

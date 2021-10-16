@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:plexlit/routes.dart';
 
 export 'package:build_config/build_config.dart';
 

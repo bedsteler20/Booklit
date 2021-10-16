@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/model/model.dart';
 import 'package:provider/src/provider.dart';
 
@@ -14,7 +15,7 @@ import 'package:provider/src/provider.dart';
 import 'package:plexlit/helpers/audiobook_extention.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/storage.dart';
+import 'package:plexlit/core/storage.dart';
 
 class AudioPlayerService {
   static final _audio = AudioPlayer();
@@ -62,8 +63,8 @@ class AudioPlayerService {
     await _audio.setAudioSource(
       book.toAudioSource(),
       preload: true,
-      // initialIndex: Storage.progress.get(book.id)?["index"],
-      // initialPosition: Duration(milliseconds: Storage.progress.get(book.id)?["position"] ?? 0),
+      // initialIndex: storage.progress.get(book.id)?["index"],
+      // initialPosition: Duration(milliseconds: storage.progress.get(book.id)?["position"] ?? 0),
     );
   }
 
@@ -78,7 +79,7 @@ class AudioPlayerService {
 
     _audio.positionStream
         .timeout(const Duration(seconds: 5))
-        .listen((e) => Storage.progress.put(current.value?.id ?? "null", {
+        .listen((e) => storage.progress.put(current.value?.id ?? "null", {
               "position": _audio.position.inMilliseconds,
               "index": _audio.currentIndex,
             }));

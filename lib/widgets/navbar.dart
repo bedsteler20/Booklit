@@ -9,7 +9,6 @@ import 'package:vrouter/src/core/extended_context.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/routes.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key, this.direction = Axis.horizontal})

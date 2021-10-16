@@ -6,10 +6,8 @@ import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
 import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit/core/storage.dart';
 
 final repository = Repo();
 final miniPlayer = MiniplayerController();
-
-abstract class Keys {
-  static final scaffold = GlobalKey<ScaffoldMessengerState>();
-}
+final storage = Storage();

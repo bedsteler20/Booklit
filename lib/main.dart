@@ -15,7 +15,7 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/list.dart';
 import 'package:plexlit/providers/providers.dart';
 import 'package:plexlit/service/service.dart';
-import 'package:plexlit/storage.dart';
+import 'package:plexlit/core/storage.dart';
 import 'app.dart';
 import 'providers/api_provider.dart';
 
@@ -31,9 +31,9 @@ void main() async {
     );
   }
 
-  await Storage.init();
+  await storage.init();
 
-  repository.connect(Storage.loadClients().lastOrNull);
+  repository.connect(storage.loadClients().lastOrNull);
 
   final audioPlayer = await AudioPlayerService().init();
 

@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 // Project imports:
-import 'package:plexlit/controllers/app_controllor.dart';
 import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/helpers/media_item_extention.dart';
 import 'package:plexlit/model/model.dart';
-import 'package:plexlit/routes.dart';
 import 'image_widget.dart';
 import 'shimmr.dart';
 
