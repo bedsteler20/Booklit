@@ -5,21 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
 // Project imports:
-import 'package:plexlit/globals.dart';
 import 'package:plexlit/screens/audiobook_screen.dart';
 import 'package:plexlit/screens/home_screen.dart';
 import 'package:plexlit/screens/library_screen.dart';
 import 'package:plexlit/screens/media_group_screen.dart';
 import 'package:plexlit/screens/setting_screen.dart';
 import 'package:plexlit/theme/material_you_theme.dart';
-import 'package:plexlit/widgets/scaffold.dart';
+import 'package:plexlit/widgets/app/scaffold.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<VRouteElement> stackedRoutes = [];
 
     return VRouter(
       theme: materialYouTheme(),

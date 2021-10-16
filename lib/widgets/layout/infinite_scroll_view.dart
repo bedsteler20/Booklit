@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/model/model.dart';
-import 'package:plexlit/widgets/list_item.dart';
+import 'package:plexlit/widgets/layout/list_item.dart';
 import 'grid_item.dart';
 
 class InfiniteScrollView extends StatefulWidget {

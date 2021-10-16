@@ -9,8 +9,8 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/helpers/media_item_extention.dart';
 import 'package:plexlit/model/model.dart';
-import 'flutter_helpers.dart';
-import 'image_widget.dart';
+import '../helper_widgets/flutter_helpers.dart';
+import '../helper_widgets/image_widget.dart';
 
 class MediaRowWidget extends StatelessWidget {
   const MediaRowWidget({

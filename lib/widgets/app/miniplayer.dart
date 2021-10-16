@@ -13,9 +13,9 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
 import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
-import 'audio_player/controls.dart';
-import 'flutter_helpers.dart';
-import 'image_widget.dart';
+import '../audio_player/controls.dart';
+import '../helper_widgets/flutter_helpers.dart';
+import '../helper_widgets/image_widget.dart';
 
 // Package imports:
 
