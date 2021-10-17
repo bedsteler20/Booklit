@@ -8,7 +8,7 @@ import 'package:plexlit/model/model.dart';
 export 'plex/plex.dart';
 
 /// The client api implemented by various servers.
-abstract class PlexlitApiClient {
+abstract class PlexlitRepository {
   external static PlexlitClientType type;
   external final Future<List<MediaItem>> Function({int start, int limit}) getAudiobooks;
   external final Future<List<MediaItem>> Function({int start, int limit}) getCollections;

@@ -7,11 +7,14 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as chrome;
+import 'package:plexlit/auth/auth.dart';
+import 'package:plexlit/globals.dart';
 import 'package:url_launcher/url_launcher.dart' as browser;
 import 'package:uuid/uuid.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
+import 'package:vrouter/src/core/extended_context.dart';
 
 import 'plex_auth.dart';
 
@@ -34,6 +37,19 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
   }
 
   Future<void> login() async {
+    if (storage.credentials.containsKey("plex-clientId")) {
+      if (storage.credentials.containsKey("plex-token")) {
+        showDialog(
+          context: context,
+          builder: (_) => PlexServerPicker(
+            token: storage.credentials.get("plex-token"),
+            clientId: storage.credentials.get("plex-clientId"),
+          ),
+        );
+        return;
+      }
+    }
+
     final clientId = const Uuid().v4();
     final api = await PlexOauth.create(clientId: clientId);
 
@@ -43,12 +59,12 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
       await api.checkPin().then((token) {
         if (token != null) {
           timer.cancel();
-          context.to(
-            "/plex/servers",
-            // arguments: {
-            //   "clientId": clientId,
-            //   "token": token,
-            // },
+          storage.credentials.put("plex-clientId", clientId);
+          storage.credentials.put("plex-token", token);
+
+          showDialog(
+            context: context,
+            builder: (_) => PlexServerPicker(token: token, clientId: clientId),
           );
         }
       });

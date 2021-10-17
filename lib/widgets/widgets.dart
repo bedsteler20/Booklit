@@ -1,5 +1,4 @@
 export 'audio_player/audio_player.dart';
-export 'helper_widgets/error_widget.dart';
 export 'helper_widgets/flutter_helpers.dart';
 export 'layout/grid_item.dart';
 export 'helper_widgets/image_widget.dart';

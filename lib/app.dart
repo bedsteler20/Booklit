@@ -1,5 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:plexlit/auth/auth.dart';
+import 'package:plexlit/auth/plex/server_picker.dart';
+import 'package:plexlit/helpers/context.dart';
+import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit/screens/auth_screen.dart';
+import 'package:provider/src/provider.dart';
 
 // Package imports:
 import 'package:vrouter/vrouter.dart';
@@ -18,7 +24,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return VRouter(
       theme: materialYouTheme(),
       debugShowCheckedModeBanner: false,
@@ -28,6 +33,7 @@ class App extends StatelessWidget {
       },
       routes: [
         VGuard(
+          beforeEnter: (redirect) async => context.repository == null ? redirect.to('/auth') : null,
           stackedRoutes: [
             VNester(
               path: "/",
@@ -52,6 +58,7 @@ class App extends StatelessWidget {
             )
           ],
         ),
+        VWidget(path: "/auth", widget: const AuthScreen()),
       ],
     );
   }

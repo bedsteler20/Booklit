@@ -11,10 +11,6 @@
 		" **/*.g.dart": true,
 		"**/*.inject.dart": true,
 		"**/*.inject.summary ": true,
-		"lib/generated_plugin_registrant.dart": true,
-		"[!l]*/**": true,
-		"l[!i]*/**": true,
-		"li[!b]*/**": true
 	},
 	"C_Cpp.errorSquiggles": "Disabled",
 	"cSpell.words": [

@@ -35,6 +35,16 @@ class SettingsScreen extends StatelessWidget {
               subtitle: const Text("The library or server to scan"),
               onTap: () => ClientPicker.open(context),
             ),
+            ListTile(
+              leading: const Icon(Icons.library_add_outlined, size: 32),
+              title: const Text("Logout"),
+              subtitle: const Text("The library or server to scan"),
+              onTap: () {
+                storage.credentials.clear();
+                storage.plexClients.clear();
+                storage.progress.clear();
+              },
+            ),
           ]),
           SettingsGroup(title: "Player", children: [
             ListTile(
@@ -69,7 +79,7 @@ class ClientPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final clients = storage.loadClients();
-    context.watch<Repo>();
+    context.watch<RepoProvider>();
 
     return SimpleDialog(
       title: const Text("Servers"),

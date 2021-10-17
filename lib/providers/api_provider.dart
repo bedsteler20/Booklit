@@ -7,14 +7,14 @@ import 'package:plexlit/repository/repository.dart';
 
 // Project imports:
 
-class Repo with ChangeNotifier {
-  PlexlitApiClient? _repo;
+class RepoProvider with ChangeNotifier {
+  PlexlitRepository? _repo;
 
-  PlexlitApiClient? get data => _repo;
+  PlexlitRepository? get data => _repo;
 
   bool get hasClient => _repo != null;
 
-  void connect(PlexlitApiClient? i, {bool save = true}) {
+  void connect(PlexlitRepository? i, {bool save = true}) {
     if (i == null) return;
     _repo = i;
     if (save) storage.saveClient(i);

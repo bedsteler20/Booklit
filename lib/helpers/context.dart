@@ -1,6 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit/repository/repository.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -11,6 +13,8 @@ export 'package:build_config/build_config.dart';
 
 extension MediaQueryExt on BuildContext {
   T find<T>({bool listen = false}) => Provider.of<T>(this, listen: listen);
+
+  PlexlitRepository? get repository => read<RepoProvider>().data;
 
   double get height => mediaQuerySize.height;
   double get width => mediaQuerySize.width;
@@ -222,5 +226,3 @@ extension ModalRouteExt<T> on BuildContext {
 
   RouteSettings? get routeSettings => modalRoute?.settings;
 }
-
-

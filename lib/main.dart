@@ -40,7 +40,7 @@ void main() async {
   runApp(MultiProvider(
       providers: [
         Provider(create: (context) => ConnectivityProvider()),
-        ListenableProvider<Repo>(create: (context) => repository),
+        ListenableProvider<RepoProvider>(create: (context) => repository),
         ListenableProvider(create: (context) => MiniplayerController()),
         // ListenableProvider(create: (context) => AppController(context)),
         Provider(create: (context) => audioPlayer),

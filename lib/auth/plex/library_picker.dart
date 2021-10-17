@@ -20,7 +20,7 @@ class PlexLibraryPicker extends StatelessWidget {
   final String clientId;
 
   @override
-  Widget build(BuildContext context1) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,15 +54,15 @@ class PlexLibraryPicker extends StatelessWidget {
                 onPressed: library == null
                     ? null
                     : () {
-                        repository.connect(
-                          PlexApi(
-                            server: server,
-                            token: token,
-                            library: library!,
-                            clientId: clientId,
-                          ),
-                        );
-                        context.to("/");
+                        // repository.connect(
+                        //   PlexApi(
+                        //     server: server,
+                        //     token: token,
+                        //     library: library!,
+                        //     clientId: clientId,
+                        //   ),
+                        // );
+                        Navigator.pop(context, library);
                       },
               ),
             );

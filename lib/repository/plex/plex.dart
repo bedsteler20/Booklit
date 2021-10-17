@@ -8,7 +8,7 @@ import '../repository.dart';
 
 part 'helpers.dart';
 
-class PlexApi extends PlexlitApiClient {
+class PlexApi extends PlexlitRepository {
   String token;
   PlexDevice server;
   String clientId;

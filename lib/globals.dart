@@ -8,6 +8,6 @@ import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/core/storage.dart';
 
-final repository = Repo();
+final repository = RepoProvider();
 final miniPlayer = MiniplayerController();
 final storage = Storage();
