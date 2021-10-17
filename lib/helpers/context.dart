@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/repository/repository.dart';
+import 'package:plexlit/repository/base_repository.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';

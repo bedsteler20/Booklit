@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:plexlit/providers/downloads_provider.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -15,12 +16,12 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/list.dart';
 import 'package:plexlit/providers/providers.dart';
 import 'package:plexlit/service/service.dart';
-import 'package:plexlit/core/storage.dart';
 import 'app.dart';
 import 'providers/api_provider.dart';
 
 void main() async {
   if (Platform.isAndroid) {
+    WidgetsFlutterBinding.ensureInitialized();
     await JustAudioBackground.init(
       preloadArtwork: true,
       artDownscaleHeight: 100,
@@ -42,7 +43,7 @@ void main() async {
         Provider(create: (context) => ConnectivityProvider()),
         ListenableProvider<RepoProvider>(create: (context) => repository),
         ListenableProvider(create: (context) => MiniplayerController()),
-        // ListenableProvider(create: (context) => AppController(context)),
+        ListenableProvider(create: (context) => DownloadsProvider()),
         Provider(create: (context) => audioPlayer),
       ],
       child: Builder(

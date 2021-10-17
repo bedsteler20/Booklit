@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:plexlit/model/model.dart';
-import 'package:plexlit/repository/repository.dart';
+import 'package:plexlit/repository/base_repository.dart';
 
 // Project imports:
 import 'package:plexlit/globals.dart';

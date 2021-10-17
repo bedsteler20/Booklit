@@ -5,7 +5,7 @@ import 'package:plexlit/globals.dart';
 
 // Package imports:
 import 'package:plexlit/model/model.dart';
-import 'package:plexlit/repository/repository.dart';
+import 'package:plexlit/repository/base_repository.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
@@ -30,7 +30,7 @@ class PlexServerPicker extends StatelessWidget {
         ),
       ),
       body: FutureBuilderPlus<List<PlexDevice>>(
-        future: PlexApi.findServers(clientId: clientId, token: token),
+        future: PlexRepository.findServers(clientId: clientId, token: token),
         loading: (ctx) => const Center(child: LoadingWidget()),
         error: (ctx, e) => const Center(child: Text("Error")),
         completed: (context, servers) {
@@ -65,7 +65,7 @@ class PlexServerPicker extends StatelessWidget {
                                     server: selected!,
                                   ));
                           if (library != null) {
-                            repository.connect(PlexApi(
+                            repository.connect(PlexRepository(
                               server: selected!,
                               token: token,
                               library: library,

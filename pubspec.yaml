@@ -43,6 +43,7 @@ dependencies:
   go_router: ^2.1.1
   sliver_header_delegate: ^0.0.5
   vrouter: ^1.2.0+14
+  path_provider: ^2.0.5
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2

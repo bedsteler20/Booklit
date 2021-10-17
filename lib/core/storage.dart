@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:plexlit/repository/repository.dart';
+import 'package:plexlit/repository/base_repository.dart';
 import 'package:uuid/uuid.dart';
 
 /// Manages Hive box's
@@ -30,14 +30,14 @@ class Storage {
 
    List<PlexlitRepository> loadClients() {
     List<PlexlitRepository> _clients = [];
-    for (var item in plexClients.values) _clients.add(PlexApi.fromMap(item));
+    for (var item in plexClients.values) _clients.add(PlexRepository.fromMap(item));
 
     return _clients;
   }
 
    void saveClient(PlexlitRepository client) async {
     switch (client.runtimeType) {
-      case PlexApi:
+      case PlexRepository:
         plexClients.add(client.toMap());
         break;
       default:

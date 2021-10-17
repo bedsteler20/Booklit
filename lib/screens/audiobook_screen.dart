@@ -9,6 +9,7 @@ import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit/model/model.dart';
+import 'package:plexlit/providers/downloads_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -97,7 +98,9 @@ class AudioBookScreen extends StatelessWidget {
         icon: const Icon(Icons.play_arrow_rounded),
         label: const Text("Play"),
         onPressed: () {
-          context.find<AudioPlayerService>().load(book);
+          context.find<DownloadsProvider>().download(book);
+
+          // context.find<AudioPlayerService>().load(book);
           miniPlayer.animateToHeight(
             duration: const Duration(milliseconds: 200),
             state: PanelState.MIN,

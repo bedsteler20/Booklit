@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:plexlit/globals.dart';
-import 'package:plexlit/repository/repository.dart';
+import 'package:plexlit/repository/base_repository.dart';
 
 // Package imports:
 

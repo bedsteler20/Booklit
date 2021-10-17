@@ -8,6 +8,7 @@ class Audiobook {
     required this.id,
     required this.chapters,
     required this.authorId,
+    required this.chapterSource,
     this.thumb,
     this.summary,
     this.releaseDate,
@@ -31,6 +32,7 @@ class Audiobook {
   List<Chapter> chapters;
   Duration length;
   MediaItem? series;
+  ChapterSource chapterSource;
 
   Map toMap() => {
         "title": title,
@@ -43,7 +45,8 @@ class Audiobook {
         "releaseDate": releaseDate?.toIso8601String(),
         "length": length,
         "chapters": chapters.map((e) => e.toMap()).toList(),
-        "publisher": publisher
+        "publisher": publisher,
+        "chapterSource": chapterSource.index,
       };
 
   factory Audiobook.fromMap(Map map) => Audiobook(
@@ -58,6 +61,7 @@ class Audiobook {
         userRating: map["userRating"],
         viewCount: map["viewCount"],
         publisher: map["publisher"],
+        chapterSource: ChapterSource.values[map["chapterSource"]],
       );
 }
 
@@ -94,4 +98,9 @@ class Chapter {
         end: map["end"] == null ? null : Duration(milliseconds: map["end"]),
         start: map["start"] == null ? null : Duration(milliseconds: map["start"]),
       );
+}
+
+
+enum ChapterSource {
+  embedded, files, none, from
 }

@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:plexlit/model/model.dart';
 
-export 'plex/plex.dart';
+export 'plex_repository.dart';
 
 /// The client api implemented by various servers.
 abstract class PlexlitRepository {
