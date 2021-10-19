@@ -64,6 +64,7 @@ class DownloadsProvider with ChangeNotifier {
       // TODO: add dynamic file extensions
       await _dio.downloadUri(book.thumb!, "$bookDir/thumb.png");
       book.thumb = Uri.parse("$bookDir/thumb.png");
+      mediaItem.thumb = Uri.parse("$bookDir/thumb.png");
     }
 
     // Metadata Saving

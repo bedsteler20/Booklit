@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 // Flutter imports:
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,9 +14,11 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
 import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
+import 'package:plexlit/widgets/widgets.dart';
 import '../audio_player/controls.dart';
 import '../helper_widgets/flutter_helpers.dart';
 import '../helper_widgets/image_widget.dart';
+import 'package:vrouter/vrouter.dart';
 
 // Package imports:
 
@@ -42,6 +45,8 @@ class MiniplayerWidget extends StatelessWidget {
     var player = context.find<AudioPlayerService>();
     double textOpacity = (1 - (percentage * 2)).clamp(0, 1);
     var alignment = Alignment.lerp(Alignment.bottomLeft, Alignment.topCenter, percentage)!;
+
+    if (context.isTablet && context.isLandscape) return buildDesktop(context);
 
     return ColumnContainer(
       constraints: BoxConstraints(maxHeight: height),
@@ -119,6 +124,70 @@ class MiniplayerWidget extends StatelessWidget {
     );
   }
 
+  Widget buildDesktop(BuildContext context) {
+    var player = context.find<AudioPlayerService>();
+    double textOpacity = (1 - (percentage * 2)).clamp(0, 1);
+    var alignment = Alignment.lerp(Alignment.bottomLeft, Alignment.topCenter, percentage)!;
+
+    return GestureDetector(
+      onPanStart: (_) {},
+      onTap: () {},
+      child: Container(
+        width: context.width - 80,
+        color: context.theme.cardColor,
+        height: 80,
+        child: Expanded(
+          child: Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              Row(
+                children: [
+                  const Expanded(child: SizedBox()),
+                  ColumnContainer(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        child: ValueListenableBuilder<Chapter?>(
+                          valueListenable: player.chapter,
+                          builder: (context, chapter, _) {
+                            return Text(
+                              chapter?.name ?? player.current.value!.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
+                            );
+                          },
+                        ),
+                      ),
+                      const Timeline(
+                        labelLocation: TimeLabelLocation.sides,
+                      ),
+                    ],
+                    width: context.width * 0.4,
+                  ),
+                  const Expanded(child: SizedBox()),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.all(4.0),
+                    child: ImageWidget(url: player.current.value!.thumb),
+                  ),
+                  PlayButton(
+                    desktop: true,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget appBarBuilder(BuildContext context, AudioPlayerService player) {
     return Offstage(
       offstage: percentage < 0.3,
@@ -157,6 +226,26 @@ class MiniplayerWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DesktopExpandMiniplayerButton extends StatefulWidget {
+  const DesktopExpandMiniplayerButton({Key? key}) : super(key: key);
+
+  @override
+  _DesktopExpandMiniplayerButtonState createState() => _DesktopExpandMiniplayerButtonState();
+}
+
+class _DesktopExpandMiniplayerButtonState extends State<DesktopExpandMiniplayerButton> {
+  bool isOpen = false;
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        setState(() => isOpen = !isOpen);
+      },
+      icon: const Icon(Icons.keyboard_arrow_up_rounded),
     );
   }
 }

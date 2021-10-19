@@ -30,28 +30,31 @@ class _AppScaffoldState extends State<AppScaffold> {
             padding: EdgeInsets.only(left: context.isSmallTablet ? 80 : 0),
             child: widget.child,
           ),
-          if (context.isSmallTablet)
+          if (context.isTablet)
             const Navbar(
               direction: Axis.vertical,
             ),
-          ValueListenableBuilder<Audiobook?>(
-            valueListenable: context.read<AudioPlayerService>().current,
-            builder: (context, audiobook, _) {
-              if (audiobook == null) return const SizedBox();
-              return Miniplayer(
-                controller: miniplayerController,
-                minHeight: 80,
-                maxHeight: context.height,
-                builder: (height, percentage) => MiniplayerWidget(
-                  height: height,
-                  percentage: percentage,
-                ),
-              );
-            },
+          Padding(
+            padding: EdgeInsets.only(left: context.isTablet ? 80 : 0),
+            child: ValueListenableBuilder<Audiobook?>(
+              valueListenable: context.read<AudioPlayerService>().current,
+              builder: (context, audiobook, _) {
+                if (audiobook == null) return const SizedBox();
+                return Miniplayer(
+                  controller: miniplayerController,
+                  minHeight: 80,
+                  maxHeight: context.height,
+                  builder: (height, percentage) => MiniplayerWidget(
+                    height: height,
+                    percentage: percentage,
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
-      bottomNavigationBar: context.isSmallTablet ? null : const Navbar(),
+      bottomNavigationBar: context.isTablet ? null : const Navbar(),
     );
   }
 }

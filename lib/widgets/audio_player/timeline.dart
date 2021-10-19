@@ -9,7 +9,9 @@ import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
 
 class Timeline extends StatefulWidget {
-  const Timeline({Key? key}) : super(key: key);
+  const Timeline({Key? key, this.labelLocation = TimeLabelLocation.below}) : super(key: key);
+
+  final TimeLabelLocation labelLocation;
 
   @override
   State<Timeline> createState() => _TimelineState();
@@ -47,6 +49,7 @@ class _TimelineState extends State<Timeline> {
       progress: player.position.value,
       total: player.duration.value,
       buffered: player.bufferedPosition.value,
+      timeLabelLocation: TimeLabelLocation.sides,
     );
   }
 }

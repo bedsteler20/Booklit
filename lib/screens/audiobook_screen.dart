@@ -99,11 +99,16 @@ class AudioBookScreen extends StatelessWidget {
         extendedPadding: const EdgeInsets.all(20),
         icon: const Icon(Icons.play_arrow_rounded),
         label: const Text("Play"),
-        onPressed: () {
-          context.find<AudioPlayerService>().load(book);
+        onPressed: () async {
+          // Prefer downloaded version of audiobook
+          if (storage.downloadsIndex.keys.contains(book.id)) {
+            context.find<AudioPlayerService>().load(await downloads.getAudiobook(book.id));
+          } else {
+            context.find<AudioPlayerService>().load(book);
+          }
           miniplayerController.animateToHeight(
-            duration: const Duration(milliseconds: 200),
-            state: PanelState.MIN,
+            duration: const Duration(milliseconds: 500),
+            state: PanelState.MAX,
           );
         },
       ),

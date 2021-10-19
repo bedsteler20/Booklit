@@ -1,11 +1,14 @@
 // Flutter imports:
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:plexlit/auth/auth.dart';
 import 'package:plexlit/auth/plex/server_picker.dart';
+import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/screens/auth_screen.dart';
 import 'package:plexlit/screens/downloads_screen.dart';
+import 'package:plexlit/screens/error_screens/offline_screen.dart';
 import 'package:provider/src/provider.dart';
 
 // Package imports:
@@ -40,27 +43,43 @@ class App extends StatelessWidget {
               path: "/",
               widgetBuilder: (child) => AppScaffold(child),
               nestedRoutes: [
+                // Network gard
+                VGuard(
+                  beforeEnter: (redirect) async {
+                    if (await Connectivity().checkConnectivity() == ConnectivityResult.none) {
+                      return redirect.to('/error/offline');
+                    }
+                  },
+                  stackedRoutes: [
+                    VWidget(path: "library", widget: const LibraryScreen()),
+                    VWidget.builder(
+                      path: "collection/:id",
+                      builder: (ctx, route) => MediaGroupScreen(route),
+                    ),
+                    VWidget.builder(
+                      path: "genre/:id",
+                      builder: (ctx, route) => MediaGroupScreen(route),
+                    ),
+                    VWidget.builder(
+                      path: "audiobook/:id",
+                      builder: (ctx, route) => AudioBookScreen(route.queryParameters["id"]!),
+                    ),
+                  ],
+                ),
+
                 VWidget(path: null, widget: const HomeScreen()),
-                VWidget(path: "library", widget: const LibraryScreen()),
                 VWidget(path: "settings", widget: const SettingsScreen()),
                 VWidget(path: "downloads", widget: const DownloadsScreen()),
-                VWidget.builder(
-                  path: "collection/:id",
-                  builder: (ctx, route) => MediaGroupScreen(route),
-                ),
-                VWidget.builder(
-                  path: "genre/:id",
-                  builder: (ctx, route) => MediaGroupScreen(route),
-                ),
-                VWidget.builder(
-                  path: "audiobook/:id",
-                  builder: (ctx, route) => AudioBookScreen(route.queryParameters["id"]!),
-                ),
+
                 VWidget.builder(
                   path: "downloads/:id",
-                  builder: (ctx, route) =>
-                      AudioBookScreen(route.queryParameters["id"]!, offline: true),
+                  builder: (ctx, route) => AudioBookScreen(
+                    route.queryParameters["id"]!,
+                    offline: true,
+                  ),
                 ),
+
+                VWidget(path: "error/offline", widget: const OfflineScreen()),
               ],
             )
           ],

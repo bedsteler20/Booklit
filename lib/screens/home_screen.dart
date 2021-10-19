@@ -30,7 +30,17 @@ class HomeScreen extends StatelessWidget {
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-          FutureBuilder<List<MediaItem>>(
+            FutureBuilderPlus<List<MediaItem>>(
+              future: downloads.savedAudiobooks(),
+              loading: (_) => SizedBox(),
+              error: (_, e) => ErrorWidget(e!),
+              completed: (context, items) => MediaRowWidget(
+                items: items,
+                title: "Downloads",
+                onShowMore: () => context.to("/downloads"),
+              ),
+            ),
+            FutureBuilder<List<MediaItem>>(
               future: repository.data!.getCollections(),
               builder: (ctx, snap) {
                 if (snap.hasError) {
@@ -62,38 +72,7 @@ class HomeScreen extends StatelessWidget {
                 }
               },
             ),
-            FutureBuilder<List<MediaItem>>(
-              future: repository.data!.getGenres(),
-              builder: (ctx, snap) {
-                if (snap.hasError) {
-                  return const Text("Error");
-                } else if (snap.hasData) {
-                  return MediaRowWidget(
-                    items: snap.data!,
-                    title: "Genres",
-                    onShowMore: () => context.to("/genres"),
-                  );
-                } else {
-                  return const Text("Loading");
-                }
-              },
-            ),
-            FutureBuilder<List<MediaItem>>(
-              future: repository.data!.getGenres(),
-              builder: (ctx, snap) {
-                if (snap.hasError) {
-                  return const Text("Error");
-                } else if (snap.hasData) {
-                  return MediaRowWidget(
-                    items: snap.data!,
-                    title: "Genres",
-                    onShowMore: () => context.to("/genres"),
-                  );
-                } else {
-                  return const Text("Loading");
-                }
-              },
-            ),
+
             // FutureBuilder<List<PlexObject>>(
             //   future: plex.library.unRead(),
             //   builder: (ctx, snap) {

@@ -20,6 +20,10 @@ import 'package:plexlit/core/storage.dart';
 class AudioPlayerService {
   static final _audio = AudioPlayer();
 
+  Duration? sleepTimerDuration;
+  Duration? _sleepEndTime; //The exect position in playback to stop
+  bool stopAtEndOfChapter = false;
+
   /// [Listenable] value that represents the currently playing audiobook
   final current = ValueNotifier<Audiobook?>(null);
 
@@ -55,6 +59,14 @@ class AudioPlayerService {
     _audio.seek(position, index: chapterIndex);
   }
 
+  void startSleepTimer({Duration? duration, bool endOfChapter = false}) {
+    if (duration != null) {
+      sleepTimerDuration = duration;
+    } else if (endOfChapter) {
+      stopAtEndOfChapter = true;
+    }
+  }
+
   Future<void> load(Audiobook? book) async {
     if (book == null) throw "Cant play audio book if it is null";
     chapter.value = book.chapters[0];
@@ -63,8 +75,8 @@ class AudioPlayerService {
     await _audio.setAudioSource(
       book.toAudioSource(),
       preload: true,
-      // initialIndex: storage.progress.get(book.id)?["index"],
-      // initialPosition: Duration(milliseconds: storage.progress.get(book.id)?["position"] ?? 0),
+      initialIndex: storage.progress.get(book.id)?["index"],
+      initialPosition: Duration(milliseconds: storage.progress.get(book.id)?["position"] ?? 0),
     );
   }
 
@@ -75,7 +87,13 @@ class AudioPlayerService {
     _audio.playerStateStream.listen((e) => playerState.value = e);
     _audio.speedStream.listen((e) => speed.value = e);
     _audio.skipSilenceEnabledStream.listen((e) => skipSilence.value = e);
-    _audio.positionStream.listen((e) => position.value = e);
+    _audio.positionStream.listen((e) {
+      position.value = e;
+      if (_sleepEndTime?.inSeconds == e.inSeconds) pause();
+    });
+    _audio.currentIndexStream.listen((_) {
+      if (stopAtEndOfChapter) pause();
+    });
 
     _audio.positionStream
         .timeout(const Duration(seconds: 5))

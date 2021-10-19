@@ -10,8 +10,10 @@ import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/core/storage.dart';
 import 'package:plexlit/providers/downloads_provider.dart';
+import 'package:plexlit/providers/providers.dart';
 
 final repository = RepoProvider();
 final miniplayerController = MiniplayerController();
 final storage = Storage();
 final downloads = DownloadsProvider();
+final connectivity = ConnectivityProvider();

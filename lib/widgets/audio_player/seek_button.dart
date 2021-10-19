@@ -6,20 +6,24 @@ import 'package:plexlit/helpers/helpers.dart';
 import 'package:plexlit/service/service.dart';
 
 class SeekButton extends StatelessWidget {
-  const SeekButton({required this.time, Key? key}) : super(key: key);
+  const SeekButton({required this.time, Key? key, this.desktop = false}) : super(key: key);
   final int time;
+  final bool desktop;
 
   @override
   Widget build(BuildContext context) {
     final player = context.find<AudioPlayerService>();
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: MaterialButton(
-          minWidth: 70,
+      margin: EdgeInsets.symmetric(horizontal: desktop ? 0 : 5),
+      height: 60,
+      width: 60,
+      decoration: BoxDecoration(
+        color: desktop ? context.theme.cardColor : context.buttonColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: IconButton(
           padding: const EdgeInsets.all(10),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          color: context.buttonColor,
           onPressed: () {
             // Prevents progress bar from going off screen
             final newTime = player.position.value + Duration(seconds: time);
@@ -31,7 +35,7 @@ class SeekButton extends StatelessWidget {
               player.seek(newTime);
             }
           },
-          child: Icon(
+          icon: Icon(
             () {
               if (time == (-30)) return Icons.replay_30;
               if (time == (-10)) return Icons.replay_10;
@@ -41,7 +45,7 @@ class SeekButton extends StatelessWidget {
               if (time == (5)) return Icons.forward_5;
               return Icons.error;
             }(),
-            size: 40,
+            size: 36,
             color: Theme.of(context).textTheme.caption!.color,
           )),
     );

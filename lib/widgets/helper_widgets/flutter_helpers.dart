@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class FutureBuilderPlus<T> extends StatelessWidget {
   const FutureBuilderPlus({
     Key? key,
+    required this.future,
     required this.completed,
     required this.loading,
     required this.error,
-    required this.future,
   }) : super(key: key);
 
   final Widget Function(BuildContext context) loading;

@@ -9,7 +9,31 @@ import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/service/service.dart';
 
 class PlayButton extends StatelessWidget {
-  const PlayButton({Key? key}) : super(key: key);
+  const PlayButton({Key? key, this.desktop = false}) : super(key: key);
+  final bool desktop;
+
+  Widget buildButton(
+    BuildContext context,
+    Function() onPressed,
+    Widget icon,
+  ) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: desktop ? 0 : 5),
+      height: 60,
+      width: desktop ? 60 : 90,
+      decoration: BoxDecoration(
+        color: desktop ? context.theme.cardColor : context.buttonColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: IconButton(
+        iconSize: 40,
+        padding: const EdgeInsets.all(10),
+        onPressed: onPressed,
+        color: Theme.of(context).textTheme.caption!.color,
+        icon: icon,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,62 +42,36 @@ class PlayButton extends StatelessWidget {
       valueListenable: player.playerState,
       builder: (context, state, _) {
         if (state.processingState == ProcessingState.buffering) {
-          return MaterialButton(
-            minWidth: 90,
-            onPressed: player.play,
-            color: context.buttonColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: const SizedBox(
+          return buildButton(
+            context,
+            player.play,
+            const SizedBox(
               height: 32,
               width: 32,
               child: CircularProgressIndicator(color: Colors.white),
             ),
-            padding: const EdgeInsets.all(10),
-            // shape: const CircleBorder(),
           );
         } else if (!state.playing) {
-          return MaterialButton(
-            minWidth: 90,
-            onPressed: player.play,
-            color: context.buttonColor,
-            child: const Icon(
-              Icons.play_arrow_rounded,
-              size: 40,
-            ),
-            padding: const EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-
-            // shape: const CircleBorder(),
+          return buildButton(
+            context,
+            player.play,
+            const Icon(Icons.play_arrow_rounded),
           );
 
           // Displayed when playing
         } else if (state.processingState != ProcessingState.completed) {
-          return MaterialButton(
-            minWidth: 90,
-            onPressed: player.pause,
-            color: context.buttonColor,
-            child: const Icon(
-              Icons.pause_rounded,
-              size: 40,
-            ),
-            padding: const EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          return buildButton(
+            context,
+            player.pause,
+            const Icon(Icons.pause_rounded),
           );
 
           //Displayed when  audiobook has ended
         } else {
-          return MaterialButton(
-            minWidth: 90,
-            onPressed: () => player.seek(Duration.zero),
-            color: context.buttonColor,
-            child: const Icon(
-              Icons.replay_rounded,
-              size: 40,
-            ),
-            padding: const EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-
-            // shape: const CircleBorder(),
+          return buildButton(
+            context,
+            () => player.seek(Duration.zero),
+            const Icon(Icons.replay_rounded),
           );
         }
       },
