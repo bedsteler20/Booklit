@@ -1,16 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:go_router/go_router.dart';
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/helpers/media_item_extention.dart';
-import 'package:plexlit/model/model.dart';
-import '../helper_widgets/flutter_helpers.dart';
-import '../helper_widgets/image_widget.dart';
+import 'package:plexlit/plexlit.dart';
 
 class MediaRowWidget extends StatelessWidget {
   const MediaRowWidget({
@@ -43,7 +31,7 @@ class MediaRowWidget extends StatelessWidget {
             for (var item in items)
               Container(
                 margin: const EdgeInsets.all(8),
-                height: 200,
+                height: 210,
                 width: 160,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),

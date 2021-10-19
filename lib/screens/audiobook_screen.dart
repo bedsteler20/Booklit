@@ -1,24 +1,13 @@
-// Flutter imports:
 // ignore_for_file: non_constant_identifier_names
 
-// Flutter imports:
-import 'package:flutter/material.dart';
+
 
 // Package imports:
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:plexlit/model/model.dart';
-import 'package:plexlit/providers/downloads_provider.dart';
-import 'package:plexlit/widgets/buttons/download_button.dart';
-import 'package:provider/provider.dart';
-import 'package:vrouter/vrouter.dart';
+import 'package:plexlit/plexlit.dart';
 
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/service/service.dart';
-import 'package:plexlit/widgets/widgets.dart';
 
 class AudioBookScreen extends StatelessWidget {
   const AudioBookScreen(this.id, {Key? key, this.offline = false}) : super(key: key);
@@ -102,9 +91,9 @@ class AudioBookScreen extends StatelessWidget {
         onPressed: () async {
           // Prefer downloaded version of audiobook
           if (storage.downloadsIndex.keys.contains(book.id)) {
-            context.find<AudioPlayerService>().load(await downloads.getAudiobook(book.id));
+            context.find<AudioProvider>().load(await downloads.getAudiobook(book.id));
           } else {
-            context.find<AudioPlayerService>().load(book);
+            context.find<AudioProvider>().load(book);
           }
           miniplayerController.animateToHeight(
             duration: const Duration(milliseconds: 500),

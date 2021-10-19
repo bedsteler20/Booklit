@@ -1,27 +1,9 @@
-// Flutter imports:
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:plexlit/auth/auth.dart';
-import 'package:plexlit/auth/plex/server_picker.dart';
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/screens/auth_screen.dart';
-import 'package:plexlit/screens/downloads_screen.dart';
-import 'package:plexlit/screens/error_screens/offline_screen.dart';
-import 'package:provider/src/provider.dart';
+import 'package:plexlit/plexlit.dart';
+import 'package:plexlit/plexlit.dart';
 
 // Package imports:
-import 'package:vrouter/vrouter.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
-// Project imports:
-import 'package:plexlit/screens/audiobook_screen.dart';
-import 'package:plexlit/screens/home_screen.dart';
-import 'package:plexlit/screens/library_screen.dart';
-import 'package:plexlit/screens/media_group_screen.dart';
-import 'package:plexlit/screens/setting_screen.dart';
-import 'package:plexlit/theme/material_you_theme.dart';
-import 'package:plexlit/widgets/app/scaffold.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

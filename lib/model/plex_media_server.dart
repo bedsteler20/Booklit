@@ -1,3 +1,4 @@
+import 'package:plexlit/plexlit.dart';
 // To parse this JSON data, do
 //
 //     final plexMediaServer = plexMediaServerFromMap(jsonString);
@@ -8,6 +9,7 @@ import 'dart:convert';
 // Package imports:
 import 'package:dio/dio.dart';
 
+// Project imports:
 import 'media_item.dart';
 
 class PlexDevice {

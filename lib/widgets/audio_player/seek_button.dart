@@ -1,9 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Project imports:
-import 'package:plexlit/helpers/helpers.dart';
-import 'package:plexlit/service/service.dart';
+import 'package:plexlit/plexlit.dart';
 
 class SeekButton extends StatelessWidget {
   const SeekButton({required this.time, Key? key, this.desktop = false}) : super(key: key);
@@ -12,7 +7,7 @@ class SeekButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = context.find<AudioPlayerService>();
+    final player = context.find<AudioProvider>();
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: desktop ? 0 : 5),
@@ -26,11 +21,11 @@ class SeekButton extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           onPressed: () {
             // Prevents progress bar from going off screen
-            final newTime = player.position.value + Duration(seconds: time);
+            final newTime = player.position + Duration(seconds: time);
             if (newTime.inSeconds < 0) {
               player.seek(const Duration());
-            } else if (newTime.inSeconds > player.duration.value.inSeconds) {
-              player.seek(player.duration.value);
+            } else if (newTime.inSeconds > player.duration.inSeconds) {
+              player.seek(player.duration);
             } else {
               player.seek(newTime);
             }

@@ -1,14 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:plexlit/model/model.dart';
-
-// Package imports:
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/widgets/widgets.dart';
+import 'package:plexlit/plexlit.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({
@@ -80,8 +70,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
           slivers: [
             SliverAppBar(
               title: const Text("Library"),
+              actions: [
+                IconButton(
+                    onPressed: () => setState(() => gridMode = !gridMode),
+                    icon: Icon(gridMode ? Icons.grid_on : Icons.list_rounded)),
+                    
+              ],
             ),
-            if (context.isSmallTablet)
+            if (gridMode)
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 sliver: SliverGrid(

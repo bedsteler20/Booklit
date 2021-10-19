@@ -1,9 +1,8 @@
+import 'package:plexlit/plexlit.dart';
 // Package imports:
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart' as b;
-import 'package:plexlit/model/model.dart';
 import 'package:uuid/uuid.dart';
-
 extension AudiobookExt on Audiobook {
   AudioSource toAudioSource() {
     return ConcatenatingAudioSource(

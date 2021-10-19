@@ -1,12 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:plexlit/model/model.dart';
-
-// Package imports:
-import 'package:vrouter/vrouter.dart';
-
-// Project imports:
-import 'package:plexlit/widgets/widgets.dart';
+import 'package:plexlit/plexlit.dart';
 
 class MediaGroupScreen extends StatefulWidget {
   const MediaGroupScreen(this.route, {Key? key}) : super(key: key);

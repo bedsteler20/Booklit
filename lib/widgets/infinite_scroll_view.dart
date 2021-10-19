@@ -1,14 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/model/model.dart';
-import 'package:plexlit/widgets/layout/list_item.dart';
-import 'grid_item.dart';
+import 'package:plexlit/plexlit.dart';
 
 class InfiniteScrollView extends StatefulWidget {
   const InfiniteScrollView({

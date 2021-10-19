@@ -1,16 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:go_router/go_router.dart';
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/helpers/media_item_extention.dart';
-import 'package:plexlit/model/model.dart';
-import '../helper_widgets/image_widget.dart';
-import '../helper_widgets/shimmr.dart';
+import 'package:plexlit/plexlit.dart';
 
 class GridItem extends StatelessWidget {
   const GridItem(this.item, {Key? key}) : super(key: key);

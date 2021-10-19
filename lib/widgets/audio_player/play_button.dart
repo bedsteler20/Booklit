@@ -1,12 +1,8 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:plexlit/plexlit.dart';
 
 // Package imports:
 import 'package:just_audio/just_audio.dart';
 
-// Project imports:
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/service/service.dart';
 
 class PlayButton extends StatelessWidget {
   const PlayButton({Key? key, this.desktop = false}) : super(key: key);
@@ -37,44 +33,41 @@ class PlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = context.find<AudioPlayerService>();
-    return ValueListenableBuilder<PlayerState>(
-      valueListenable: player.playerState,
-      builder: (context, state, _) {
-        if (state.processingState == ProcessingState.buffering) {
-          return buildButton(
-            context,
-            player.play,
-            const SizedBox(
-              height: 32,
-              width: 32,
-              child: CircularProgressIndicator(color: Colors.white),
-            ),
-          );
-        } else if (!state.playing) {
-          return buildButton(
-            context,
-            player.play,
-            const Icon(Icons.play_arrow_rounded),
-          );
+    final player = context.find<AudioProvider>();
+    var playerState = context.select<AudioProvider, PlayerState>((v) => v.playerState);
 
-          // Displayed when playing
-        } else if (state.processingState != ProcessingState.completed) {
-          return buildButton(
-            context,
-            player.pause,
-            const Icon(Icons.pause_rounded),
-          );
+    if (playerState.processingState == ProcessingState.buffering) {
+      return buildButton(
+        context,
+        player.play,
+        const SizedBox(
+          height: 32,
+          width: 32,
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
+      );
+    } else if (!playerState.playing) {
+      return buildButton(
+        context,
+        player.play,
+        const Icon(Icons.play_arrow_rounded),
+      );
 
-          //Displayed when  audiobook has ended
-        } else {
-          return buildButton(
-            context,
-            () => player.seek(Duration.zero),
-            const Icon(Icons.replay_rounded),
-          );
-        }
-      },
-    );
+      // Displayed when playing
+    } else if (playerState.processingState != ProcessingState.completed) {
+      return buildButton(
+        context,
+        player.pause,
+        const Icon(Icons.pause_rounded),
+      );
+
+      //Displayed when  audiobook has ended
+    } else {
+      return buildButton(
+        context,
+        () => player.seek(Duration.zero),
+        const Icon(Icons.replay_rounded),
+      );
+    }
   }
 }

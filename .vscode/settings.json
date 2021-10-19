@@ -11,9 +11,7 @@
 		" **/*.g.dart": true,
 		"**/*.inject.dart": true,
 		"**/*.inject.summary ": true,
-		"[!l]*/**": true,
-		"l[!i]*/**": true,
-		"li[!b]*/**": true
+		"generated_plugin_registrant.dart": true
 	},
 	"C_Cpp.errorSquiggles": "Disabled",
 	"cSpell.words": [
@@ -31,5 +29,6 @@
 		"toggleable",
 		"vrouter"
 	],
+	"explorerExclude.backup": null,
 
 }

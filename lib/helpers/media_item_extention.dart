@@ -1,11 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:plexlit/model/model.dart';
-
-// Package imports:
-import 'package:vrouter/src/core/extended_context.dart';
-
-// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 extension MediaItemGenreExt on MediaItem {
   void goTo(BuildContext context) {

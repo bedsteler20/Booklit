@@ -1,13 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:plexlit/model/model.dart';
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/widgets/widgets.dart';
+import 'package:plexlit/plexlit.dart';
 
 class HomeScreen extends StatelessWidget {
   static Route<dynamic> route() => MaterialPageRoute(

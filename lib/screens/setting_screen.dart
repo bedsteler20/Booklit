@@ -1,27 +1,12 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:plexlit/repository/base_repository.dart';
-import 'package:plexlit/widgets/dialogs/client_picker_dialog.dart';
-import 'package:provider/provider.dart';
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/service/service.dart';
-import 'package:plexlit/core/storage.dart';
-import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
-import 'package:plexlit/widgets/widgets.dart';
+import 'package:plexlit/plexlit.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final player = context.read<AudioPlayerService>();
+    final player = context.read<AudioProvider>();
     return Scaffold(
       body: Column(
         children: [
@@ -39,18 +24,11 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.library_add_outlined, size: 32),
               title: const Text("Logout"),
-              subtitle: const Text("The library or server to scan"),
+              subtitle: const Text("Logout of all accounts"),
               onTap: () {
                 storage.credentials.clear();
                 storage.plexClients.clear();
                 storage.progress.clear();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.delete, size: 32),
-              title: const Text("Delete Downloads Index"),
-              onTap: () {
-                storage.downloadsIndex.clear();
               },
             ),
           ]),
@@ -60,17 +38,11 @@ class SettingsScreen extends StatelessWidget {
               trailing: const SpeedButton(),
               onTap: () => showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
             ),
-            if (context.isAndroid)
-              ValueListenableBuilder<bool>(
-                valueListenable: player.skipSilence,
-                builder: (context, val, _) {
-                  return SwitchListTile(
-                    title: const Text("Skip Silence"),
-                    value: val,
-                    onChanged: (n) => player.skipSilence.value = n,
-                  );
-                },
-              ),
+            SwitchListTile(
+              title: const Text("Skip Silence"),
+              value: context.select<AudioProvider, bool>((v) => v.skipSilence),
+              onChanged: context.read<AudioProvider>().setSkipSilence,
+            )
           ]),
         ],
       ),

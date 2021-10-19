@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/model/model.dart';
-import 'package:plexlit/widgets/helper_widgets/image_widget.dart';
+import 'package:plexlit/plexlit.dart';
 
 class DownloadingListItem extends StatelessWidget {
   final MediaItem item;

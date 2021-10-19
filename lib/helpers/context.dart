@@ -1,11 +1,14 @@
+import 'package:plexlit/plexlit.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/repository/base_repository.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
+import 'package:plexlit/providers/api_provider.dart';
+import 'package:plexlit/repository/base_repository.dart';
 
 // Project imports:
 

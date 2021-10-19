@@ -1,11 +1,8 @@
+import 'package:plexlit/plexlit.dart';
 import 'dart:async';
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:plexlit/model/model.dart';
-
-import 'base_repository.dart';
+import 'package:dio/dio.dart';
 
 class PlexRepository extends PlexlitRepository {
   String token;

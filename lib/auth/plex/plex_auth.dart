@@ -1,9 +1,12 @@
+import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:io';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 Dio _http = Dio(
   BaseOptions(

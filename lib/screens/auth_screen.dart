@@ -1,14 +1,5 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:plexlit/plexlit.dart';
 
-// Project imports:
-import 'package:plexlit/auth/auth.dart';
-
-// Project imports:
-
-// Package imports:
-
-// Project imports:
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);

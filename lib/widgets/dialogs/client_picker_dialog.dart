@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/repository/plex_repository.dart';
-import 'package:provider/src/provider.dart';
-import 'package:vrouter/src/core/extended_context.dart';
+import 'package:plexlit/plexlit.dart';
 
 class ClientPicker extends StatelessWidget {
   const ClientPicker({Key? key}) : super(key: key);
@@ -17,7 +12,7 @@ class ClientPicker extends StatelessWidget {
     context.watch<RepoProvider>();
 
     return SimpleDialog(
-      title: const Text("Servers"),
+      title: const Text("Librarys"),
       children: clients.map((e) {
         switch (e.runtimeType) {
           case PlexRepository:
@@ -35,14 +30,22 @@ class ClientPicker extends StatelessWidget {
             return const SizedBox();
         }
       }).toList()
-        ..add(ListTile(
-          title: const Text("Add Server"),
-          leading: const Icon(Icons.add),
-          onTap: () {
-            Navigator.pop(context);
-            context.vRouter.to("/auth");
-          },
-        )),
+        ..addAll([
+          ListTile(
+            title: const Text("Add Plex Library"),
+            leading: const Icon(Icons.add),
+            onTap: () {
+              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (_) => PlexServerPicker(
+                  token: storage.credentials.get("plex-token"),
+                  clientId: storage.credentials.get("plex-clientId"),
+                ),
+              );
+            },
+          )
+        ]),
     );
   }
 }

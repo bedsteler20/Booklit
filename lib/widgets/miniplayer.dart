@@ -1,26 +1,7 @@
-// Dart imports:
+import 'package:plexlit/plexlit.dart';
 import 'dart:ui';
-
-// Flutter imports:
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:miniplayer/miniplayer.dart';
-import 'package:plexlit/model/model.dart';
-
-// Project imports:
-import 'package:plexlit/globals.dart';
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/service/service.dart';
-import 'package:plexlit/widgets/dialogs/player_speed_dialog.dart';
-import 'package:plexlit/widgets/widgets.dart';
-import '../audio_player/controls.dart';
-import '../helper_widgets/flutter_helpers.dart';
-import '../helper_widgets/image_widget.dart';
-import 'package:vrouter/vrouter.dart';
-
-// Package imports:
 
 class MiniplayerWidget extends StatelessWidget {
   const MiniplayerWidget({
@@ -42,7 +23,7 @@ class MiniplayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var player = context.find<AudioPlayerService>();
+    var player = context.find<AudioProvider>();
     double textOpacity = (1 - (percentage * 2)).clamp(0, 1);
     var alignment = Alignment.lerp(Alignment.bottomLeft, Alignment.topCenter, percentage)!;
 
@@ -69,7 +50,7 @@ class MiniplayerWidget extends StatelessWidget {
                       duration: animationDiration,
                       padding: const EdgeInsets.all(10),
                       child: ImageWidget(
-                        url: player.current.value?.thumb,
+                        url: context.select<AudioProvider, Uri?>((v) => v.current?.thumb),
                         borderRadius: percentage < 0.3 ? 5 : 20,
                       ),
                     ),
@@ -83,18 +64,14 @@ class MiniplayerWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         padding: const EdgeInsets.all(10),
                         children: [
-                          ValueListenableBuilder<Chapter?>(
-                              valueListenable: player.chapter,
-                              builder: (context, chapter, _) {
-                                return Text(
-                                  chapter?.name ?? player.current.value!.title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
-                                );
-                              }),
                           Text(
-                            player.current.value!.author,
+                            context.select<AudioProvider, String>((v) => v.current!.title),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
+                          ),
+                          Text(
+                            context.select<AudioProvider, String>((v) => v.current!.author),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: context.textTheme.caption!.copyWith(fontSize: 16),
@@ -125,7 +102,7 @@ class MiniplayerWidget extends StatelessWidget {
   }
 
   Widget buildDesktop(BuildContext context) {
-    var player = context.find<AudioPlayerService>();
+    var player = context.find<AudioProvider>();
     double textOpacity = (1 - (percentage * 2)).clamp(0, 1);
     var alignment = Alignment.lerp(Alignment.bottomLeft, Alignment.topCenter, percentage)!;
 
@@ -147,16 +124,11 @@ class MiniplayerWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10),
-                        child: ValueListenableBuilder<Chapter?>(
-                          valueListenable: player.chapter,
-                          builder: (context, chapter, _) {
-                            return Text(
-                              chapter?.name ?? player.current.value!.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
-                            );
-                          },
+                        child: Text(
+                          context.select<AudioProvider, String>((v) => v.chapter!.name),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
                         ),
                       ),
                       const Timeline(
@@ -174,9 +146,11 @@ class MiniplayerWidget extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.all(4.0),
-                    child: ImageWidget(url: player.current.value!.thumb),
+                    child: ImageWidget(
+                      url: context.select<AudioProvider, Uri?>((v) => v.current?.thumb),
+                    ),
                   ),
-                  PlayButton(
+                  const PlayButton(
                     desktop: true,
                   ),
                 ],
@@ -188,7 +162,7 @@ class MiniplayerWidget extends StatelessWidget {
     );
   }
 
-  Widget appBarBuilder(BuildContext context, AudioPlayerService player) {
+  Widget appBarBuilder(BuildContext context, AudioProvider player) {
     return Offstage(
       offstage: percentage < 0.3,
       child: GestureDetector(
@@ -212,12 +186,12 @@ class MiniplayerWidget extends StatelessWidget {
                         onTap: () =>
                             showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
                       ),
-                    )
+                    ),
                   ];
                 },
               ),
             ],
-            title: Text(player.current.value!.title),
+            title: Text(context.select<AudioProvider, String>((v) => v.current!.title)),
             backgroundColor: const Color.fromARGB(0, 0, 0, 0),
             leading: IconButton(
               icon: const Icon(Icons.arrow_drop_down),

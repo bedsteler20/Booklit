@@ -1,16 +1,4 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:plexlit/model/model.dart';
-
-// Package imports:
-
-// Project imports:
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/service/service.dart';
-import 'play_button.dart';
-import 'seek_button.dart';
-import 'speed_button.dart';
-import 'timeline.dart';
+import 'package:plexlit/plexlit.dart';
 
 /// Buttons, Timeline & title widget
 class AudioPlayerControls extends StatelessWidget {
@@ -40,22 +28,18 @@ class AudioPlayerControls extends StatelessWidget {
   }
 
   Widget title(BuildContext context) {
-    final player = context.find<AudioPlayerService>();
+    final player = context.find<AudioProvider>();
+    var name = context.select<AudioProvider, String?>((v) => v.chapter?.name);
     return Container(
       width: context.width * 0.8,
       padding: const EdgeInsets.only(top: 50, bottom: 25),
       child: Center(
-        child: ValueListenableBuilder<Chapter?>(
-          valueListenable: player.chapter,
-          builder: (context, chapter, _) {
-            return Text(
-              chapter?.name ?? "Chapter Null",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.bodyText1!.copyWith(fontSize: 24),
-              textAlign: TextAlign.center,
-            );
-          },
+        child: Text(
+          name ?? "Chapter Null",
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: context.bodyText1!.copyWith(fontSize: 24),
+          textAlign: TextAlign.center,
         ),
       ),
     );
