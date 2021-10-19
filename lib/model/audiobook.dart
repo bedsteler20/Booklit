@@ -16,7 +16,6 @@ class Audiobook {
     this.viewCount,
     this.publisher,
     this.series,
-    
   }) : length = Duration(milliseconds: chapters.fold(0, (p, e) => p += e.length.inMilliseconds));
 
   String title;
@@ -39,11 +38,11 @@ class Audiobook {
         "authorId": authorId,
         "author": author,
         "thumb": thumb.toString(),
+        "id": id,
         "summary": summary,
         "userRating": userRating,
         "viewCount": viewCount,
         "releaseDate": releaseDate?.toIso8601String(),
-        "length": length,
         "chapters": chapters.map((e) => e.toMap()).toList(),
         "publisher": publisher,
         "chapterSource": chapterSource.index,
@@ -62,6 +61,15 @@ class Audiobook {
         viewCount: map["viewCount"],
         publisher: map["publisher"],
         chapterSource: ChapterSource.values[map["chapterSource"]],
+      );
+
+  MediaItem toMediaItem({bool offline = false}) => MediaItem(
+        type: offline ? MediaItemType.offlineAudiobook : MediaItemType.audioBook,
+        id: id,
+        title: title,
+        thumb: thumb,
+        summary: summary,
+        title2: author,
       );
 }
 
@@ -100,7 +108,4 @@ class Chapter {
       );
 }
 
-
-enum ChapterSource {
-  embedded, files, none, from
-}
+enum ChapterSource { embedded, files, none, from }

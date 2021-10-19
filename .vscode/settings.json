@@ -11,6 +11,9 @@
 		" **/*.g.dart": true,
 		"**/*.inject.dart": true,
 		"**/*.inject.summary ": true,
+		"[!l]*/**": true,
+		"l[!i]*/**": true,
+		"li[!b]*/**": true
 	},
 	"C_Cpp.errorSquiggles": "Disabled",
 	"cSpell.words": [
@@ -19,6 +22,7 @@
 		"jellyfin",
 		"lerp",
 		"Miniplayer",
+		"mkdir",
 		"Plex",
 		"Plexlit",
 		"preload",

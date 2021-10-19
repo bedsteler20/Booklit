@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -63,24 +65,46 @@ class ImageWidget extends StatelessWidget {
         ),
       );
     }
-    return Image.network(
-      url.toString(),
-      height: height,
-      width: width,
-      errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
-      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Material(
-            elevation: 10,
-            borderRadius: BorderRadius.circular(borderRadius),
-            child: ClipRRect(
+    if (url!.isScheme("https") || url!.isScheme("http")) {
+      return Image.network(
+        url.toString(),
+        height: height,
+        width: width,
+        errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+              elevation: 10,
               borderRadius: BorderRadius.circular(borderRadius),
-              child: child,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius),
+                child: child,
+              ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    } else {
+      return Image.file(
+        File(url!.path),
+        height: height,
+        width: width,
+        errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Material(
+              elevation: 10,
+              borderRadius: BorderRadius.circular(borderRadius),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius),
+                child: child,
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 }

@@ -4,6 +4,7 @@ class MediaItem {
   Uri? thumb;
   String id;
   String? summary;
+  String? path;
   MediaItemType type;
 
   MediaItem({
@@ -12,6 +13,7 @@ class MediaItem {
     required this.type,
     this.summary,
     this.thumb,
+    this.path,
     required this.id,
   });
 
@@ -22,22 +24,26 @@ class MediaItem {
         if (title2 != null) "title2": title2!,
         if (summary != null) "summary": summary!,
         if (thumb != null) "thumb": thumb.toString(),
+        if (path != null) "path": path!,
       };
 
   factory MediaItem.fromMap(Map map) {
     return MediaItem(
-        id: map["id"],
-        title: map["title"],
-        summary: map["summary"],
-        thumb: Uri.tryParse(map["thumb"] ?? ""),
-        title2: map["title2"],
-        type: MediaItemType.from[map["type"] ?? "library"]);
+      id: map["id"],
+      title: map["title"],
+      summary: map["summary"],
+      thumb: Uri.tryParse(map["thumb"] ?? ""),
+      title2: map["title2"],
+      type: MediaItemType.from[map["type"] ?? "library"],
+      path: map["path"],
+    );
   }
 }
 
 enum MediaItemType {
   from,
   audioBook,
+  offlineAudiobook,
   collection,
   genre,
   author,
@@ -60,6 +66,8 @@ extension MediaItemTypeString on MediaItemType {
         return "library";
       case MediaItemType.series:
         return "series";
+      case MediaItemType.offlineAudiobook:
+        return "offline_audiobook";
       default:
         throw RangeError("enum Fruit contains no value '$name'");
     }
@@ -73,6 +81,8 @@ extension MediaItemTypeString on MediaItemType {
             return MediaItemType.genre;
           case 'audiobook':
             return MediaItemType.audioBook;
+          case 'offline_audiobook':
+            return MediaItemType.offlineAudiobook;
           case 'author':
             return MediaItemType.author;
           case 'library':

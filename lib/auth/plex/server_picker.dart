@@ -11,6 +11,7 @@ import 'package:plexlit/repository/base_repository.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/core/storage.dart';
 import 'package:plexlit/widgets/widgets.dart';
+import 'package:uuid/uuid.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 
 class PlexServerPicker extends StatelessWidget {
@@ -70,6 +71,7 @@ class PlexServerPicker extends StatelessWidget {
                               token: token,
                               library: library,
                               clientId: clientId,
+                              id: const Uuid().v4()
                             ));
                             context.vRouter.to("/");
                           }

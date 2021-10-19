@@ -9,13 +9,14 @@ export 'plex_repository.dart';
 
 /// The client api implemented by various servers.
 abstract class PlexlitRepository {
-  external static PlexlitClientType type;
-  external final Future<List<MediaItem>> Function({int start, int limit}) getAudiobooks;
-  external final Future<List<MediaItem>> Function({int start, int limit}) getCollections;
-  external final Future<List<MediaItem>> Function(String id, {int start, int limit}) getCollection;
-  external final Future<List<MediaItem>> Function({int start, int limit}) getGenres;
-  external final Future<List<MediaItem>> Function(String id, {int start, int limit}) getGenre;
-  external final Future<Audiobook> Function(String id) getAudioBook;
+  final String id = "null";
+  static PlexlitClientType type = PlexlitClientType.local;
+  Future<List<MediaItem>> getAudiobooks({int start, int limit});
+  Future<List<MediaItem>> getCollections({int start, int limit});
+  Future<List<MediaItem>> getCollection(String id, {int start, int limit});
+  Future<List<MediaItem>> getGenres({int start, int limit});
+  Future<List<MediaItem>> getGenre(String id, {int start, int limit});
+  Future<Audiobook> getAudioBook(String id);
   Future<Author> getAuthor(String id, {int start, int limit});
 
   /// Reports player position to server
@@ -24,7 +25,7 @@ abstract class PlexlitRepository {
     throw "Plexlit.reportTimelinePosition Is not Implemented";
   }
 
-  external Map toMap();
+  Map toMap();
 
   Uri? transcodeImage(Uri? uri, {required int height, required int width}) => uri;
 }

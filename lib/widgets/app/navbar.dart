@@ -34,6 +34,9 @@ class _NavbarState extends State<Navbar> {
         context.vRouter.to("/library", isReplacement: true);
         break;
       case 2:
+        context.vRouter.to("/downloads", isReplacement: true);
+        break;
+      case 3:
         context.vRouter.to("/settings", isReplacement: true);
         break;
     }
@@ -51,9 +54,14 @@ class _NavbarState extends State<Navbar> {
       selectedIcon: const Icon(Icons.library_books_rounded, color: Colors.black),
     ),
     NavigationDestination(
+      icon: Icon(Icons.download_done_outlined, color: Colors.grey.shade400),
+      label: "Library",
+      selectedIcon: const Icon(Icons.download, color: Colors.black),
+    ),
+    NavigationDestination(
       icon: Icon(Icons.settings_outlined, color: Colors.grey.shade400),
       label: "Settings",
-      selectedIcon: const Icon(Icons.settings_rounded, color: Colors.black),
+      selectedIcon: const Icon(Icons.download, color: Colors.black),
     ),
   ];
 
@@ -67,6 +75,11 @@ class _NavbarState extends State<Navbar> {
       icon: Icon(Icons.library_books_outlined),
       label: Text("Library"),
       selectedIcon: Icon(Icons.library_books),
+    ),
+    NavigationRailDestination(
+      icon: Icon(Icons.download_outlined),
+      label: Text("Downloads"),
+      selectedIcon: Icon(Icons.download),
     ),
     NavigationRailDestination(
       icon: Icon(Icons.settings_outlined),

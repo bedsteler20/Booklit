@@ -10,6 +10,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:plexlit/model/model.dart';
 import 'package:plexlit/providers/downloads_provider.dart';
+import 'package:plexlit/widgets/buttons/download_button.dart';
 import 'package:provider/provider.dart';
 import 'package:vrouter/vrouter.dart';
 
@@ -20,8 +21,9 @@ import 'package:plexlit/service/service.dart';
 import 'package:plexlit/widgets/widgets.dart';
 
 class AudioBookScreen extends StatelessWidget {
-  const AudioBookScreen(this.id, {Key? key}) : super(key: key);
+  const AudioBookScreen(this.id, {Key? key, this.offline = false}) : super(key: key);
   final String id;
+  final bool offline;
 
   Widget RatingBuilder(BuildContext context, Audiobook book) {
     return RatingBar.builder(
@@ -44,8 +46,8 @@ class AudioBookScreen extends StatelessWidget {
     return FutureBuilderPlus<Author>(
       key: key,
       future: repository.data!.getAuthor(book.authorId, limit: 10),
-      loading: (_) => const LoadingWidget(),
-      error: (_, __) => const Text("error"),
+      loading: (_) => const SizedBox(),
+      error: (_, __) => const SizedBox(),
       completed: (_, author) {
         return MediaRowWidget(
           onShowMore: () {},
@@ -98,10 +100,8 @@ class AudioBookScreen extends StatelessWidget {
         icon: const Icon(Icons.play_arrow_rounded),
         label: const Text("Play"),
         onPressed: () {
-          context.find<DownloadsProvider>().download(book);
-
-          // context.find<AudioPlayerService>().load(book);
-          miniPlayer.animateToHeight(
+          context.find<AudioPlayerService>().load(book);
+          miniplayerController.animateToHeight(
             duration: const Duration(milliseconds: 200),
             state: PanelState.MIN,
           );
@@ -209,13 +209,16 @@ class AudioBookScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilderPlus<Audiobook>(
-      future: repository.data!.getAudioBook(id),
+      future: offline ? downloads.getAudiobook(id) : repository.data!.getAudioBook(id),
       completed: (ctx, data) {
         return CustomScrollView(
           slivers: [
             SliverAppBar(
               title: Text(data.title),
               leading: BackButton(onPressed: context.vRouter.historyBack),
+              actions: [
+                DownloadButton(data),
+              ],
             ),
             SliverPadding(
               padding: const EdgeInsets.only(top: 10),

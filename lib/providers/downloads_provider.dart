@@ -1,53 +1,88 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:plexlit/globals.dart';
+import 'package:plexlit/helpers/dart.dart';
 import 'package:plexlit/model/audiobook.dart';
+import 'package:plexlit/model/media_item.dart';
+import 'package:uuid/uuid.dart';
 
 class DownloadsProvider with ChangeNotifier {
-  Map<Audiobook, ValueNotifier<double>> inProgress = {};
+  Map<MediaItem, ValueNotifier<double>> inProgress = {};
   final _dio = Dio();
 
-  void download(Audiobook book) async {
-    final basePath = await getApplicationDocumentsDirectory();
+  static _pathSanitizer(String path) => path.replaceAll(" ", "_").toLowerCase();
 
-    final bookDir = await Directory("${basePath.path}/${book.id}").create();
-    inProgress[book] = ValueNotifier(0);
+  void download(Audiobook book) async {
+    final rootDirectory = (await getApplicationDocumentsDirectory()).path;
+
+    final mediaItem = book.toMediaItem(offline: true)..type = MediaItemType.offlineAudiobook;
+
+    inProgress[mediaItem] = ValueNotifier(0);
+
+    final bookDir = await mkdir("$rootDirectory/downloads/${book.id}");
+
     notifyListeners();
+
     if (book.chapterSource == ChapterSource.files) {
       var totalProgress = 0.0;
-      for (var i = 0; i < book.chapters.length; i++) {
-        book.chapters[i].url = Uri.parse("$bookDir/$i.mp4");
 
+      for (var i = 0; i < book.chapters.length; i++) {
         // Download book
         await _dio.downloadUri(
           book.chapters[i].url,
           "$bookDir/$i.mp4",
           onReceiveProgress: (receivedBytes, totalBytes) {
             if (totalBytes != 1) {
-              totalProgress = receivedBytes / totalBytes * 100;
-              inProgress[book]!.value = totalProgress / book.chapters.length;
-              print("${(receivedBytes / totalBytes * 100).round()}%");
+              inProgress[mediaItem]!.value = receivedBytes / totalBytes;
             }
           },
         );
-        print("Completed");
+        book.chapters[i].url = Uri.parse("$bookDir/$i.m4b"); //TODO: add dynamic file extensions
       }
     } else {
-      book.chapters =
-          book.chapters.map((e) => e..url = Uri.parse("${basePath.path}/0.mp4")).toList();
-
       await _dio.downloadUri(
         book.chapters.first.url,
-        "${basePath.path}/0.mp4",
+        "$bookDir/0.mp4",
         onReceiveProgress: (receivedBytes, totalBytes) {
           if (totalBytes != 1) {
-            inProgress[book]!.value = receivedBytes / totalBytes * 100;
-            print("${(receivedBytes / totalBytes * 100).round()}%");
+            inProgress[mediaItem]!.value = receivedBytes / totalBytes;
           }
         },
       );
+
+      book.chapters = book.chapters.map((e) => e..url = Uri.parse("$bookDir/0.mp4")).toList();
+      inProgress.removeWhere((key, value) => key.id == mediaItem.id);
+      notifyListeners();
     }
+
+    // Download thumb
+    if (book.thumb != null) {
+      // TODO: add dynamic file extensions
+      await _dio.downloadUri(book.thumb!, "$bookDir/thumb.png");
+      book.thumb = Uri.parse("$bookDir/thumb.png");
+    }
+
+    // Metadata Saving
+    final metadataFile = await File("$bookDir/metadata.json").create();
+
+    await metadataFile.writeAsString(jsonEncode(book.toMap()));
+
+    await storage.downloadsIndex.put(bookDir, mediaItem.toMap());
+  }
+
+  Future<List<MediaItem>> savedAudiobooks() async => [
+        for (var item in storage.downloadsIndex.keys)
+          MediaItem.fromMap(await storage.downloadsIndex.get(item))
+      ];
+
+  Future<Audiobook> getAudiobook(String id) async {
+    final rootDirectory = (await getApplicationDocumentsDirectory()).path;
+
+    final file = File("$rootDirectory/downloads/$id/metadata.json");
+    return Audiobook.fromMap(jsonDecode(await file.readAsString()));
   }
 }

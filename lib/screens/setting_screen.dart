@@ -45,6 +45,13 @@ class SettingsScreen extends StatelessWidget {
                 storage.progress.clear();
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.delete, size: 32),
+              title: const Text("Delete Downloads Index"),
+              onTap: () {
+                storage.downloadsIndex.clear();
+              },
+            ),
           ]),
           SettingsGroup(title: "Player", children: [
             ListTile(

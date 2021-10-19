@@ -10,39 +10,39 @@ import 'package:uuid/uuid.dart';
 
 /// Manages Hive box's
 class Storage {
-   late Box<Map<dynamic, dynamic>> plexClients;
+  late Box<Map<dynamic, dynamic>> plexClients;
 
-   late Box credentials;
+  late Box credentials;
 
   /// Stores the progress of audiobooks
   /// keys are the books id
-   late Box progress;
+  late Box progress;
 
-  
+  late LazyBox downloadsIndex;
 
-   Future init() async {
+  Future init() async {
     await Hive.initFlutter();
     progress = await Hive.openBox("progress");
     plexClients = await Hive.openBox("plex_clients");
-    credentials=await Hive.openBox("credentials");
+    credentials = await Hive.openBox("credentials");
+    downloadsIndex = await Hive.openLazyBox("downloads_index");
     // plexClients.clear();
   }
 
-   List<PlexlitRepository> loadClients() {
+  List<PlexlitRepository> loadClients() {
     List<PlexlitRepository> _clients = [];
     for (var item in plexClients.values) _clients.add(PlexRepository.fromMap(item));
 
     return _clients;
   }
 
-   void saveClient(PlexlitRepository client) async {
+  void saveClient(PlexlitRepository client) async {
     switch (client.runtimeType) {
       case PlexRepository:
-        plexClients.add(client.toMap());
+        plexClients.put(client.id, client.toMap());
         break;
       default:
         throw "Failed Saving Client Unknown Client Type";
     }
   }
-
 }

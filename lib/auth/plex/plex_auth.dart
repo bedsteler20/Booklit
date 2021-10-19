@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Package imports:
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 Dio _http = Dio(
   BaseOptions(
@@ -10,8 +11,8 @@ Dio _http = Dio(
       "X-Plex-Version": "2.0",
       "X-Plex-Product": "Plexlit (Flutter)",
       "X-Plex-Model": "hosted",
-      "X-Plex-Device": Platform.operatingSystem,
-      "X-Plex-Device-Name": Platform.operatingSystem,
+      "X-Plex-Device":kIsWeb?"Web": Platform.operatingSystem,
+      "X-Plex-Device-Name": kIsWeb?"Web":Platform.operatingSystem,
       "X-Plex-Sync-Version": "2",
       "X-Plex-Features": "external-media%2Cindirect-media",
       "accept": "application/json",

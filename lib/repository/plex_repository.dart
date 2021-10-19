@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:plexlit/model/model.dart';
 
 import 'base_repository.dart';
@@ -11,6 +12,9 @@ class PlexRepository extends PlexlitRepository {
   PlexDevice server;
   String clientId;
   MediaItem library;
+
+  @override
+  String id;
 
   String get libraryId => library.id;
 
@@ -30,8 +34,8 @@ class PlexRepository extends PlexlitRepository {
           "X-Plex-Version": "2.0",
           "X-Plex-Product": "Plexlit",
           "X-Plex-Model": "hosted",
-          "X-Plex-Device": Platform.operatingSystem,
-          "X-Plex-Device-Name": Platform.localHostname,
+          "X-Plex-Device": kIsWeb ? "Web" : Platform.operatingSystem,
+          "X-Plex-Device-Name": kIsWeb ? "Web" : Platform.localHostname,
           "X-Plex-Sync-Version": "2",
           "X-Plex-Features": "external-media%2Cindirect-media",
           "X-Plex-Client-Identifier": clientId,
@@ -57,6 +61,7 @@ class PlexRepository extends PlexlitRepository {
     required this.token,
     required this.library,
     required this.clientId,
+    required this.id,
   }) {
     _dio.options = BaseOptions(
       headers: {
@@ -65,8 +70,8 @@ class PlexRepository extends PlexlitRepository {
         "X-Plex-Version": "2.0",
         "X-Plex-Product": "Plexlit",
         "X-Plex-Model": "hosted",
-        "X-Plex-Device": Platform.operatingSystem,
-        "X-Plex-Device-Name": Platform.localHostname,
+        "X-Plex-Device": kIsWeb ? "Web" : Platform.operatingSystem,
+        "X-Plex-Device-Name": kIsWeb ? "Web" : Platform.localHostname,
         "X-Plex-Sync-Version": "2",
         "X-Plex-Features": "external-media%2Cindirect-media",
         "accept": "application/json",
@@ -75,7 +80,7 @@ class PlexRepository extends PlexlitRepository {
   }
 
   @override
-  get getAudiobooks => ({int start = 0, int limit = 50}) async => _dio.get(
+  getAudiobooks({int start = 0, int limit = 50}) async => _dio.get(
         "$libraryAddress/all?type=9",
         queryParameters: {
           "X-Plex-Container-Start": start,
@@ -84,7 +89,7 @@ class PlexRepository extends PlexlitRepository {
       ).then((_) => makeMediaList(_));
 
   @override
-  get getCollections => ({int start = 0, int limit = 50}) async => _dio.get(
+  getCollections({int start = 0, int limit = 50}) async => _dio.get(
         "$libraryAddress/collections",
         queryParameters: {
           "X-Plex-Container-Start": start,
@@ -92,7 +97,7 @@ class PlexRepository extends PlexlitRepository {
         },
       ).then(makeMediaList);
   @override
-  get getCollection => (String id, {int start = 0, int limit = 50}) async => _dio.get(
+  getCollection(String id, {int start = 0, int limit = 50}) async => _dio.get(
         "${server.address}/library/collections/$id/children",
         queryParameters: {
           "type": 9,
@@ -101,7 +106,7 @@ class PlexRepository extends PlexlitRepository {
         },
       ).then(makeMediaList);
   @override
-  get getGenres => ({int start = 0, int limit = 50}) async => _dio.get(
+  getGenres({int start = 0, int limit = 50}) async => _dio.get(
         "$libraryAddress/genre",
         queryParameters: {
           "type": 9,
@@ -110,7 +115,7 @@ class PlexRepository extends PlexlitRepository {
         },
       ).then(makeMediaList);
   @override
-  get getGenre => (String id, {int start = 0, int limit = 50}) async => _dio.get(
+  getGenre(String id, {int start = 0, int limit = 50}) async => _dio.get(
         "$libraryAddress/all",
         queryParameters: {
           "type": 9,
@@ -121,77 +126,77 @@ class PlexRepository extends PlexlitRepository {
       ).then(makeMediaList);
 
   @override
-  get getAudioBook => (String id) async {
-        const queryParameters = {
-          "includeChapters": "1",
-          "includeReviews": "1",
-          "includeCollections": "1",
-        };
+  getAudioBook(String id) async {
+    const queryParameters = {
+      "includeChapters": "1",
+      "includeReviews": "1",
+      "includeCollections": "1",
+    };
 
-        // This endpoint gets collections and userRatings
-        final album = await _dio.get("${server.address}/library/metadata/$id", queryParameters: {
-          "includeChapters": "1",
-          "includeReviews": "1",
-          "includeCollections": "1",
-        }).then((e) => e.data["MediaContainer"]["Metadata"][0]);
+    // This endpoint gets collections and userRatings
+    final album = await _dio.get("${server.address}/library/metadata/$id", queryParameters: {
+      "includeChapters": "1",
+      "includeReviews": "1",
+      "includeCollections": "1",
+    }).then((e) => e.data["MediaContainer"]["Metadata"][0]);
 
-        final track = (await _dio.get(
-          "${server.address}/library/metadata/$id/children",
-          queryParameters: {
-            "includeChapters": "1",
-            "includeReviews": "1",
-            "includeCollections": "1",
-          },
-        ))
-            .data["MediaContainer"]["Metadata"] as List;
+    final track = (await _dio.get(
+      "${server.address}/library/metadata/$id/children",
+      queryParameters: {
+        "includeChapters": "1",
+        "includeReviews": "1",
+        "includeCollections": "1",
+      },
+    ))
+        .data["MediaContainer"]["Metadata"] as List;
 
-        Future<List<Chapter>> chapters() async {
-          if (track.length < 2) {
-            final metadata = (await _dio.get(
-                    "${server.address}/library/metadata/" + track.first["ratingKey"],
-                    queryParameters: queryParameters))
-                .data["MediaContainer"]["Metadata"][0];
+    Future<List<Chapter>> chapters() async {
+      if (track.length < 2) {
+        final metadata = (await _dio.get(
+                "${server.address}/library/metadata/" + track.first["ratingKey"],
+                queryParameters: queryParameters))
+            .data["MediaContainer"]["Metadata"][0];
 
-            return [
-              for (var e in metadata["Chapter"])
-                Chapter(
-                  length: Duration(milliseconds: e["endTimeOffset"] - e["startTimeOffset"]),
-                  name: e["tag"] ?? "Chapter ${e["index"]}",
-                  url: _makeLink(track.first["Media"][0]["Part"][0]["key"])!,
-                  id: track.first["key"],
-                  end: Duration(milliseconds: e["endTimeOffset"]),
-                  start: Duration(milliseconds: e["startTimeOffset"]),
-                )
-            ];
-          } else {
-            return [
-              for (var e in track)
-                Chapter(
-                  length: Duration(milliseconds: e["duration"]),
-                  name: e["title"],
-                  url: _makeLink(e["Media"][0]["Part"][0]["key"])!,
-                  id: e["ratingKey"],
-                )
-            ];
-          }
-        }
+        return [
+          for (var e in metadata["Chapter"])
+            Chapter(
+              length: Duration(milliseconds: e["endTimeOffset"] - e["startTimeOffset"]),
+              name: e["tag"] ?? "Chapter ${e["index"]}",
+              url: _makeLink(track.first["Media"][0]["Part"][0]["key"])!,
+              id: track.first["key"],
+              end: Duration(milliseconds: e["endTimeOffset"]),
+              start: Duration(milliseconds: e["startTimeOffset"]),
+            )
+        ];
+      } else {
+        return [
+          for (var e in track)
+            Chapter(
+              length: Duration(milliseconds: e["duration"]),
+              name: e["title"],
+              url: _makeLink(e["Media"][0]["Part"][0]["key"])!,
+              id: e["ratingKey"],
+            )
+        ];
+      }
+    }
 
-        return Audiobook(
-          author: album["parentTitle"] ?? "",
-          authorId: album["parentRatingKey"],
-          summary: album["summary"] ?? "",
-          title: album["title"] ?? "",
-          releaseDate: DateTime.tryParse(album["originallyAvailableAt"] ?? ""),
-          thumb: _makeLink(album["thumb"]),
-          chapters: await chapters(),
-          userRating: album["userRating"] ?? 0.0,
-          id: id,
-          publisher: album["studio"],
-          chapterSource: track.length < 2 ? ChapterSource.embedded : ChapterSource.files,
-          // series: makeMediaList(album["Collection"])
-          // .firstWhere((e) => e.type == MediaItemType.series),
-        );
-      };
+    return Audiobook(
+      author: album["parentTitle"] ?? "",
+      authorId: album["parentRatingKey"],
+      summary: album["summary"] ?? "",
+      title: album["title"] ?? "",
+      releaseDate: DateTime.tryParse(album["originallyAvailableAt"] ?? ""),
+      thumb: _makeLink(album["thumb"]),
+      chapters: await chapters(),
+      userRating: album["userRating"] ?? 0.0,
+      id: id,
+      publisher: album["studio"],
+      chapterSource: track.length < 2 ? ChapterSource.embedded : ChapterSource.files,
+      // series: makeMediaList(album["Collection"])
+      // .firstWhere((e) => e.type == MediaItemType.series),
+    );
+  }
 
   @override
   Future<void> reportTimelinePosition(Audiobook book,
@@ -235,6 +240,7 @@ class PlexRepository extends PlexlitRepository {
 
   /// Used for loading Client from disk
   factory PlexRepository.fromMap(Map map) => PlexRepository(
+        id: map["id"],
         clientId: map["clientId"],
         library: MediaItem.fromMap(map["library"]),
         server: PlexDevice.fromMap(map["server"]),
@@ -248,6 +254,7 @@ class PlexRepository extends PlexlitRepository {
         "library": library.toMap(),
         "server": server.toMap(),
         "token": token,
+        "id": id,
       };
 
   /// Gets servers from Plex.tv and Updates [PlexRepository.server]

@@ -5,6 +5,7 @@ import 'package:plexlit/auth/plex/server_picker.dart';
 import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/providers/api_provider.dart';
 import 'package:plexlit/screens/auth_screen.dart';
+import 'package:plexlit/screens/downloads_screen.dart';
 import 'package:provider/src/provider.dart';
 
 // Package imports:
@@ -42,6 +43,7 @@ class App extends StatelessWidget {
                 VWidget(path: null, widget: const HomeScreen()),
                 VWidget(path: "library", widget: const LibraryScreen()),
                 VWidget(path: "settings", widget: const SettingsScreen()),
+                VWidget(path: "downloads", widget: const DownloadsScreen()),
                 VWidget.builder(
                   path: "collection/:id",
                   builder: (ctx, route) => MediaGroupScreen(route),
@@ -53,6 +55,11 @@ class App extends StatelessWidget {
                 VWidget.builder(
                   path: "audiobook/:id",
                   builder: (ctx, route) => AudioBookScreen(route.queryParameters["id"]!),
+                ),
+                VWidget.builder(
+                  path: "downloads/:id",
+                  builder: (ctx, route) =>
+                      AudioBookScreen(route.queryParameters["id"]!, offline: true),
                 ),
               ],
             )

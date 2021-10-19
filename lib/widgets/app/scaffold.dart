@@ -39,7 +39,7 @@ class _AppScaffoldState extends State<AppScaffold> {
             builder: (context, audiobook, _) {
               if (audiobook == null) return const SizedBox();
               return Miniplayer(
-                controller: miniPlayer,
+                controller: miniplayerController,
                 minHeight: 80,
                 maxHeight: context.height,
                 builder: (height, percentage) => MiniplayerWidget(

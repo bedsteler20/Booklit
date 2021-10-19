@@ -9,7 +9,11 @@ import 'package:vrouter/src/core/extended_context.dart';
 
 extension MediaItemGenreExt on MediaItem {
   void goTo(BuildContext context) {
-    context.vRouter.to("/${type.string}/$id", queryParameters: toMap());
+    if (type == MediaItemType.offlineAudiobook) {
+      context.vRouter.to("/downloads/$id", queryParameters: toMap());
+    } else {
+      context.vRouter.to("/${type.string}/$id", queryParameters: toMap());
+    }
     // router.go(x);
   }
 

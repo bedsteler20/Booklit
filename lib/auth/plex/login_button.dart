@@ -53,7 +53,9 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
     final clientId = const Uuid().v4();
     final api = await PlexOauth.create(clientId: clientId);
 
-    Platform.isAndroid ? await chrome.launch(api.loginUrl) : await browser.launch(api.loginUrl);
+    context.isAndroid
+        ? await chrome.launch(api.loginUrl)
+        : context.vRouter.toExternal(api.loginUrl, openNewTab: true);
 
     timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
       await api.checkPin().then((token) {

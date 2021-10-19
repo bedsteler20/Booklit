@@ -152,7 +152,7 @@ class MiniplayerWidget extends StatelessWidget {
             backgroundColor: const Color.fromARGB(0, 0, 0, 0),
             leading: IconButton(
               icon: const Icon(Icons.arrow_drop_down),
-              onPressed: () => miniPlayer.animateToHeight(state: PanelState.MIN),
+              onPressed: () => miniplayerController.animateToHeight(state: PanelState.MIN),
             ),
           ),
         ),
