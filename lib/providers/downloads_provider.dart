@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 // Project imports:
-import 'package:plexlit/globals.dart';
+import 'package:plexlit/core/globals.dart';
 import 'package:plexlit/helpers/dart.dart';
 import 'package:plexlit/model/audiobook.dart';
 import 'package:plexlit/model/media_item.dart';

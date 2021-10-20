@@ -11,10 +11,7 @@
 		" **/*.g.dart": true,
 		"**/*.inject.dart": true,
 		"**/*.inject.summary ": true,
-		"**/generated_plugin_registrant.dart": true,
-		"[!l]*/**": true,
-		"l[!i]*/**": true,
-		"li[!b]*/**": true
+		"**/generated_plugin_registrant.dart": true
 	},
 	"cSpell.words": [
 		"Cindirect",
