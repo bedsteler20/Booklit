@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-library index_generator;
+library plexlit;
 
 export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
 export 'package:vrouter/vrouter.dart';
 
-export 'core/app.dart';
 export 'auth/plex/library_picker.dart';
 export 'auth/plex/login_button.dart';
 export 'auth/plex/plex_auth.dart';
 export 'auth/plex/server_picker.dart';
+export 'core/app.dart';
 export 'core/config.dart';
-export 'core/storage.dart';
 export 'core/globals.dart';
+export 'core/storage.dart';
 export 'helpers/audiobook_extention.dart';
 export 'helpers/change_notifier_state.dart';
 export 'helpers/context.dart';

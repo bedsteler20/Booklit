@@ -11,13 +11,11 @@ import 'package:plexlit/repository/base_repository.dart';
 
 // ignore_for_file: curly_braces_in_flow_control_structures
 
-
-
-
 /// Manages Hive box's
 class Storage {
   late Box<Map<dynamic, dynamic>> plexClients;
 
+  late Box settings;
   late Box credentials;
 
   /// Stores the progress of audiobooks
@@ -32,6 +30,7 @@ class Storage {
     plexClients = await Hive.openBox("plex_clients");
     credentials = await Hive.openBox("credentials");
     downloadsIndex = await Hive.openLazyBox("downloads_index");
+    settings = await Hive.openBox("settings");
     // plexClients.clear();
   }
 
@@ -51,4 +50,6 @@ class Storage {
         throw "Failed Saving Client Unknown Client Type";
     }
   }
+
+  
 }

@@ -17,10 +17,32 @@ class RepoProvider with ChangeNotifier {
 
   bool get hasClient => _repo != null;
 
-  void connect(PlexlitRepository? i, {bool save = true}) {
+  Future<void> connect(
+    PlexlitRepository? i, {
+    bool save = true,
+    bool setPrimaryClient = false,
+    bool updateServerInfo = false,
+  }) async {
     if (i == null) return;
-    _repo = i;
     if (save) storage.saveClient(i);
+    if (setPrimaryClient) storage.settings.put("primary_client", i.id);
+    if (updateServerInfo) i.updateServerInfo();
+
+    _repo = i;
+
     notifyListeners();
+  }
+
+  Future<void> loadPrimaryClient() async {
+    String? primaryClientId = storage.settings.get("primary_client");
+    if (primaryClientId == null) {
+      await connect(await storage.loadClients().lastOrNull);
+      return;
+    }
+    for (var item in storage.loadClients()) {
+      if (item.id == primaryClientId) {
+        await connect(item, updateServerInfo: true);
+      }
+    }
   }
 }

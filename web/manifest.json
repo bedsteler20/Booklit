@@ -1,11 +1,10 @@
 {
-    "name": "plexlit",
-    "short_name": "plexlit",
+    "name": "Plexlit",
+    "short_name": "Plexlit",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#F08CC9",
+    "theme_color": "#F08CC9",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

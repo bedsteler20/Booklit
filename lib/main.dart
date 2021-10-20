@@ -3,21 +3,18 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:just_audio_background/just_audio_background.dart';
 
 // Project imports:
 import 'package:plexlit/plexlit.dart';
-import 'package:plexlit/plexlit.dart';
 
 void main() async {
   if (kIsWeb || Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     await JustAudioBackground.init(
-      preloadArtwork: true,
+      preloadArtwork: false,
       artDownscaleHeight: 100,
       artDownscaleWidth: 100,
       androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
@@ -27,7 +24,7 @@ void main() async {
   }
   await storage.init();
 
-  repository.connect(storage.loadClients().lastOrNull);
+  await repository.loadPrimaryClient();
 
   final audioPlayer = await AudioProvider().init();
 

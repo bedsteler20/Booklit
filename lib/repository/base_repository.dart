@@ -19,6 +19,8 @@ abstract class PlexlitRepository {
     throw "Plexlit.reportTimelinePosition Is not Implemented";
   }
 
+  Future<void> updateServerInfo() async => this;
+
   Map toMap();
 
   Uri? transcodeImage(Uri? uri, {required int height, required int width}) => uri;

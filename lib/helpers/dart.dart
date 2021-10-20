@@ -1,8 +1,6 @@
 // Dart imports:
 import 'dart:io';
 
-
-
 extension ListExt<E> on List {
   E? get lastOrNull {
     try {

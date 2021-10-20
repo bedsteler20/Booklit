@@ -1,4 +1,4 @@
-
+// Project imports:
 import 'package:plexlit/plexlit.dart';
 
 extension MediaQueryExt on BuildContext {

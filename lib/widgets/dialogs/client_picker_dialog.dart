@@ -25,7 +25,7 @@ class ClientPicker extends StatelessWidget {
               // Selected if type is [PlexApi] & server address match
               selected: e.runtimeType == repository.data!.runtimeType &&
                   e.server.address == (repository.data! as PlexRepository).server.address,
-              onTap: () => repository.connect(e, save: false),
+              onTap: () => repository.connect(e, save: false, setPrimaryClient: true),
             );
           default:
             return const SizedBox();
