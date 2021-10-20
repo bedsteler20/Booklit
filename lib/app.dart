@@ -1,9 +1,8 @@
-import 'package:plexlit/plexlit.dart';
-import 'package:plexlit/plexlit.dart';
-
 // Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

@@ -1,7 +1,12 @@
-import 'package:plexlit/plexlit.dart';
+// Dart imports:
 import 'dart:ui';
+
+// Package imports:
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class MiniplayerWidget extends StatelessWidget {
   const MiniplayerWidget({

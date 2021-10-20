@@ -1,9 +1,11 @@
-import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:async';
 
-
+// Package imports:
 import 'package:just_audio/just_audio.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class AudioProvider extends ChangeNotifierState {
   static final _audio = AudioPlayer();

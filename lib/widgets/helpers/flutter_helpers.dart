@@ -1,6 +1,8 @@
-import 'package:plexlit/plexlit.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class FutureBuilderPlus<T> extends StatelessWidget {
   const FutureBuilderPlus({

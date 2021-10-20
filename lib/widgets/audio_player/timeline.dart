@@ -1,5 +1,8 @@
-import 'package:plexlit/plexlit.dart';
+// Package imports:
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class Timeline extends StatelessWidget {
   const Timeline({Key? key, this.labelLocation = TimeLabelLocation.below}) : super(key: key);

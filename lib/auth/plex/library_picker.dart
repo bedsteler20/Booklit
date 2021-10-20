@@ -1,9 +1,9 @@
-import 'package:plexlit/plexlit.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:plexlit/globals.dart';
+import 'package:plexlit/plexlit.dart';
 
 class PlexLibraryPicker extends StatelessWidget {
   const PlexLibraryPicker(

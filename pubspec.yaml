@@ -57,6 +57,7 @@ dev_dependencies:
   built_value_generator: ^8.1.2
   import_sorter: ^4.6.0
   auto_route_generator: ^2.4.1
+  index_generator: ^3.0.0
 
 
 flutter:
@@ -78,3 +79,20 @@ fonts:
       - asset: fonts/Poppins/Poppins-Medium.ttf
       - asset: fonts/Poppins/Poppins-MediumItalic.ttf
         weight: 500
+
+index_generator:
+  exclude:
+    - '**.g.dart'
+    - 'generated_plugin_registrant.dart'
+    - 'main.dart'
+  indexes:
+    - path: lib
+      include:
+        - '**'
+      exports:
+        - package: flutter/material
+        - package: vrouter/vrouter
+        - package: provider/provider
+      name: plexlit
+
+      library: plexlit

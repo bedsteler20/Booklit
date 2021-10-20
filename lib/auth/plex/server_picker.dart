@@ -1,7 +1,8 @@
-import 'package:plexlit/plexlit.dart';
-
+// Package imports:
 import 'package:uuid/uuid.dart';
 
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class PlexServerPicker extends StatelessWidget {
   const PlexServerPicker({required this.token, required this.clientId, Key? key}) : super(key: key);

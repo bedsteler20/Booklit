@@ -1,10 +1,12 @@
-import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:ui' as ui;
 
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 enum ShimmrType {
   loop,

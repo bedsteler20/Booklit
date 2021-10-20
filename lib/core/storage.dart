@@ -1,6 +1,3 @@
-import 'package:plexlit/plexlit.dart';
-// ignore_for_file: curly_braces_in_flow_control_structures
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -9,7 +6,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 // Project imports:
+import 'package:plexlit/plexlit.dart';
 import 'package:plexlit/repository/base_repository.dart';
+
+// ignore_for_file: curly_braces_in_flow_control_structures
+
+
+
 
 /// Manages Hive box's
 class Storage {

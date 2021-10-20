@@ -1,8 +1,9 @@
-import 'package:plexlit/plexlit.dart';
-import 'package:plexlit/plexlit.dart';
 // Package imports:
 import 'package:miniplayer/miniplayer.dart';
 
+// Project imports:
+import 'package:plexlit/plexlit.dart';
+import 'package:plexlit/plexlit.dart';
 
 final repository = RepoProvider();
 final miniplayerController = MiniplayerController();

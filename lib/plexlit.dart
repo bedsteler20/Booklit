@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-library plexlit;
+library index_generator;
 
 export 'package:flutter/material.dart';
 export 'package:provider/provider.dart';
@@ -13,7 +13,6 @@ export 'auth/plex/plex_auth.dart';
 export 'auth/plex/server_picker.dart';
 export 'config.dart';
 export 'core/storage.dart';
-export 'generated_plugin_registrant.dart';
 export 'globals.dart';
 export 'helpers/audiobook_extention.dart';
 export 'helpers/change_notifier_state.dart';
@@ -23,7 +22,6 @@ export 'helpers/media_item_extention.dart';
 export 'helpers/miniplayer.dart';
 export 'helpers/scraper.dart';
 export 'helpers/time.dart';
-export 'main.dart';
 export 'model/audiobook.dart';
 export 'model/author.dart';
 export 'model/exeptions.dart';

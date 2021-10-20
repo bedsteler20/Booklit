@@ -1,4 +1,3 @@
-import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:convert';
 import 'dart:io';
@@ -16,6 +15,7 @@ import 'package:plexlit/globals.dart';
 import 'package:plexlit/helpers/dart.dart';
 import 'package:plexlit/model/audiobook.dart';
 import 'package:plexlit/model/media_item.dart';
+import 'package:plexlit/plexlit.dart';
 
 class DownloadsProvider with ChangeNotifier {
   Map<MediaItem, ValueNotifier<double>> inProgress = {};

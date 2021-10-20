@@ -1,4 +1,3 @@
-import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:io';
 
@@ -7,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
+import 'package:plexlit/plexlit.dart';
 
 // Package imports:
 

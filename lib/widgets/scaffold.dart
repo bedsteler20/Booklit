@@ -1,4 +1,3 @@
-import 'package:plexlit/plexlit.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -7,9 +6,12 @@ import 'package:miniplayer/miniplayer.dart';
 import 'package:provider/src/provider.dart';
 
 // Project imports:
-
+import 'package:plexlit/plexlit.dart';
 import 'miniplayer.dart';
 import 'navbar.dart';
+
+// Project imports:
+
 
 class AppScaffold extends StatefulWidget {
   const AppScaffold(this.child, {Key? key}) : super(key: key);

@@ -1,4 +1,3 @@
-import 'package:plexlit/plexlit.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -10,6 +9,7 @@ import 'package:vrouter/src/core/extended_context.dart';
 
 // Project imports:
 import 'package:plexlit/helpers/context.dart';
+import 'package:plexlit/plexlit.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key, this.direction = Axis.horizontal})

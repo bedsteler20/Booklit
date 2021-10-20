@@ -1,18 +1,5 @@
+
 import 'package:plexlit/plexlit.dart';
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:provider/provider.dart';
-
-// Project imports:
-import 'package:plexlit/providers/api_provider.dart';
-import 'package:plexlit/repository/base_repository.dart';
-
-// Project imports:
-
-export 'package:build_config/build_config.dart';
 
 extension MediaQueryExt on BuildContext {
   T find<T>({bool listen = false}) => Provider.of<T>(this, listen: listen);

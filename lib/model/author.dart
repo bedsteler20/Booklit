@@ -1,8 +1,9 @@
+// Project imports:
 import 'package:plexlit/plexlit.dart';
+import 'media_item.dart';
+
 // Package imports:
 
-// Project imports:
-import 'media_item.dart';
 
 class Author {
   Author({

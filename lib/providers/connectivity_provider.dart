@@ -1,4 +1,3 @@
-import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:async';
 
@@ -7,6 +6,9 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class ConnectivityProvider extends ChangeNotifier {
   bool isOffline = false;

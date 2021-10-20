@@ -1,8 +1,8 @@
-import 'package:plexlit/plexlit.dart';
-
 // Package imports:
 import 'package:just_audio/just_audio.dart';
 
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class PlayButton extends StatelessWidget {
   const PlayButton({Key? key, this.desktop = false}) : super(key: key);

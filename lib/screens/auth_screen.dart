@@ -1,5 +1,5 @@
+// Project imports:
 import 'package:plexlit/plexlit.dart';
-
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);

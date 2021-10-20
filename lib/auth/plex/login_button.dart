@@ -1,8 +1,12 @@
-import 'package:plexlit/plexlit.dart';
+// Dart imports:
 import 'dart:async';
+
+// Package imports:
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as chrome;
 import 'package:uuid/uuid.dart';
 
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 class PlexLoginButton extends StatefulWidget {
   const PlexLoginButton({

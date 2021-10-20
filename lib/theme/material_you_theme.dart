@@ -1,6 +1,8 @@
-import 'package:plexlit/plexlit.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:plexlit/plexlit.dart';
 
 const _background = Color.fromARGB(255, 32, 26, 28);
 

@@ -11,9 +11,11 @@
 		" **/*.g.dart": true,
 		"**/*.inject.dart": true,
 		"**/*.inject.summary ": true,
-		"generated_plugin_registrant.dart": true
+		"**/generated_plugin_registrant.dart": true,
+		"[!l]*/**": true,
+		"l[!i]*/**": true,
+		"li[!b]*/**": true
 	},
-	"C_Cpp.errorSquiggles": "Disabled",
 	"cSpell.words": [
 		"Cindirect",
 		"fullscreen",
@@ -29,6 +31,5 @@
 		"toggleable",
 		"vrouter"
 	],
-	"explorerExclude.backup": null,
 
 }

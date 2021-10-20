@@ -1,5 +1,3 @@
-import 'package:plexlit/plexlit.dart';
-import 'package:plexlit/plexlit.dart';
 // Dart imports:
 import 'dart:io';
 
@@ -11,6 +9,9 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:just_audio_background/just_audio_background.dart';
 
+// Project imports:
+import 'package:plexlit/plexlit.dart';
+import 'package:plexlit/plexlit.dart';
 
 void main() async {
   if (kIsWeb || Platform.isAndroid) {

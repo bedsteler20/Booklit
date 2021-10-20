@@ -1,4 +1,6 @@
+// Project imports:
 import 'package:plexlit/plexlit.dart';
+
 class MediaItem {
   String title;
   String? title2;

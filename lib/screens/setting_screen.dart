@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+
+// Project imports:
 import 'package:plexlit/plexlit.dart';
 
 class SettingsScreen extends StatelessWidget {

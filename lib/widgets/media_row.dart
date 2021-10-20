@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:plexlit/plexlit.dart';
 
 class MediaRowWidget extends StatelessWidget {
