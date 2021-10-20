@@ -262,11 +262,14 @@ class PlexRepository extends PlexlitRepository {
       };
 
   /// Gets servers from Plex.tv and Updates [PlexRepository.server]
+  @override
   Future<void> updateServerInfo() async {
     print("Updating PMS Info");
     var devices = await findServers(clientId: clientId, token: token);
-    for (var i in devices) {
-      if (i.clientIdentifier == server.clientIdentifier) server = i;
+    for (var server in devices) {
+      if (server.clientIdentifier == server.clientIdentifier) {
+        server.useRelay = !await server.ping(_dio);
+      }
     }
   }
 

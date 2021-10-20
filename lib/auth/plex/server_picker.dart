@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:dio/dio.dart';
 import 'package:uuid/uuid.dart';
 
 // Project imports:
@@ -48,6 +49,7 @@ class PlexServerPicker extends StatelessWidget {
                   onPressed: selected == null
                       ? null
                       : () async {
+                          selected!.useRelay = !await selected!.ping(Dio());
                           final library = await showDialog<MediaItem?>(
                               context: context,
                               builder: (_) => PlexLibraryPicker(

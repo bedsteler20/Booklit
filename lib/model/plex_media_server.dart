@@ -12,9 +12,6 @@ import 'media_item.dart';
 //
 //     final plexMediaServer = plexMediaServerFromMap(jsonString);
 
-
-
-
 class PlexDevice {
   PlexDevice({
     this.name,
@@ -67,6 +64,8 @@ class PlexDevice {
   final bool? dnsRebindingProtection;
   final bool? natLoopbackSupported;
   final List<PlexConnection?>? connections;
+
+  bool useRelay = false;
 
   PlexDevice copyWith({
     String? name,
@@ -181,9 +180,26 @@ class PlexDevice {
         "connections":
             connections == null ? null : List<dynamic>.from(connections!.map((x) => x!.toMap())),
       };
-  String get address => publicAddressMatches! ? connections![0]!.uri! : connections![1]!.uri!;
-  String get ipAddress =>
-      publicAddressMatches! ? connections![0]!.address! : connections![1]!.address!;
+  String get address => useRelay
+      ? connections!.last!.uri!
+      : publicAddressMatches!
+          ? connections![0]!.uri!
+          : connections![1]!.uri!;
+
+  String get ipAddress => useRelay
+      ? connections!.last!.address!
+      : publicAddressMatches!
+          ? connections![0]!.address!
+          : connections![1]!.address!;
+
+  Future<bool> ping(Dio dio) async {
+    try {
+      await dio.get("$address/updater/check");
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   Future<List<MediaItem>> library({required String token, required String clientId}) {
     return Dio(BaseOptions(
