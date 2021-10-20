@@ -184,13 +184,13 @@ class PlexDevice {
       ? connections!.last!.uri!
       : publicAddressMatches!
           ? connections![0]!.uri!
-          : connections![1]!.uri!;
+          : connections![2]!.uri!;
 
   String get ipAddress => useRelay
       ? connections!.last!.address!
       : publicAddressMatches!
           ? connections![0]!.address!
-          : connections![1]!.address!;
+          : connections![2]!.address!;
 
   Future<bool> ping(Dio dio) async {
     try {

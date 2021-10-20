@@ -49,7 +49,6 @@ class PlexServerPicker extends StatelessWidget {
                   onPressed: selected == null
                       ? null
                       : () async {
-                          selected!.useRelay = !await selected!.ping(Dio());
                           final library = await showDialog<MediaItem?>(
                               context: context,
                               builder: (_) => PlexLibraryPicker(

@@ -32,7 +32,11 @@ class App extends StatelessWidget {
                     }
                   },
                   stackedRoutes: [
-                    VWidget(path: "library", widget: const LibraryScreen()),
+                    VWidget(
+                      path: "library",
+                      widget: const LibraryScreen(),
+                      // buildTransition: (_, __, child) => child,
+                    ),
                     VWidget.builder(
                       path: "collection/:id",
                       builder: (ctx, route) => MediaGroupScreen(route),
@@ -48,9 +52,20 @@ class App extends StatelessWidget {
                   ],
                 ),
 
-                VWidget(path: null, widget: const HomeScreen()),
-                VWidget(path: "settings", widget: const SettingsScreen()),
-                VWidget(path: "downloads", widget: const DownloadsScreen()),
+                VWidget(
+                  path: null,
+                  widget: const HomeScreen(),
+                  // buildTransition: (_, __, child) => child,
+                ),
+                VWidget(
+                  path: "settings",
+                  widget: const SettingsScreen(),
+                  // buildTransition: (_, __, child) => child,
+                ),
+                VWidget(
+                  path: "downloads",
+                  widget: const DownloadsScreen(),
+                ),
 
                 VWidget.builder(
                   path: "downloads/:id",

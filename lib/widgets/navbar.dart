@@ -1,14 +1,5 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:go_router/go_router.dart';
 import 'package:miniplayer/miniplayer.dart';
-import 'package:provider/src/provider.dart';
-import 'package:vrouter/src/core/extended_context.dart';
 
-// Project imports:
-import 'package:plexlit/helpers/context.dart';
 import 'package:plexlit/plexlit.dart';
 
 class Navbar extends StatefulWidget {
@@ -55,14 +46,14 @@ class _NavbarState extends State<Navbar> {
       selectedIcon: const Icon(Icons.library_books_rounded, color: Colors.black),
     ),
     NavigationDestination(
-      icon: Icon(Icons.download_done_outlined, color: Colors.grey.shade400),
-      label: "Library",
-      selectedIcon: const Icon(Icons.download, color: Colors.black),
+      icon: Icon(Icons.download_outlined, color: Colors.grey.shade400),
+      label: "Downloads",
+      selectedIcon: const Icon(Icons.download_rounded, color: Colors.black),
     ),
     NavigationDestination(
       icon: Icon(Icons.settings_outlined, color: Colors.grey.shade400),
       label: "Settings",
-      selectedIcon: const Icon(Icons.download, color: Colors.black),
+      selectedIcon: const Icon(Icons.settings_rounded, color: Colors.black),
     ),
   ];
 

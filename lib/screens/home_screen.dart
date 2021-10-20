@@ -1,87 +1,105 @@
 // Project imports:
 import 'package:plexlit/plexlit.dart';
 
-class HomeScreen extends StatelessWidget {
-  static Route<dynamic> route() => MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      );
-
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  static List<MediaItem>? _downloads;
+  static List<MediaItem>? _collections;
+  static List<MediaItem>? _genres;
+
+  static bool _downloadsLoaded = false;
+  static bool _collectionsLoaded = false;
+  static bool _genresLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (!_downloadsLoaded) {
+      downloads.savedAudiobooks().then((value) {
+        _downloads = value;
+        _downloadsLoaded = true;
+        setState(() {});
+      });
+    }
+
+    if (!_collectionsLoaded) {
+      context.repository?.getCollections().then((value) {
+        _collections = value;
+        _collectionsLoaded = true;
+        setState(() {});
+      });
+    }
+
+    if (!_genresLoaded) {
+      context.repository?.getGenres().then((value) {
+        _genres = value;
+        _genresLoaded = true;
+        setState(() {});
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          const SliverAppBar(
-            title: Text(
-              "Home",
-              textScaleFactor: 1.35,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          SliverList(
-              delegate: SliverChildListDelegate([
-            FutureBuilderPlus<List<MediaItem>>(
-              future: downloads.savedAudiobooks(),
-              loading: (_) => SizedBox(),
-              error: (_, e) => ErrorWidget(e!),
-              completed: (context, items) => MediaRowWidget(
-                items: items,
-                title: "Downloads",
-                onShowMore: () => context.to("/downloads"),
+    if (!_downloadsLoaded || !_collectionsLoaded || !_genresLoaded) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      return Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const SliverAppBar(
+              title: Text(
+                "Home",
+                textScaleFactor: 1.35,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            FutureBuilder<List<MediaItem>>(
-              future: repository.data!.getCollections(),
-              builder: (ctx, snap) {
-                if (snap.hasError) {
-                  return const Text("Error");
-                } else if (snap.hasData) {
-                  return MediaRowWidget(
-                    items: snap.data!,
-                    title: "Collections",
-                    onShowMore: () => context.to("/collections"),
-                  );
-                } else {
-                  return const Text("Loading");
-                }
-              },
-            ),
-            FutureBuilder<List<MediaItem>>(
-              future: repository.data!.getGenres(),
-              builder: (ctx, snap) {
-                if (snap.hasError) {
-                  return const Text("Error");
-                } else if (snap.hasData) {
-                  return MediaRowWidget(
-                    items: snap.data!,
-                    title: "Genres",
-                    onShowMore: () => context.to("/genres"),
-                  );
-                } else {
-                  return const Text("Loading");
-                }
-              },
-            ),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              if (_downloadsLoaded)
+                MediaRowWidget(
+                  items: _downloads!,
+                  title: "Downloads",
+                  onShowMore: () => context.to("/downloads"),
+                ),
+              if (_collectionsLoaded)
+                MediaRowWidget(
+                  items: _collections!,
+                  title: "Collections",
+                  onShowMore: () => context.to("/collections"),
+                ),
 
-            // FutureBuilder<List<PlexObject>>(
-            //   future: plex.library.unRead(),
-            //   builder: (ctx, snap) {
-            //     if (snap.hasError) {
-            //       return const Text("Error");
-            //     } else if (snap.hasData) {
-            //       return MediaRowWidget(
-            //         mediaList: snap.data!,
-            //       );
-            //     } else {
-            //       return const Text("Loading");
-            //     }
-            //   },
-            // ),
-          ])),
-        ],
-      ),
-    );
+              if (_genresLoaded)
+                MediaRowWidget(
+                  items: _genres!,
+                  title: "Genres",
+                  onShowMore: () => context.to("/genres"),
+                )
+
+              // FutureBuilder<List<PlexObject>>(
+              //   future: plex.library.unRead(),
+              //   builder: (ctx, snap) {
+              //     if (snap.hasError) {
+              //       return const Text("Error");
+              //     } else if (snap.hasData) {
+              //       return MediaRowWidget(
+              //         mediaList: snap.data!,
+              //       );
+              //     } else {
+              //       return const Text("Loading");
+              //     }
+              //   },
+              // ),
+            ])),
+          ],
+        ),
+      );
+    }
   }
 }

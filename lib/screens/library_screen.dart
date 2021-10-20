@@ -6,27 +6,29 @@ class LibraryScreen extends StatefulWidget {
     Key? key,
   }) : super(key: key);
   @override
-  _LibraryScreenState createState() => _LibraryScreenState();
+  LibraryScreenState createState() => LibraryScreenState();
 }
 
-class _LibraryScreenState extends State<LibraryScreen> {
+class LibraryScreenState extends State<LibraryScreen> {
   static const _querySize = 50;
 
-  List<MediaItem> children = [];
-  bool isLoading = true;
-  bool isComplete = false;
-  bool gridMode = false;
-  final scrollController = ScrollController();
+  static List<MediaItem> children = [];
+  static bool isLoading = true;
+  static bool isComplete = false;
+  static bool gridMode = false;
+  static final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    repository.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
-      children.addAll(value);
-      if (value.length < _querySize) isComplete = true;
-      isLoading = false;
-      setState(() {});
-    });
+    if (children.isEmpty) {
+      repository.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
+        children.addAll(value);
+        if (value.length < _querySize) isComplete = true;
+        isLoading = false;
+        setState(() {});
+      });
+    }
 
     // Fetch more data when bottom of page is reached
     scrollController.addListener(
@@ -75,7 +77,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 IconButton(
                     onPressed: () => setState(() => gridMode = !gridMode),
                     icon: Icon(gridMode ? Icons.grid_on : Icons.list_rounded)),
-                    
               ],
             ),
             if (gridMode)
