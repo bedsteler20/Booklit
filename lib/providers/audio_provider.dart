@@ -27,13 +27,13 @@ class AudioProvider extends ChangeNotifierState {
   bool skipSilence = false;
 
   /// The duration of the current audio or null if unknown.
-  Duration duration = const Duration(seconds: 60);
+  Duration get duration => chapter!.length;
 
   /// The current position of the player.
-  Duration position = const Duration();
+  Duration position = const Duration(milliseconds: 0);
 
   /// The position up to which buffered audio is available.
-  Duration bufferedPosition = const Duration();
+  Duration bufferedPosition = const Duration(milliseconds: 0);
 
   late final BuildContext context;
 
@@ -74,9 +74,9 @@ class AudioProvider extends ChangeNotifierState {
     _audio.currentIndexStream.listen(
       (e) => setValue(() => chapter = current?.chapters[e ?? 0]),
     );
-    _audio.durationStream.listen(
-      (e) => setValue(() => duration = e ?? const Duration()),
-    );
+    // _audio.durationStream.listen(
+    //   (e) => setValue(() => duration = e ?? const Duration()),
+    // );
     _audio.bufferedPositionStream.listen(
       (e) => setValue(() => bufferedPosition = e),
     );
@@ -86,7 +86,7 @@ class AudioProvider extends ChangeNotifierState {
     _audio.speedStream.listen(
       (e) => setValue(() => speed = e),
     );
-    _audio.skipSilenceEnabledStream.listen((e) =>setValue(()=>skipSilence=e));
+    _audio.skipSilenceEnabledStream.listen((e) => setValue(() => skipSilence = e));
     _audio.positionStream.listen((e) => setValue(() {
           position = e;
           if (_sleepEndTime?.inSeconds == e.inSeconds) pause();
