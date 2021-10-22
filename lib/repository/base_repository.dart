@@ -3,7 +3,10 @@ import 'package:plexlit/plexlit.dart';
 
 /// The client api implemented by various servers.
 abstract class PlexlitRepository {
-  final String id = "null";
+  String clientId = "null";
+  String title = "null";
+  String? title2;
+
   static PlexlitClientType type = PlexlitClientType.local;
   Future<List<MediaItem>> getAudiobooks({int start, int limit});
   Future<List<MediaItem>> getCollections({int start, int limit});
@@ -20,6 +23,8 @@ abstract class PlexlitRepository {
   }
 
   Future<void> updateServerInfo() async => this;
+
+  Future<void> rateItem(String id, double rating) => throw UnimplementedError();
 
   Map toMap();
 

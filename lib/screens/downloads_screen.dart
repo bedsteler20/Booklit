@@ -6,36 +6,67 @@ class DownloadsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inProgress = context.watch<DownloadsProvider>().inProgress;
+    final downloaded = context.select<DownloadsProvider, Iterable<MediaItem>>((s) => s.downloaded);
+    final cancel = context.read<DownloadsProvider>().cancel;
+    final delete = context.read<DownloadsProvider>().delete;
+
+    final inProgresses =
+        context.select<DownloadsProvider, Iterable<MediaItem>>((s) => s.inProgress.keys);
 
     return CustomScrollView(
       slivers: [
         const SliverAppBar(title: Text("Downloads")),
-        FutureBuilderPlus<List<MediaItem>>(
-          future: context.read<DownloadsProvider>().savedAudiobooks(),
-          completed: (context, items) {
-            return SliverList(
-              delegate: SliverChildListDelegate([
-                for (var item in items) ListItem(item),
-                for (var item in inProgress.keys)
-                  ValueListenableBuilder<double>(
-                    valueListenable: inProgress[item]!,
-                    builder: (context, value, __) => DownloadingListItem(
-                      item,
-                      onCancel: () {},
-                      progress: value,
-                    ),
-                  )
-              ]),
-            );
-          },
-          loading: (c) => SliverFillViewport(
-            delegate: SliverChildBuilderDelegate((_, __) => const LoadingWidget()),
-          ),
-          error: (c, e) => SliverFillViewport(
-            delegate: SliverChildBuilderDelegate((_, __) => ErrorWidget(e!)),
-          ),
-        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            for (var item in inProgresses)
+              Selector<DownloadsProvider, double>(
+                selector: (context, s) => s.inProgress[item]!,
+                builder: (context, value, __) => DownloadingListItem(item,
+                    progress: value,
+                    onCancel: () => showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text("Cancel Download?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text("No"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    cancel(item);
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Yes"),
+                                )
+                              ],
+                            ))),
+              ),
+            if (inProgresses.isNotEmpty) const Divider(),
+            for (var item in downloaded)
+              ListItem(
+                item,
+                onLongPress: () => showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: Text("Delete ${item.title}"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("No"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                delete(item.id);
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Yes"),
+                            )
+                          ],
+                        )),
+              ),
+          ]),
+        )
       ],
     );
   }

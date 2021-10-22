@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:miniplayer/miniplayer.dart';
 
+// Project imports:
 import 'package:plexlit/plexlit.dart';
 
 class Navbar extends StatefulWidget {

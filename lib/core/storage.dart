@@ -22,14 +22,14 @@ class Storage {
   /// keys are the books id
   late Box progress;
 
-  late LazyBox downloadsIndex;
+  late Box downloadsIndex;
 
   Future init() async {
     await Hive.initFlutter();
     progress = await Hive.openBox("progress");
     plexClients = await Hive.openBox("plex_clients");
     credentials = await Hive.openBox("credentials");
-    downloadsIndex = await Hive.openLazyBox("downloads_index");
+    downloadsIndex = await Hive.openBox("downloads_index");
     settings = await Hive.openBox("settings");
     // plexClients.clear();
   }
@@ -44,12 +44,10 @@ class Storage {
   void saveClient(PlexlitRepository client) async {
     switch (client.runtimeType) {
       case PlexRepository:
-        plexClients.put(client.id, client.toMap());
+        plexClients.put(client.clientId, client.toMap());
         break;
       default:
         throw "Failed Saving Client Unknown Client Type";
     }
   }
-
-  
 }

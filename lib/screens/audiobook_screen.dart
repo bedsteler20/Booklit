@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-
-
 // Package imports:
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -17,18 +15,18 @@ class AudioBookScreen extends StatelessWidget {
 
   Widget RatingBuilder(BuildContext context, Audiobook book) {
     return RatingBar.builder(
-      ignoreGestures: true,
       initialRating: book.userRating / 2,
       minRating: 0.5,
       direction: Axis.horizontal,
       allowHalfRating: true,
       itemCount: 5,
       itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-      itemBuilder: (context, _) => const Icon(
-        Icons.star,
-        color: Colors.amber,
+      glow: false,
+      itemBuilder: (context, _) => Icon(
+        Icons.star_rounded,
+        color: context.buttonColor,
       ),
-      onRatingUpdate: (x) {},
+      onRatingUpdate: (x) => context.repository?.rateItem(id, x),
     );
   }
 

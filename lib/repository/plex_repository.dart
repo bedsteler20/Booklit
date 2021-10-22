@@ -1,4 +1,7 @@
 // Dart imports:
+// ignore_for_file: overridden_fields
+
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
@@ -7,6 +10,7 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:dio/dio.dart';
+import 'package:uuid/uuid.dart';
 
 // Project imports:
 import 'package:plexlit/plexlit.dart';
@@ -14,11 +18,15 @@ import 'package:plexlit/plexlit.dart';
 class PlexRepository extends PlexlitRepository {
   String token;
   PlexDevice server;
+  @override
   String clientId;
   MediaItem library;
 
   @override
-  String id;
+  String get title => library.title;
+
+  @override
+  String? get title2 => "${server.name} - ${server.publicAddress}";
 
   String get libraryId => library.id;
 
@@ -65,7 +73,6 @@ class PlexRepository extends PlexlitRepository {
     required this.token,
     required this.library,
     required this.clientId,
-    required this.id,
   }) {
     _dio.options = BaseOptions(
       headers: {
@@ -244,7 +251,6 @@ class PlexRepository extends PlexlitRepository {
 
   /// Used for loading Client from disk
   factory PlexRepository.fromMap(Map map) => PlexRepository(
-        id: map["id"],
         clientId: map["clientId"],
         library: MediaItem.fromMap(map["library"]),
         server: PlexDevice.fromMap(map["server"]),
@@ -258,19 +264,26 @@ class PlexRepository extends PlexlitRepository {
         "library": library.toMap(),
         "server": server.toMap(),
         "token": token,
-        "id": id,
       };
 
   /// Gets servers from Plex.tv and Updates [PlexRepository.server]
   @override
   Future<void> updateServerInfo() async {
-    print("Updating PMS Info");
     var devices = await findServers(clientId: clientId, token: token);
     for (var server in devices) {
       if (server.clientIdentifier == server.clientIdentifier) {
         server.useRelay = !await server.ping(_dio);
       }
     }
+  }
+
+  @override
+  Future<void> rateItem(String id, double rating) async {
+    await _dio.put("${server.address}/:/rate", queryParameters: {
+      "identifier": "com.plexapp.plugins.library",
+      "key": id,
+      "rating": rating * 2,
+    });
   }
 
   @override

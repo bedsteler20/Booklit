@@ -40,39 +40,60 @@ class _InfiniteScrollViewState extends State<InfiniteScrollView> {
   bool isLoading = true;
   bool isComplete = false;
 
+  Object? error;
+
   @override
   void initState() {
     super.initState();
-    widget.query(limit: _querySize, start: 0).then((value) {
-      children.addAll(value);
-      if (value.length < _querySize) isComplete = true;
-      isLoading = false;
-      setState(() {});
-    });
+
+    try {
+      widget.query(limit: _querySize, start: 0).then((value) {
+        children.addAll(value);
+        if (value.length < _querySize) isComplete = true;
+        isLoading = false;
+        setState(() {});
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+    }
 
     // Fetch more data when bottom of page is reached
     widget.controller.addListener(
       () {
-        if (widget.controller.position.pixels + 100 >= widget.controller.position.maxScrollExtent) {
-          if (!isLoading && !isComplete) {
-            isLoading = true;
-            widget.query(limit: _querySize, start: children.length).then((value) {
-              children.addAll(value);
-              if (value.length < _querySize) isComplete = true;
-              isLoading = false;
-              setState(() {});
-            });
+        try {
+          if (widget.controller.position.pixels + 100 >=
+              widget.controller.position.maxScrollExtent) {
+            if (!isLoading && !isComplete) {
+              isLoading = true;
+              widget.query(limit: _querySize, start: children.length).then((value) {
+                children.addAll(value);
+                if (value.length < _querySize) isComplete = true;
+                isLoading = false;
+                setState(() {});
+              });
+            }
           }
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
         }
       },
     );
   }
 
   Future<void> refresh() async {
-    if (!isLoading) {
-      isLoading = true;
+    try {
+      if (!isLoading) {
+        isLoading = true;
+        widget.query(limit: _querySize, start: 0).then((value) {
+          children = value;
+          if (value.length < _querySize) isComplete = true;
+          isLoading = false;
+          setState(() {});
+        });
+      }
+    } catch (e) {
       widget.query(limit: _querySize, start: 0).then((value) {
-        children = value;
+        children.addAll(value);
         if (value.length < _querySize) isComplete = true;
         isLoading = false;
         setState(() {});

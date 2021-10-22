@@ -15,21 +15,12 @@ class ClientPicker extends StatelessWidget {
     return SimpleDialog(
       title: const Text("Librarys"),
       children: clients.map((e) {
-        switch (e.runtimeType) {
-          case PlexRepository:
-            e as PlexRepository;
-
-            return ListTile(
-              title: Text(e.library.title),
-              subtitle: Text("${e.server.name!} - ${e.server.ipAddress}"),
-              // Selected if type is [PlexApi] & server address match
-              selected: e.runtimeType == repository.data!.runtimeType &&
-                  e.server.address == (repository.data! as PlexRepository).server.address,
-              onTap: () => repository.connect(e, save: false, setPrimaryClient: true),
-            );
-          default:
-            return const SizedBox();
-        }
+        return ListTile(
+          title: Text(e.title),
+          subtitle: Text(e.title2 ?? ""),
+          selected: e.clientId == repository.data!.clientId,
+          onTap: () => repository.connect(e, save: false, setPrimaryClient: true),
+        );
       }).toList()
         ..addAll([
           ListTile(

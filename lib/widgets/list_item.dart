@@ -4,7 +4,9 @@ import 'package:plexlit/plexlit.dart';
 class ListItem extends StatelessWidget {
   final MediaItem item;
 
-  const ListItem(this.item, {Key? key}) : super(key: key);
+  const ListItem(this.item, {Key? key, this.onLongPress}) : super(key: key);
+
+  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class ListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         child: RawMaterialButton(
           onPressed: () => item.goTo(context),
+          onLongPress: onLongPress,
           child: Row(
             children: [
               /*----Image----*/

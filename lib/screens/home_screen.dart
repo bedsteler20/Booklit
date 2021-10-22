@@ -9,24 +9,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  static List<MediaItem>? _downloads;
   static List<MediaItem>? _collections;
   static List<MediaItem>? _genres;
 
-  static bool _downloadsLoaded = false;
   static bool _collectionsLoaded = false;
   static bool _genresLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    if (!_downloadsLoaded) {
-      downloads.savedAudiobooks().then((value) {
-        _downloads = value;
-        _downloadsLoaded = true;
-        setState(() {});
-      });
-    }
 
     if (!_collectionsLoaded) {
       context.repository?.getCollections().then((value) {
@@ -47,7 +38,9 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_downloadsLoaded || !_collectionsLoaded || !_genresLoaded) {
+    final downloaded = context.select<DownloadsProvider, List<MediaItem>>((s) => s.downloaded);
+
+    if (downloaded.isEmpty || !_collectionsLoaded || !_genresLoaded) {
       return const Center(child: CircularProgressIndicator());
     } else {
       return Scaffold(
@@ -62,9 +55,9 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             SliverList(
                 delegate: SliverChildListDelegate([
-              if (_downloadsLoaded)
+              if (downloaded.isNotEmpty)
                 MediaRowWidget(
-                  items: _downloads!,
+                  items: downloaded,
                   title: "Downloads",
                   onShowMore: () => context.to("/downloads"),
                 ),

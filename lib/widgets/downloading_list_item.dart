@@ -24,6 +24,7 @@ class DownloadingListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         child: RawMaterialButton(
           onPressed: () => null,
+          onLongPress: onCancel,
           child: Row(
             children: [
               /*----Image----*/
