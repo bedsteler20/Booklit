@@ -40,7 +40,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final downloaded = context.select<DownloadsProvider, List<MediaItem>>((s) => s.downloaded);
 
-    if (downloaded.isEmpty || !_collectionsLoaded || !_genresLoaded) {
+    if (!_collectionsLoaded || !_genresLoaded) {
       return const Center(child: CircularProgressIndicator());
     } else {
       return Scaffold(
