@@ -28,11 +28,14 @@ class ClientPicker extends StatelessWidget {
             leading: const Icon(Icons.add),
             onTap: () {
               Navigator.pop(context);
+
+              var account = Account.fromMap(storage.accounts.get("plex-account"));
+
               showDialog(
                 context: context,
                 builder: (_) => PlexServerPicker(
-                  token: storage.credentials.get("plex-token"),
-                  clientId: storage.credentials.get("plex-clientId"),
+                  token: account.token,
+                  clientId: account.clientId,
                 ),
               );
             },

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Package imports:
+import 'package:dio/dio.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as chrome;
 import 'package:uuid/uuid.dart';
 
@@ -27,17 +28,17 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
   }
 
   Future<void> login() async {
-    if (storage.credentials.containsKey("plex-clientId")) {
-      if (storage.credentials.containsKey("plex-token")) {
-        showDialog(
-          context: context,
-          builder: (_) => PlexServerPicker(
-            token: storage.credentials.get("plex-token"),
-            clientId: storage.credentials.get("plex-clientId"),
-          ),
-        );
-        return;
-      }
+    if (storage.accounts.containsKey("plex-account")) {
+      var account = Account.fromMap(storage.accounts.get("plex-account"));
+
+      showDialog(
+        context: context,
+        builder: (_) => PlexServerPicker(
+          token: account.token,
+          clientId: account.clientId,
+        ),
+      );
+      return;
     }
 
     final clientId = const Uuid().v4();
@@ -48,15 +49,15 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
         : context.vRouter.toExternal(api.loginUrl, openNewTab: true);
 
     timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      await api.checkPin().then((token) {
-        if (token != null) {
+      await api.checkPin().then((account) async {
+        if (account != null) {
           timer.cancel();
-          storage.credentials.put("plex-clientId", clientId);
-          storage.credentials.put("plex-token", token);
+
+          storage.accounts.put("plex-account", account.toMap());
 
           showDialog(
             context: context,
-            builder: (_) => PlexServerPicker(token: token, clientId: clientId),
+            builder: (_) => PlexServerPicker(token: account.token, clientId: account.clientId),
           );
         }
       });

@@ -47,11 +47,12 @@ class _NavbarState extends State<Navbar> {
       label: "Library",
       selectedIcon: const Icon(Icons.library_books_rounded, color: Colors.black),
     ),
-    NavigationDestination(
-      icon: Icon(Icons.download_outlined, color: Colors.grey.shade400),
-      label: "Downloads",
-      selectedIcon: const Icon(Icons.download_rounded, color: Colors.black),
-    ),
+    if (kDownloadsEnabled)
+      NavigationDestination(
+        icon: Icon(Icons.download_outlined, color: Colors.grey.shade400),
+        label: "Downloads",
+        selectedIcon: const Icon(Icons.download_rounded, color: Colors.black),
+      ),
     NavigationDestination(
       icon: Icon(Icons.settings_outlined, color: Colors.grey.shade400),
       label: "Settings",
@@ -70,11 +71,12 @@ class _NavbarState extends State<Navbar> {
       label: Text("Library"),
       selectedIcon: Icon(Icons.library_books),
     ),
-    NavigationRailDestination(
-      icon: Icon(Icons.download_outlined),
-      label: Text("Downloads"),
-      selectedIcon: Icon(Icons.download),
-    ),
+    if (kDownloadsEnabled)
+      NavigationRailDestination(
+        icon: Icon(Icons.download_outlined),
+        label: Text("Downloads"),
+        selectedIcon: Icon(Icons.download),
+      ),
     NavigationRailDestination(
       icon: Icon(Icons.settings_outlined),
       label: Text("Settings"),

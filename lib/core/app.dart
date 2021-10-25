@@ -62,18 +62,20 @@ class App extends StatelessWidget {
                   widget: const SettingsScreen(),
                   // buildTransition: (_, __, child) => child,
                 ),
-                VWidget(
-                  path: "downloads",
-                  widget: const DownloadsScreen(),
-                ),
-
-                VWidget.builder(
-                  path: "downloads/:id",
-                  builder: (ctx, route) => AudioBookScreen(
-                    route.queryParameters["id"]!,
-                    offline: true,
+                
+                if (kDownloadsEnabled) ...[
+                  VWidget(
+                    path: "downloads",
+                    widget: const DownloadsScreen(),
                   ),
-                ),
+                  VWidget.builder(
+                    path: "downloads/:id",
+                    builder: (ctx, route) => AudioBookScreen(
+                      route.queryParameters["id"]!,
+                      offline: true,
+                    ),
+                  )
+                ],
 
                 VWidget(path: "error/offline", widget: const OfflineScreen()),
               ],

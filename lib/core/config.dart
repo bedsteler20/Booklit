@@ -1,5 +1,5 @@
 // Project imports:
+import 'package:flutter/foundation.dart';
 import 'package:plexlit/plexlit.dart';
 
-const supportDownloads = true;
-const devMode = true;
+const kDownloadsEnabled = !kIsWeb && true;

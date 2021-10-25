@@ -16,7 +16,7 @@ class Storage {
   late Box<Map<dynamic, dynamic>> plexClients;
 
   late Box settings;
-  late Box credentials;
+  late Box accounts;
 
   /// Stores the progress of audiobooks
   /// keys are the books id
@@ -28,7 +28,7 @@ class Storage {
     await Hive.initFlutter();
     progress = await Hive.openBox("progress");
     plexClients = await Hive.openBox("plex_clients");
-    credentials = await Hive.openBox("credentials");
+    accounts = await Hive.openBox("accounts");
     downloadsIndex = await Hive.openBox("downloads_index");
     settings = await Hive.openBox("settings");
     // plexClients.clear();

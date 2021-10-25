@@ -23,6 +23,15 @@ class PlexRepository extends PlexlitRepository {
   MediaItem library;
 
   @override
+  RepoFeatures features = const RepoFeatures(
+    allCollections: true,
+    allGenres: true,
+    collections: true,
+    genres: true,
+    newBooks: false,
+  );
+
+  @override
   String get title => library.title;
 
   @override

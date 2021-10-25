@@ -16,8 +16,8 @@ Dio _http = Dio(
       "X-Plex-Version": "2.0",
       "X-Plex-Product": "Plexlit (Flutter)",
       "X-Plex-Model": "hosted",
-      "X-Plex-Device":kIsWeb?"Web": Platform.operatingSystem,
-      "X-Plex-Device-Name": kIsWeb?"Web":Platform.operatingSystem,
+      "X-Plex-Device": kIsWeb ? "Web" : Platform.operatingSystem,
+      "X-Plex-Device-Name": kIsWeb ? "Web" : Platform.operatingSystem,
       "X-Plex-Sync-Version": "2",
       "X-Plex-Features": "external-media%2Cindirect-media",
       "accept": "application/json",
@@ -34,7 +34,7 @@ class PlexOauth {
   String clientId;
   String authCode;
   int authId;
-  String? token;
+  Account? account;
 
   static Future<PlexOauth> create({required String clientId}) async => _http.post(
         "https://plex.tv/api/v2/pins",
@@ -50,14 +50,27 @@ class PlexOauth {
         );
       });
 
-  Future<String?> checkPin() async {
+  Future<Account?> checkPin() async {
     String? newToken = await _http.get(
       "https://plex.tv/api/v2/pins/$authId",
       queryParameters: {"X-Plex-Client-Identifier": clientId},
     ).then((x) => x.data["authToken"]);
+
     if (newToken == null) return null;
-    token = newToken;
-    return newToken;
+
+    final accountData = await _http.get("https://plex.tv/api/v2/user", queryParameters: {
+      "X-Plex-Client-Identifier": clientId,
+      "X-Plex-Token": newToken,
+    });
+
+    account = Account(
+      clientId: clientId,
+      name: accountData.data["username"],
+      profilePicture: Uri.parse(accountData.data["thumb"]),
+      token: newToken,
+    );
+
+    return account;
   }
 
   String get loginUrl => Uri(
