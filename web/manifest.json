@@ -3,8 +3,8 @@
     "short_name": "Plexlit",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#F08CC9",
-    "theme_color": "#F08CC9",
+    "background_color": "#32272a",
+    "theme_color": "#32272a",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

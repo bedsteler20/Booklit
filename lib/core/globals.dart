@@ -1,12 +1,13 @@
 // Package imports:
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
 import 'package:plexlit/plexlit.dart';
-import 'package:plexlit/plexlit.dart';
 
-final repository = RepoProvider();
-final miniplayerController = MiniplayerController();
-final storage = Storage();
-final downloads = DownloadsProvider();
-final connectivity = ConnectivityProvider();
+final REPOSITORY = RepoProvider();
+final MINIPLAYER_CONTROLLER = MiniplayerController();
+final STORAGE = Storage();
+final DOWNLOADS = DownloadsProvider();
+final CONNECTIVITY = ConnectivityProvider();

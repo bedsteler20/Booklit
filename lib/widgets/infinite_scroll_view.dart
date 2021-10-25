@@ -16,14 +16,14 @@ class InfiniteScrollView extends StatefulWidget {
   Future<List<MediaItem>> query({int limit = 50, int start = 0}) {
     switch (parent.type) {
       case MediaItemType.author:
-        return repository.data!
+        return REPOSITORY.data!
             .getAuthor(parent.id, limit: limit, start: start)
             .then((v) => v.books);
 
       case MediaItemType.genre:
-        return repository.data!.getGenre(parent.id, limit: limit, start: start);
+        return REPOSITORY.data!.getGenre(parent.id, limit: limit, start: start);
       case MediaItemType.collection:
-        return repository.data!.getCollection(parent.id, limit: limit, start: start);
+        return REPOSITORY.data!.getCollection(parent.id, limit: limit, start: start);
       default:
         throw "can't find repository query for ${parent.type.toString()}";
     }

@@ -9,7 +9,7 @@ class ClientPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final clients = storage.loadClients();
+    final clients = STORAGE.loadClients();
     context.watch<RepoProvider>();
 
     return SimpleDialog(
@@ -18,8 +18,8 @@ class ClientPicker extends StatelessWidget {
         return ListTile(
           title: Text(e.title),
           subtitle: Text(e.title2 ?? ""),
-          selected: e.clientId == repository.data!.clientId,
-          onTap: () => repository.connect(e, save: false, setPrimaryClient: true),
+          selected: e.clientId == REPOSITORY.data!.clientId,
+          onTap: () => REPOSITORY.connect(e, save: false, setPrimaryClient: true),
         );
       }).toList()
         ..addAll([
@@ -29,7 +29,7 @@ class ClientPicker extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
 
-              var account = Account.fromMap(storage.accounts.get("plex-account"));
+              var account = Account.fromMap(STORAGE.accounts.get("plex-account"));
 
               showDialog(
                 context: context,

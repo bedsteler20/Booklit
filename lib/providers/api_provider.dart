@@ -24,8 +24,8 @@ class RepoProvider with ChangeNotifier {
     bool updateServerInfo = false,
   }) async {
     if (i == null) return;
-    if (save) storage.saveClient(i);
-    if (setPrimaryClient) storage.settings.put("primary_client", i.clientId);
+    if (save) STORAGE.saveClient(i);
+    if (setPrimaryClient) STORAGE.settings.put("primary_client", i.clientId);
     if (updateServerInfo) i.updateServerInfo();
 
     _repo = i;
@@ -34,12 +34,12 @@ class RepoProvider with ChangeNotifier {
   }
 
   Future<void> loadPrimaryClient() async {
-    String? primaryClientId = storage.settings.get("primary_client");
+    String? primaryClientId = STORAGE.settings.get("primary_client");
     if (primaryClientId == null) {
-      await connect(await storage.loadClients().lastOrNull);
+      await connect(await STORAGE.loadClients().lastOrNull);
       return;
     }
-    for (var item in storage.loadClients()) {
+    for (var item in STORAGE.loadClients()) {
       if (item.clientId == primaryClientId) {
         await connect(item, updateServerInfo: true);
       }

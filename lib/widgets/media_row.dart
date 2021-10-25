@@ -44,7 +44,7 @@ class MediaRowWidget extends StatelessWidget {
                         const SizedBox(height: 4),
                         Center(
                           child: ImageWidget(
-                            url: repository.data!.transcodeImage(
+                            url: REPOSITORY.data!.transcodeImage(
                               item.thumb,
                               height: 150,
                               width: 150,

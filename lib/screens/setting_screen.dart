@@ -60,8 +60,8 @@ class AccountSettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (storage.accounts.containsKey(type)) {
-      var account = Account.fromMap(storage.accounts.get(type));
+    if (STORAGE.accounts.containsKey(type)) {
+      var account = Account.fromMap(STORAGE.accounts.get(type));
       return ListTile(
         title: Text(account.name),
         subtitle: const Text("Plex.tv"),
@@ -77,8 +77,8 @@ class AccountSettingsTile extends StatelessWidget {
                     TextButton(
                       child: const Text("Yes"),
                       onPressed: () {
-                        storage.accounts.delete(type);
-                        if (storage.accounts.isEmpty) context.vRouter.to("/auth");
+                        STORAGE.accounts.delete(type);
+                        if (STORAGE.accounts.isEmpty) context.vRouter.to("/auth");
                         Navigator.pop(context);
                       },
                     )

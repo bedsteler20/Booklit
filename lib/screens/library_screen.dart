@@ -22,7 +22,7 @@ class LibraryScreenState extends State<LibraryScreen> {
   void initState() {
     super.initState();
     if (children.isEmpty) {
-      repository.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
+      REPOSITORY.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
         children.addAll(value);
         if (value.length < _querySize) isComplete = true;
         isLoading = false;
@@ -36,7 +36,7 @@ class LibraryScreenState extends State<LibraryScreen> {
         if (scrollController.position.pixels + 100 >= scrollController.position.maxScrollExtent) {
           if (!isLoading && !isComplete) {
             isLoading = true;
-            repository.data!.getAudiobooks(limit: _querySize, start: children.length).then(
+            REPOSITORY.data!.getAudiobooks(limit: _querySize, start: children.length).then(
               (value) {
                 children.addAll(value);
                 if (value.length < _querySize) isComplete = true;
@@ -53,7 +53,7 @@ class LibraryScreenState extends State<LibraryScreen> {
   Future<void> refresh() async {
     if (!isLoading) {
       isLoading = true;
-      repository.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
+      REPOSITORY.data!.getAudiobooks(limit: _querySize, start: 0).then((value) {
         children = value;
         if (value.length < _querySize) isComplete = true;
         isLoading = false;

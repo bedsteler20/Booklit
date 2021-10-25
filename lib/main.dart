@@ -22,18 +22,18 @@ void main() async {
       androidNotificationOngoing: true,
     );
   }
-  await storage.init();
+  await STORAGE.init();
 
-  await repository.loadPrimaryClient();
+  await REPOSITORY.loadPrimaryClient();
 
   final audioPlayer = await AudioProvider().init();
 
   runApp(MultiProvider(
       providers: [
         Provider(create: (context) => ConnectivityProvider()),
-        ListenableProvider<RepoProvider>(create: (context) => repository),
-        ListenableProvider(create: (context) => miniplayerController),
-        ListenableProvider(create: (context) => downloads),
+        ListenableProvider<RepoProvider>(create: (context) => REPOSITORY),
+        ListenableProvider(create: (context) => MINIPLAYER_CONTROLLER),
+        ListenableProvider(create: (context) => DOWNLOADS),
         ListenableProvider(create: (context) => audioPlayer),
       ],
       child: Builder(

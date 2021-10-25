@@ -6,7 +6,7 @@ class DownloadButton extends StatelessWidget {
   final Audiobook book;
   @override
   Widget build(BuildContext context) {
-    final isDonwnloaded = storage.downloadsIndex.containsKey(book.id);
+    final isDonwnloaded = STORAGE.downloadsIndex.containsKey(book.id);
     return IconButton(
       icon: Icon(isDonwnloaded ? Icons.download_done_rounded : Icons.download_outlined),
       onPressed: () {

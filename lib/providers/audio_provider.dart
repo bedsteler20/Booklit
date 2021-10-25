@@ -71,8 +71,8 @@ class AudioProvider extends ChangeNotifierState {
     await _audio.setAudioSource(
       book.toAudioSource(),
       preload: true,
-      initialIndex: storage.progress.get(book.id)?["index"],
-      initialPosition: Duration(milliseconds: storage.progress.get(book.id)?["position"] ?? 0),
+      initialIndex: STORAGE.progress.get(book.id)?["index"],
+      initialPosition: Duration(milliseconds: STORAGE.progress.get(book.id)?["position"] ?? 0),
     );
   }
 
@@ -109,7 +109,7 @@ class AudioProvider extends ChangeNotifierState {
     // Position Tracking
     _audio.positionStream
         .timeout(const Duration(seconds: 5))
-        .listen((e) => storage.progress.put(current?.id ?? "null", {
+        .listen((e) => STORAGE.progress.put(current?.id ?? "null", {
               "position": _audio.position.inMilliseconds,
               "index": _audio.currentIndex,
             }));

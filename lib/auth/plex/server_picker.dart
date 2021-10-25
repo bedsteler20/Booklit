@@ -57,7 +57,7 @@ class PlexServerPicker extends StatelessWidget {
                                     server: selected!,
                                   ));
                           if (library != null) {
-                            repository.connect(
+                            REPOSITORY.connect(
                               PlexRepository(
                                 server: selected!,
                                 token: token,

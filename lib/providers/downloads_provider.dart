@@ -22,7 +22,7 @@ class DownloadsProvider with ChangeNotifier {
   Map<MediaItem, CancelToken> _cancelTokens = {};
 
   List<MediaItem> get downloaded =>
-      storage.downloadsIndex.values.map((e) => MediaItem.fromMap(e)).toList();
+      STORAGE.downloadsIndex.values.map((e) => MediaItem.fromMap(e)).toList();
 
   final _dio = Dio();
 
@@ -88,7 +88,7 @@ class DownloadsProvider with ChangeNotifier {
 
     await metadataFile.writeAsString(jsonEncode(book.toMap()));
 
-    await storage.downloadsIndex.put(bookDir, mediaItem.toMap());
+    await STORAGE.downloadsIndex.put(bookDir, mediaItem.toMap());
 
     notifyListeners();
   }
@@ -103,7 +103,7 @@ class DownloadsProvider with ChangeNotifier {
     final rootDirectory = (await getApplicationDocumentsDirectory()).path;
     final bookDir = await mkdir("$rootDirectory/downloads/$id");
     await Directory(bookDir).delete(recursive: true);
-    storage.downloadsIndex.delete(bookDir);
+    STORAGE.downloadsIndex.delete(bookDir);
 
     notifyListeners();
   }

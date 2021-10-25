@@ -33,7 +33,7 @@ class AudioBookScreen extends StatelessWidget {
   Widget MoreByAuthorBuilder(BuildContext context, Audiobook book) {
     return FutureBuilderPlus<Author>(
       key: key,
-      future: repository.data!.getAuthor(book.authorId, limit: 10),
+      future: REPOSITORY.data!.getAuthor(book.authorId, limit: 10),
       loading: (_) => const SizedBox(),
       error: (_, __) => const SizedBox(),
       completed: (_, author) {
@@ -89,12 +89,12 @@ class AudioBookScreen extends StatelessWidget {
         label: const Text("Play"),
         onPressed: () async {
           // Prefer downloaded version of audiobook
-          if (storage.downloadsIndex.keys.contains(book.id)) {
-            context.find<AudioProvider>().load(await downloads.getAudiobook(book.id));
+          if (STORAGE.downloadsIndex.keys.contains(book.id)) {
+            context.find<AudioProvider>().load(await DOWNLOADS.getAudiobook(book.id));
           } else {
             context.find<AudioProvider>().load(book);
           }
-          miniplayerController.animateToHeight(
+          MINIPLAYER_CONTROLLER.animateToHeight(
             duration: const Duration(milliseconds: 500),
             state: PanelState.MAX,
           );
@@ -202,7 +202,7 @@ class AudioBookScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilderPlus<Audiobook>(
-      future: offline ? downloads.getAudiobook(id) : repository.data!.getAudioBook(id),
+      future: offline ? DOWNLOADS.getAudiobook(id) : REPOSITORY.data!.getAudioBook(id),
       completed: (ctx, data) {
         return CustomScrollView(
           slivers: [

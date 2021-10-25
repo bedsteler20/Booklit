@@ -18,7 +18,7 @@ class GridItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ImageWidget(
-                url: repository.data!.transcodeImage(
+                url: REPOSITORY.data!.transcodeImage(
                   item.thumb,
                   height: 200,
                   width: 200,

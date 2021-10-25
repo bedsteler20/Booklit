@@ -28,8 +28,8 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
   }
 
   Future<void> login() async {
-    if (storage.accounts.containsKey("plex-account")) {
-      var account = Account.fromMap(storage.accounts.get("plex-account"));
+    if (STORAGE.accounts.containsKey("plex-account")) {
+      var account = Account.fromMap(STORAGE.accounts.get("plex-account"));
 
       showDialog(
         context: context,
@@ -53,7 +53,7 @@ class _PlexLoginButtonState extends State<PlexLoginButton> {
         if (account != null) {
           timer.cancel();
 
-          storage.accounts.put("plex-account", account.toMap());
+          STORAGE.accounts.put("plex-account", account.toMap());
 
           showDialog(
             context: context,

@@ -46,7 +46,7 @@ class _AppScaffoldState extends State<AppScaffold> {
             Padding(
               padding: EdgeInsets.only(left: context.isTablet ? 80 : 0),
               child: Miniplayer(
-                controller: miniplayerController,
+                controller: MINIPLAYER_CONTROLLER,
                 minHeight: 80,
                 maxHeight: context.height,
                 builder: (height, percentage) => MiniplayerWidget(
