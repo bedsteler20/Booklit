@@ -35,6 +35,8 @@ class AudioProvider extends ChangeNotifierState {
   /// The position up to which buffered audio is available.
   Duration bufferedPosition = const Duration(milliseconds: 0);
 
+  int chapterIndex = 0;
+
   late final BuildContext context;
 
   Future<void> play() => _audio.play();
@@ -46,6 +48,10 @@ class AudioProvider extends ChangeNotifierState {
   Future<void> setSpeed(double speed) => _audio.setSpeed(speed);
 
   Future<void> seek(Duration? position, {int? chapterIndex}) async {
+    if (chapterIndex != null) {
+      this.chapterIndex = chapterIndex;
+      notifyListeners();
+    }
     _audio.seek(position, index: chapterIndex);
   }
 
@@ -72,7 +78,11 @@ class AudioProvider extends ChangeNotifierState {
 
   Future<AudioProvider> init() async {
     _audio.currentIndexStream.listen(
-      (e) => setValue(() => chapter = current?.chapters[e ?? 0]),
+      (e) {
+        chapterIndex = e ?? 0;
+        chapter = current?.chapters[e ?? 0];
+        setValue(() {});
+      },
     );
     // _audio.durationStream.listen(
     //   (e) => setValue(() => duration = e ?? const Duration()),

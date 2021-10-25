@@ -52,6 +52,7 @@ export 'widgets/audio_player/seek_button.dart';
 export 'widgets/audio_player/speed_button.dart';
 export 'widgets/audio_player/timeline.dart';
 export 'widgets/buttons/download_button.dart';
+export 'widgets/dialogs/chapter_picker.dart';
 export 'widgets/dialogs/client_picker_dialog.dart';
 export 'widgets/dialogs/player_speed_dialog.dart';
 export 'widgets/downloading_list_item.dart';
