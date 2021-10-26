@@ -27,27 +27,26 @@ Dio _http = Dio(
 
 class PlexOauth {
   PlexOauth({
-    required this.authCode,
-    required this.authId,
+    this.authCode,
+    this.authId,
     required this.clientId,
   });
   String clientId;
-  String authCode;
-  int authId;
+  String? authCode;
+  int? authId;
   Account? account;
 
-  static Future<PlexOauth> create({required String clientId}) async => _http.post(
+  Future<void> create() async => _http.post(
         "https://plex.tv/api/v2/pins",
         queryParameters: {
           "strong": true,
           "X-Plex-Client-Identifier": clientId,
         },
       ).then((v) {
-        return PlexOauth(
-          clientId: clientId,
-          authCode: v.data["code"],
-          authId: v.data["id"],
-        );
+        authCode = v.data["code"];
+        authId = v.data["id"];
+
+        
       });
 
   Future<Account?> checkPin() async {

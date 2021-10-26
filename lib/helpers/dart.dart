@@ -1,5 +1,13 @@
 // Dart imports:
+// ignore_for_file: constant_identifier_names
+
+// Dart imports:
 import 'dart:io';
+
+// Package imports:
+import 'package:uuid/uuid.dart' as uu;
+
+const Uuid = uu.Uuid();
 
 extension ListExt<E> on List {
   E? get lastOrNull {

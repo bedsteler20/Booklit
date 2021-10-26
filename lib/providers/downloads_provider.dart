@@ -2,20 +2,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-// Flutter imports:
-import 'package:flutter/cupertino.dart';
-
 // Package imports:
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
 
 // Project imports:
-import 'package:plexlit/core/globals.dart';
-import 'package:plexlit/helpers/dart.dart';
-import 'package:plexlit/model/audiobook.dart';
-import 'package:plexlit/model/media_item.dart';
 import 'package:plexlit/plexlit.dart';
+
+// Project imports:
+
 
 class DownloadsProvider with ChangeNotifier {
   Map<MediaItem, double> inProgress = {};

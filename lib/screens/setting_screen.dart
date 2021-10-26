@@ -38,6 +38,13 @@ class SettingsScreen extends StatelessWidget {
                 title: const Text("Skip Silence"),
                 value: context.select<AudioProvider, bool>((v) => v.skipSilence),
                 onChanged: context.read<AudioProvider>().setSkipSilence,
+              ),
+              SwitchListTile(
+                title: const Text("Auto-Rewind"),
+                subtitle: const Text(
+                    "When resuming playback, Plexlit will rewind between 0 and 20 seconds depending on how long ago you last listen"),
+                value: context.select<AudioProvider, bool>((v) => v.autoRewindEnabled),
+                onChanged: context.read<AudioProvider>().setAutoRewindEnabled,
               )
             ],
           ),

@@ -114,7 +114,14 @@ class AudioBookScreen extends StatelessWidget {
               padding: const EdgeInsets.only(right: 16),
               width: (context.width * 0.3).clamp(1, context.height * 0.4),
               children: [
-                ImageWidget(url: book.thumb),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: ImageWidget(
+                    url: book.thumb,
+                    height: 600,
+                    width: 600,
+                  ),
+                ),
                 PlayButtonBuilder(context, book),
                 RatingBuilder(context, book),
               ],

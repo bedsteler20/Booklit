@@ -5,8 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:plexlit/plexlit.dart';
 
 abstract class ChangeNotifierState with ChangeNotifier {
-  void setValue(VoidCallback _cb) {
-    _cb();
+  void setState([VoidCallback? _cb]) {
+    _cb?.call();
     notifyListeners();
+  }
+
+  /// Saves state to disk
+  Future<void> saveState() async {}
+
+  /// Loads State from disk
+  Future<void> loadState() async {}
+
+  Future<void> initState() async {
+    loadState();
   }
 }

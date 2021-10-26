@@ -1,7 +1,6 @@
 // Package imports:
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart' as b;
-import 'package:uuid/uuid.dart';
 
 // Project imports:
 import 'package:plexlit/plexlit.dart';
@@ -15,9 +14,10 @@ extension AudiobookExt on Audiobook {
                 end: e.end,
                 start: e.start,
                 tag: b.MediaItem(
-                  id: const Uuid().v4(),
+                  id: Uuid.v4(),
                   title: title,
                   album: e.name,
+                  artUri: thumb,
                 )))
             .toList());
   }

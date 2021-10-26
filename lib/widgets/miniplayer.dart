@@ -202,6 +202,18 @@ class MiniplayerWidget extends StatelessWidget {
                             showDialog(context: context, builder: (_) => const ChapterPicker()),
                       ),
                     ),
+                    PopupMenuItem(
+                      child: ListTile(
+                        visualDensity: VisualDensity.compact,
+                        leading: const Icon(Icons.stop_rounded),
+                        contentPadding: const EdgeInsets.all(2),
+                        title: const Text("Stop"),
+                        onTap: () {
+                          player.stop();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
                   ];
                 },
               ),

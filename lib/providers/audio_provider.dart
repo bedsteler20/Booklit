@@ -3,47 +3,42 @@ import 'dart:async';
 
 // Package imports:
 import 'package:just_audio/just_audio.dart';
+import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
 import 'package:plexlit/plexlit.dart';
 
-class AudioProvider extends ChangeNotifierState {
+class AudioProvider extends ChangeNotifierState with AutoRewind {
+  late final BuildContext context;
   static final _audio = AudioPlayer();
 
-  Duration? sleepTimerDuration;
-  Duration? _sleepEndTime; //The exect position in playback to stop
-  bool stopAtEndOfChapter = false;
-
-  /// value that represents the currently playing audiobook
-  Audiobook? current;
-
-  Chapter? chapter;
-
   PlayerState playerState = PlayerState(false, ProcessingState.buffering);
-
+  Duration position = const Duration(milliseconds: 0);
+  Duration bufferedPosition = const Duration(milliseconds: 0);
+  int chapterIndex = 0;
   double speed = 1;
-
-  /// Only on Android
   bool skipSilence = false;
+  Audiobook? current;
+  bool autoRewindEnabled = true;
 
-  /// The duration of the current audio or null if unknown.
+  Chapter? get chapter => current?.chapters[chapterIndex];
   Duration get duration => chapter!.length;
 
-  /// The current position of the player.
-  Duration position = const Duration(milliseconds: 0);
+  Future<void> play() async {
+    if (autoRewindEnabled && autoRewindSeconds > 2) {
+      await seek(Duration(seconds: position.inSeconds - autoRewindSeconds));
+      stopAutoRemindTimer();
+    }
+    await _audio.play();
+  }
 
-  /// The position up to which buffered audio is available.
-  Duration bufferedPosition = const Duration(milliseconds: 0);
-
-  int chapterIndex = 0;
-
-  late final BuildContext context;
-
-  Future<void> play() => _audio.play();
-
-  Future<void> pause() => _audio.pause();
+  Future<void> pause() async {
+    if (autoRewindEnabled) startAutoRemindTimer();
+    await _audio.pause();
+  }
 
   Future<void> setSkipSilence(bool b) => _audio.setSkipSilenceEnabled(b);
+  void setAutoRewindEnabled(bool b) => setState(() => autoRewindEnabled = b);
 
   Future<void> setSpeed(double speed) => _audio.setSpeed(speed);
 
@@ -55,18 +50,10 @@ class AudioProvider extends ChangeNotifierState {
     _audio.seek(position, index: chapterIndex);
   }
 
-  void startSleepTimer({Duration? duration, bool endOfChapter = false}) {
-    if (duration != null) {
-      sleepTimerDuration = duration;
-    } else if (endOfChapter) {
-      stopAtEndOfChapter = true;
-    }
-  }
-
   Future<void> load(Audiobook? book) async {
     if (book == null) throw "Cant play audio book if it is null";
-    chapter = book.chapters[0];
     current = book;
+    saveState();
 
     await _audio.setAudioSource(
       book.toAudioSource(),
@@ -76,35 +63,22 @@ class AudioProvider extends ChangeNotifierState {
     );
   }
 
-  Future<AudioProvider> init() async {
-    _audio.currentIndexStream.listen(
-      (e) {
-        chapterIndex = e ?? 0;
-        chapter = current?.chapters[e ?? 0];
-        setValue(() {});
-      },
-    );
-    // _audio.durationStream.listen(
-    //   (e) => setValue(() => duration = e ?? const Duration()),
-    // );
-    _audio.bufferedPositionStream.listen(
-      (e) => setValue(() => bufferedPosition = e),
-    );
-    _audio.playerStateStream.listen(
-      (e) => setValue(() => playerState = e),
-    );
-    _audio.speedStream.listen(
-      (e) => setValue(() => speed = e),
-    );
-    _audio.skipSilenceEnabledStream.listen((e) => setValue(() => skipSilence = e));
-    _audio.positionStream.listen((e) => setValue(() {
-          position = e;
-          if (_sleepEndTime?.inSeconds == e.inSeconds) pause();
-          notifyListeners();
-        }));
-    _audio.currentIndexStream.listen((_) {
-      if (stopAtEndOfChapter) pause();
-    });
+  void stop() async {
+    current = null;
+    notifyListeners();
+    saveState();
+  }
+
+  @override
+  Future<AudioProvider> initState() async {
+    super.initState();
+
+    _audio.currentIndexStream.listen((e) => setState(() => chapterIndex = e ?? 0));
+    _audio.bufferedPositionStream.listen((e) => setState(() => bufferedPosition = e));
+    _audio.playerStateStream.listen((e) => setState(() => playerState = e));
+    _audio.speedStream.listen((e) => setState(() => speed = e));
+    _audio.skipSilenceEnabledStream.listen((e) => setState(() => skipSilence = e));
+    _audio.positionStream.listen((e) => setState(() => position = e));
 
     // Position Tracking
     _audio.positionStream
@@ -117,7 +91,21 @@ class AudioProvider extends ChangeNotifierState {
     return this;
   }
 
+  @override
   Future<void> dispose() async {
+    super.dispose();
     _audio.dispose();
+  }
+
+  @override
+  Future<void> loadState() async {
+    if (STORAGE.state.containsKey("playerState")) {
+      load(Audiobook.fromMap(await STORAGE.state.get("playerState")));
+    }
+  }
+
+  @override
+  Future<void> saveState() async {
+    STORAGE.state.put("playerState", current?.toMap());
   }
 }

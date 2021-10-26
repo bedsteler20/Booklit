@@ -44,6 +44,14 @@ class ImageWidget extends StatelessWidget {
     );
   }
 
+  Widget buildLoading(BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+    if (loadingProgress == null) {
+      return child;
+    } else {
+      return Shimmr();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (icon == null && url == null) {
@@ -59,7 +67,7 @@ class ImageWidget extends StatelessWidget {
         color: context.theme.cardColor,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
-          child: SizedBox(
+          child: Container(
             height: width,
             width: height,
             child: Icon(icon, size: 36),
@@ -68,44 +76,55 @@ class ImageWidget extends StatelessWidget {
       );
     }
     if (url!.isScheme("https") || url!.isScheme("http")) {
-      return Image.network(
-        url.toString(),
-        height: height,
-        width: width,
-        errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Material(
-              elevation: 10,
-              borderRadius: BorderRadius.circular(borderRadius),
-              child: ClipRRect(
+      return Container(
+        constraints: BoxConstraints(
+          maxHeight: height ?? double.infinity,
+          maxWidth: width ?? double.infinity,
+        ),
+        child: Image.network(
+          url.toString(),
+          height: height,
+          width: width,
+          loadingBuilder: buildLoading,
+          errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
+          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Material(
+                elevation: 10,
                 borderRadius: BorderRadius.circular(borderRadius),
-                child: child,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  child: child,
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       );
     } else {
-      return Image.file(
-        File(url!.path),
-        height: height,
-        width: width,
-        errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Material(
-              elevation: 10,
-              borderRadius: BorderRadius.circular(borderRadius),
-              child: ClipRRect(
+      return Container(
+        constraints: BoxConstraints(
+          maxHeight: height ?? double.infinity,
+          maxWidth: width ?? double.infinity,
+        ),
+        child: Image.file(
+          File(url!.path),
+          errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
+          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Material(
+                elevation: 10,
                 borderRadius: BorderRadius.circular(borderRadius),
-                child: child,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  child: child,
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       );
     }
   }

@@ -14,7 +14,7 @@ void main() async {
   if (kIsWeb || Platform.isAndroid) {
     WidgetsFlutterBinding.ensureInitialized();
     await JustAudioBackground.init(
-      preloadArtwork: false,
+      preloadArtwork: true,
       artDownscaleHeight: 100,
       artDownscaleWidth: 100,
       androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
@@ -26,7 +26,7 @@ void main() async {
 
   await REPOSITORY.loadPrimaryClient();
 
-  final audioPlayer = await AudioProvider().init();
+  final audioPlayer = await AudioProvider().initState();
 
   runApp(MultiProvider(
       providers: [

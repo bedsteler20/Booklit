@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 // Project imports:
 import 'package:plexlit/plexlit.dart';
-import 'package:plexlit/repository/base_repository.dart';
 
 // ignore_for_file: curly_braces_in_flow_control_structures
 
@@ -17,6 +15,7 @@ class Storage {
 
   late Box settings;
   late Box accounts;
+  late LazyBox state;
 
   /// Stores the progress of audiobooks
   /// keys are the books id
@@ -31,6 +30,7 @@ class Storage {
     accounts = await Hive.openBox("accounts");
     downloadsIndex = await Hive.openBox("downloads_index");
     settings = await Hive.openBox("settings");
+    state = await Hive.openLazyBox("state");
     // plexClients.clear();
   }
 
