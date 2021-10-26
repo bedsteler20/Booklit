@@ -4,6 +4,7 @@ import 'dart:io';
 
 // Package imports:
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
@@ -11,24 +12,20 @@ import 'package:plexlit/plexlit.dart';
 
 // Project imports:
 
-
-class DownloadsProvider with ChangeNotifier {
-  Map<MediaItem, double> inProgress = {};
-  Map<MediaItem, CancelToken> _cancelTokens = {};
-
-  List<MediaItem> get downloaded =>
-      STORAGE.downloadsIndex.values.map((e) => MediaItem.fromMap(e)).toList();
+class DownloadsProvider extends DownloadsProviderBase {
 
   final _dio = Dio();
 
+  @override
   void download(Audiobook book) async {
+   
     final rootDirectory = (await getApplicationDocumentsDirectory()).path;
     final mediaItem = book.toMediaItem(offline: true)..type = MediaItemType.offlineAudiobook;
     final bookDir = await mkdir("$rootDirectory/downloads/${book.id}");
     final cancelToken = CancelToken();
 
     inProgress[mediaItem] = 0;
-    _cancelTokens[mediaItem] = cancelToken;
+    cancelTokens[mediaItem] = cancelToken;
 
     notifyListeners();
 
@@ -88,12 +85,9 @@ class DownloadsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void cancel(MediaItem item) {
-    _cancelTokens[item]?.cancel();
-    inProgress.remove(item);
-    notifyListeners();
-  }
+ 
 
+  @override
   void delete(String id) async {
     final rootDirectory = (await getApplicationDocumentsDirectory()).path;
     final bookDir = await mkdir("$rootDirectory/downloads/$id");
@@ -103,6 +97,7 @@ class DownloadsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   Future<Audiobook> getAudiobook(String id) async {
     final rootDirectory = (await getApplicationDocumentsDirectory()).path;
 

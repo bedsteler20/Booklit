@@ -18,11 +18,9 @@ class GridItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ImageWidget(
-                url: REPOSITORY.data!.transcodeImage(
-                  item.thumb,
-                  height: 200,
-                  width: 200,
-                ),
+                url: item.thumb,
+                height: 200,
+                width: 200,
                 asspectRatio: 1 / 1,
               ),
               const SizedBox(height: 4),

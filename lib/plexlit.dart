@@ -32,7 +32,7 @@ export 'model/plex_media_server.dart';
 export 'providers/api_provider.dart';
 export 'providers/audio_provider.dart';
 export 'providers/connectivity_provider.dart';
-export 'providers/downloads_provider.dart';
+export 'providers/downloads_provider/downloads_provider.dart';
 export 'repository/base_repository.dart';
 export 'repository/libvox_repository.dart';
 export 'repository/plex_repository.dart';

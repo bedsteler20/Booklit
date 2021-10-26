@@ -23,6 +23,7 @@ void main() async {
     );
   }
   await STORAGE.init();
+  await DOWNLOADS.init();
 
   await REPOSITORY.loadPrimaryClient();
 

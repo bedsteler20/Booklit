@@ -86,6 +86,8 @@ index_generator:
     - '**.g.dart'
     - 'generated_plugin_registrant.dart'
     - 'main.dart'
+    - '**.io.dart'
+    - '**.web.dart'
   indexes:
     - path: lib
       include:

@@ -29,11 +29,8 @@ class ListItem extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: ImageWidget(
-                    url: REPOSITORY.data!.transcodeImage(
-                      item.thumb,
-                      height: imageSize.toInt(),
-                      width: imageSize.toInt(),
-                    ),
+                    url: item.thumb,
+                    transcode: true,
                     height: imageSize,
                     width: imageSize,
                   ),
