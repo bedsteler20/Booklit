@@ -44,7 +44,7 @@ class MiniplayerWidget extends StatelessWidget {
               alignment: alignment,
               duration: animationDiration,
               child: Container(
-                padding: EdgeInsets.only(top: percentage * 45),
+                padding: EdgeInsets.only(top: percentage * 65),
                 constraints: BoxConstraints(
                     maxHeight: height.clamp(0, context.height.clamp(0, context.height / 2.2))),
                 child: Row(
@@ -53,7 +53,7 @@ class MiniplayerWidget extends StatelessWidget {
                     // Thumb
                     AnimatedContainer(
                       duration: animationDiration,
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(5),
                       child: ImageWidget(
                         url: context.select<AudioProvider, Uri?>((v) => v.current?.thumb),
                         borderRadius: percentage < 0.3 ? 5 : 20,
