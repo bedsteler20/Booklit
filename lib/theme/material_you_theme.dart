@@ -6,7 +6,7 @@ import 'package:plexlit/plexlit.dart';
 
 const _background = Color.fromARGB(255, 32, 26, 28);
 
-materialYouTheme() => ThemeData(
+final materialYouTheme = ThemeData(
     buttonColor: const Color.fromARGB(255, 255, 175, 210),
     cardColor: const Color.fromARGB(255, 43, 33, 37),
     cardTheme: CardTheme(
@@ -33,4 +33,7 @@ materialYouTheme() => ThemeData(
     ),
     popupMenuTheme: PopupMenuThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
+    dialogTheme: const DialogTheme(
+      backgroundColor: _background,
     ));

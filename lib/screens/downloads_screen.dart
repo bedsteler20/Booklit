@@ -19,29 +19,34 @@ class DownloadsScreen extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate([
             for (var item in inProgresses)
-              Selector<DownloadsProvider, double>(
-                selector: (context, s) => s.inProgress[item]!,
-                builder: (context, value, __) => DownloadingListItem(item,
-                    progress: value,
-                    onCancel: () => showDialog(
+              Selector<DownloadsProvider, double?>(
+                  selector: (context, s) => s.inProgress[item],
+                  builder: (context, value, __) {
+                    if (value == null) return const SizedBox();
+                    return DownloadingListItem(
+                      item,
+                      progress: value,
+                      onCancel: () => showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              title: const Text("Cancel Download?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text("No"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    cancel(item);
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Yes"),
-                                )
-                              ],
-                            ))),
-              ),
+                          title: const Text("Cancel Download?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("No"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                cancel(item);
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Yes"),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
             if (inProgresses.isNotEmpty) const Divider(),
             for (var item in downloaded)
               ListItem(

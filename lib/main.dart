@@ -3,6 +3,7 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:just_audio_background/just_audio_background.dart';
@@ -28,6 +29,10 @@ void main() async {
   await REPOSITORY.loadPrimaryClient();
 
   final audioPlayer = await AudioProvider().initState();
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    statusBarColor: materialYouTheme.navigationRailTheme.backgroundColor,
+  ));
 
   runApp(MultiProvider(
       providers: [

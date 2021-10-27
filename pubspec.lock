@@ -288,6 +288,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  dio_cache_interceptor:
+    dependency: "direct main"
+    description:
+      name: dio_cache_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
+  dio_cache_interceptor_hive_store:
+    dependency: "direct main"
+    description:
+      name: dio_cache_interceptor_hive_store
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   expand_widget:
     dependency: "direct main"
     description:

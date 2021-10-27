@@ -5,13 +5,11 @@ class MediaRowWidget extends StatelessWidget {
   const MediaRowWidget({
     Key? key,
     required this.items,
-    required this.onShowMore,
     this.title = "null",
   }) : super(key: key);
 
   final List<MediaItem> items;
   final String title;
-  final void Function() onShowMore;
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox();
@@ -21,10 +19,7 @@ class MediaRowWidget extends StatelessWidget {
         ListTile(
           title: Text(title, style: Theme.of(context).textTheme.headline6),
           dense: true,
-          trailing: IconButton(
-            icon: Icon(Icons.arrow_forward, color: context.primaryColor),
-            onPressed: onShowMore,
-          ),
+          //
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -32,7 +27,6 @@ class MediaRowWidget extends StatelessWidget {
             for (var item in items)
               Container(
                 margin: const EdgeInsets.all(8),
-                height: 210,
                 width: 160,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
@@ -51,8 +45,8 @@ class MediaRowWidget extends StatelessWidget {
                             transcode: true,
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Expanded(
+                        Container(
+                          margin: const EdgeInsets.all(8),
                           child: Text(
                             item.title,
                             maxLines: 2,

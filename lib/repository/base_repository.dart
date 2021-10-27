@@ -1,3 +1,8 @@
+// Package imports:
+import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+
 // Project imports:
 import 'package:plexlit/plexlit.dart';
 
@@ -6,6 +11,9 @@ abstract class PlexlitRepository {
   String clientId = "null";
   String title = "null";
   String? title2;
+
+  final client = Dio()
+    ..interceptors.add(DioCacheInterceptor(options: CacheOptions(store: HiveCacheStore(null))));
 
   final RepoFeatures features = const RepoFeatures();
 

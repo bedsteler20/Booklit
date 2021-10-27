@@ -11,77 +11,79 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final player = context.read<AudioProvider>();
     return Scaffold(
-      body: Column(
-        children: [
-          AppBar(
-            title: const Text("Settings"),
-          ),
-          SettingsGroup(title: "General", children: [
-            const SizedBox(height: 8),
-            ListTile(
-              leading: const Icon(Icons.library_add_outlined, size: 32),
-              title: const Text("Server"),
-              subtitle: const Text("The library or server to scan"),
-              onTap: () => ClientPicker.open(context),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AppBar(
+              title: const Text("Settings"),
             ),
-          ]),
-          SettingsGroup(
-            title: "Player",
-            children: [
+            SettingsGroup(title: "General", children: [
+              const SizedBox(height: 8),
               ListTile(
-                title: const Text("Playback Speed"),
-                trailing: const SpeedButton(),
-                onTap: () =>
-                    showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
+                leading: const Icon(Icons.library_add_outlined, size: 32),
+                title: const Text("Server"),
+                subtitle: const Text("The library or server to scan"),
+                onTap: () => ClientPicker.open(context),
               ),
-              SwitchListTile(
-                title: const Text("Skip Silence"),
-                value: context.select<AudioProvider, bool>((v) => v.skipSilence),
-                onChanged: context.read<AudioProvider>().setSkipSilence,
-              ),
-              SwitchListTile(
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    "Auto-Rewind",
-                    style: context.bodyText1?.copyWith(fontSize: 16),
-                  ),
+            ]),
+            SettingsGroup(
+              title: "Player",
+              children: [
+                ListTile(
+                  title: const Text("Playback Speed"),
+                  trailing: const SpeedButton(),
+                  onTap: () =>
+                      showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
                 ),
-                subtitle: const Text(
-                    "When resuming playback, Plexlit will rewind between 0 and 20 seconds depending on how long ago you last listen"),
-                value: context.select<AudioProvider, bool>((v) => v.autoRewindEnabled),
-                onChanged: context.read<AudioProvider>().setAutoRewindEnabled,
-              )
-            ],
-          ),
-          SettingsGroup(
-            title: "Accounts",
-            children: const [
-              AccountSettingsTile("plex-account"),
-            ],
-          ),
-          SettingsGroup(
-            title: "Other Stuff",
-            children: [
-              ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    "reddit.com/r/Plexlit",
-                    style: context.bodyText1?.copyWith(fontSize: 16),
-                  ),
+                SwitchListTile(
+                  title: const Text("Skip Silence"),
+                  value: context.select<AudioProvider, bool>((v) => v.skipSilence),
+                  onChanged: context.read<AudioProvider>().setSkipSilence,
                 ),
-                onTap: () => context.vRouter.toExternal("https://reddit.com/r/Plexlit"),
-                subtitle: const Text(
-                    "Share bug reports, request features, and learn about upcoming features"),
-              ),
-              ListTile(
-                title: const Text("Licencees"),
-                onTap: () => showLicensePage(context: context),
-              )
-            ],
-          ),
-        ],
+                SwitchListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      "Auto-Rewind",
+                      style: context.bodyText1?.copyWith(fontSize: 16),
+                    ),
+                  ),
+                  subtitle: const Text(
+                      "When resuming playback, Plexlit will rewind between 0 and 20 seconds depending on how long ago you last listen"),
+                  value: context.select<AudioProvider, bool>((v) => v.autoRewindEnabled),
+                  onChanged: context.read<AudioProvider>().setAutoRewindEnabled,
+                )
+              ],
+            ),
+            SettingsGroup(
+              title: "Accounts",
+              children: const [
+                AccountSettingsTile("plex-account"),
+              ],
+            ),
+            SettingsGroup(
+              title: "Other Stuff",
+              children: [
+                ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      "reddit.com/r/Plexlit",
+                      style: context.bodyText1?.copyWith(fontSize: 16),
+                    ),
+                  ),
+                  onTap: () => context.vRouter.toExternal("https://reddit.com/r/Plexlit"),
+                  subtitle: const Text(
+                      "Share bug reports, request features, and learn about upcoming features"),
+                ),
+                ListTile(
+                  title: const Text("Licencees"),
+                  onTap: () => showLicensePage(context: context),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

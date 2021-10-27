@@ -67,20 +67,17 @@ class HomeScreenState extends State<HomeScreen> {
                 MediaRowWidget(
                   items: downloaded,
                   title: "Downloads",
-                  onShowMore: () => context.to("/downloads"),
                 ),
               if (_collectionsLoaded)
                 MediaRowWidget(
                   items: _collections!,
                   title: "Collections",
-                  onShowMore: () => context.to("/collections"),
                 ),
 
               if (_genresLoaded)
                 MediaRowWidget(
                   items: _genres!,
                   title: "Genres",
-                  onShowMore: () => context.to("/genres"),
                 )
 
               // FutureBuilder<List<PlexObject>>(

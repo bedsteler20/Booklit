@@ -1,3 +1,6 @@
+// Flutter imports:
+import 'package:flutter/services.dart';
+
 // Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -10,7 +13,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VRouter(
-      theme: materialYouTheme(),
+      theme: materialYouTheme,
       debugShowCheckedModeBanner: false,
       title: "Plexlit",
       onSystemPop: (redirect) async {
@@ -62,7 +65,7 @@ class App extends StatelessWidget {
                   widget: const SettingsScreen(),
                   // buildTransition: (_, __, child) => child,
                 ),
-                
+
                 if (kDownloadsEnabled) ...[
                   VWidget(
                     path: "downloads",

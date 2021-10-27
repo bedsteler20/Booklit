@@ -51,7 +51,6 @@ enum MediaItemType {
   genre,
   author,
   library,
-  series,
 }
 
 extension MediaItemTypeString on MediaItemType {
@@ -67,8 +66,6 @@ extension MediaItemTypeString on MediaItemType {
         return "author";
       case MediaItemType.library:
         return "library";
-      case MediaItemType.series:
-        return "series";
       case MediaItemType.offlineAudiobook:
         return "offline_audiobook";
       default:
@@ -90,8 +87,6 @@ extension MediaItemTypeString on MediaItemType {
             return MediaItemType.author;
           case 'library':
             return MediaItemType.library;
-          case 'Series':
-            return MediaItemType.series;
           default:
             throw RangeError("enum Fruit contains no value '$name'");
         }

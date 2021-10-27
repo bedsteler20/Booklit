@@ -1,4 +1,7 @@
 // Dart imports:
+// ignore_for_file: non_constant_identifier_names
+
+// Dart imports:
 import 'dart:ui';
 
 // Package imports:
@@ -118,52 +121,108 @@ class MiniplayerWidget extends StatelessWidget {
         width: context.width - 80,
         color: context.theme.cardColor,
         height: 80,
-        child: Expanded(
-          child: Stack(
-            alignment: Alignment.centerRight,
-            children: [
-              Row(
-                children: [
-                  const Expanded(child: SizedBox()),
-                  ColumnContainer(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          context.select<AudioProvider, String>((v) => v.chapter!.name),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
-                        ),
-                      ),
-                      const Timeline(
-                        labelLocation: TimeLabelLocation.sides,
-                      ),
-                    ],
-                    width: context.width * 0.4,
+        child: Flex(
+          direction: Axis.horizontal,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ImageWidget(
+                    url: context.select<AudioProvider, Uri?>((v) => v.current?.thumb),
                   ),
-                  const Expanded(child: SizedBox()),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.all(4.0),
-                    child: ImageWidget(
-                      url: context.select<AudioProvider, Uri?>((v) => v.current?.thumb),
+                ),
+                const PlayButton(desktop: true),
+              ],
+            ),
+            const Expanded(child: SizedBox()),
+            Row(
+              children: [
+                const SeekButton(time: -30, desktop: true),
+                ColumnContainer(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        context.select<AudioProvider, String>((v) => v.chapter!.name),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.bodyText1!.copyWith(fontSize: 20),
+                      ),
                     ),
-                  ),
-                  const PlayButton(
-                    desktop: true,
-                  ),
-                ],
-              )
-            ],
-          ),
+                    const Timeline(
+                      labelLocation: TimeLabelLocation.sides,
+                    ),
+                  ],
+                  width: context.width * 0.4,
+                ),
+                const SeekButton(time: 30, desktop: true),
+              ],
+            ),
+            const Expanded(child: SizedBox()),
+            Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.all(4.0),
+              child: MoreButton(context, player),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget MoreButton(BuildContext context, AudioProvider player) {
+    return PopupMenuButton(
+      icon: const Icon(Icons.more_vert),
+      color: context.theme.scaffoldBackgroundColor,
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            child: ListTile(
+              visualDensity: VisualDensity.compact,
+              leading: const Icon(Icons.speed_rounded),
+              contentPadding: const EdgeInsets.all(2),
+              title: const Text("Playback Speed"),
+              onTap: () => showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              visualDensity: VisualDensity.compact,
+              leading: const Icon(Icons.book_rounded),
+              contentPadding: const EdgeInsets.all(2),
+              title: const Text("Chapter"),
+              onTap: () => showDialog(context: context, builder: (_) => const ChapterPicker()),
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              visualDensity: VisualDensity.compact,
+              leading: const Icon(Icons.stop_rounded),
+              contentPadding: const EdgeInsets.all(2),
+              title: const Text("Stop"),
+              onTap: () {
+                player.stop();
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              visualDensity: VisualDensity.compact,
+              leading: const Icon(Icons.timer_rounded),
+              contentPadding: const EdgeInsets.all(2),
+              title: const Text("Sleep Timer"),
+              onTap: () {
+                Navigator.pop(context);
+                SleepTimerDialog.show(context);
+              },
+            ),
+          ),
+        ];
+      },
     );
   }
 
@@ -176,60 +235,7 @@ class MiniplayerWidget extends StatelessWidget {
         child: Opacity(
           opacity: percentage < 0.3 ? 0.0 : percentage,
           child: AppBar(
-            actions: [
-              PopupMenuButton(
-                icon: const Icon(Icons.more_vert),
-                color: context.theme.scaffoldBackgroundColor,
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      child: ListTile(
-                        visualDensity: VisualDensity.compact,
-                        leading: const Icon(Icons.speed_rounded),
-                        contentPadding: const EdgeInsets.all(2),
-                        title: const Text("Playback Speed"),
-                        onTap: () =>
-                            showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
-                      ),
-                    ),
-                    PopupMenuItem(
-                      child: ListTile(
-                        visualDensity: VisualDensity.compact,
-                        leading: const Icon(Icons.book_rounded),
-                        contentPadding: const EdgeInsets.all(2),
-                        title: const Text("Chapter"),
-                        onTap: () =>
-                            showDialog(context: context, builder: (_) => const ChapterPicker()),
-                      ),
-                    ),
-                    PopupMenuItem(
-                      child: ListTile(
-                        visualDensity: VisualDensity.compact,
-                        leading: const Icon(Icons.stop_rounded),
-                        contentPadding: const EdgeInsets.all(2),
-                        title: const Text("Stop"),
-                        onTap: () {
-                          player.stop();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    PopupMenuItem(
-                      child: ListTile(
-                        visualDensity: VisualDensity.compact,
-                        leading: const Icon(Icons.timer_rounded),
-                        contentPadding: const EdgeInsets.all(2),
-                        title: const Text("Sleep Timer"),
-                        onTap: () {
-                          Navigator.pop(context);
-                          SleepTimerDialog.show(context);
-                        },
-                      ),
-                    ),
-                  ];
-                },
-              ),
-            ],
+            actions: [MoreButton(context, player)],
             title: Text(context.select<AudioProvider, String>((v) => v.current!.title)),
             backgroundColor: const Color.fromARGB(0, 0, 0, 0),
             leading: IconButton(

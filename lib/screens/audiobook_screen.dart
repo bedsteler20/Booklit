@@ -38,7 +38,6 @@ class AudioBookScreen extends StatelessWidget {
       error: (_, __) => const SizedBox(),
       completed: (_, author) {
         return MediaRowWidget(
-          onShowMore: () {},
           items: author.books.where((e) => e.id != book.id).toList(),
           title: "More by ${book.author}",
         );

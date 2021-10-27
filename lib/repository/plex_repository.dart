@@ -38,7 +38,6 @@ class PlexRepository extends PlexlitRepository {
 
   String get libraryId => library.id;
 
-  final _dio = Dio();
   static const type = PlexlitClientType.plex;
 
   /// Asks Plex.tv for a list of servers and picks the one thats client id matches
@@ -82,7 +81,7 @@ class PlexRepository extends PlexlitRepository {
     required this.library,
     required this.clientId,
   }) {
-    _dio.options = BaseOptions(
+    client.options = BaseOptions(
       headers: {
         "X-Plex-Token": token,
         "X-Plex-Client-Identifier": clientId,
@@ -99,7 +98,7 @@ class PlexRepository extends PlexlitRepository {
   }
 
   @override
-  getAudiobooks({int start = 0, int limit = 50}) async => _dio.get(
+  getAudiobooks({int start = 0, int limit = 50}) async => client.get(
         "$libraryAddress/all?type=9",
         queryParameters: {
           "X-Plex-Container-Start": start,
@@ -108,7 +107,7 @@ class PlexRepository extends PlexlitRepository {
       ).then((_) => makeMediaList(_));
 
   @override
-  getCollections({int start = 0, int limit = 50}) async => _dio.get(
+  getCollections({int start = 0, int limit = 50}) async => client.get(
         "$libraryAddress/collections",
         queryParameters: {
           "X-Plex-Container-Start": start,
@@ -116,7 +115,7 @@ class PlexRepository extends PlexlitRepository {
         },
       ).then(makeMediaList);
   @override
-  getCollection(String id, {int start = 0, int limit = 50}) async => _dio.get(
+  getCollection(String id, {int start = 0, int limit = 50}) async => client.get(
         "${server.address}/library/collections/$id/children",
         queryParameters: {
           "type": 9,
@@ -125,7 +124,7 @@ class PlexRepository extends PlexlitRepository {
         },
       ).then(makeMediaList);
   @override
-  getGenres({int start = 0, int limit = 50}) async => _dio.get(
+  getGenres({int start = 0, int limit = 50}) async => client.get(
         "$libraryAddress/genre",
         queryParameters: {
           "type": 9,
@@ -134,7 +133,7 @@ class PlexRepository extends PlexlitRepository {
         },
       ).then(makeMediaList);
   @override
-  getGenre(String id, {int start = 0, int limit = 50}) async => _dio.get(
+  getGenre(String id, {int start = 0, int limit = 50}) async => client.get(
         "$libraryAddress/all",
         queryParameters: {
           "type": 9,
@@ -153,13 +152,13 @@ class PlexRepository extends PlexlitRepository {
     };
 
     // This endpoint gets collections and userRatings
-    final album = await _dio.get("${server.address}/library/metadata/$id", queryParameters: {
+    final album = await client.get("${server.address}/library/metadata/$id", queryParameters: {
       "includeChapters": "1",
       "includeReviews": "1",
       "includeCollections": "1",
     }).then((e) => e.data["MediaContainer"]["Metadata"][0]);
 
-    final track = (await _dio.get(
+    final track = (await client.get(
       "${server.address}/library/metadata/$id/children",
       queryParameters: {
         "includeChapters": "1",
@@ -171,7 +170,7 @@ class PlexRepository extends PlexlitRepository {
 
     Future<List<Chapter>> chapters() async {
       if (track.length < 2) {
-        final metadata = (await _dio.get(
+        final metadata = (await client.get(
                 "${server.address}/library/metadata/" + track.first["ratingKey"],
                 queryParameters: queryParameters))
             .data["MediaContainer"]["Metadata"][0];
@@ -232,7 +231,7 @@ class PlexRepository extends PlexlitRepository {
 
   @override
   Future<Author> getAuthor(String id, {int start = 50, int limit = 0}) async =>
-      await _dio.get("${server.address}/library/metadata/$id/children").then((v) {
+      await client.get("${server.address}/library/metadata/$id/children").then((v) {
         List<MediaItem> books = [];
 
         if (v.data["MediaContainer"]["Metadata"] != null) {
@@ -280,14 +279,14 @@ class PlexRepository extends PlexlitRepository {
     var devices = await findServers(clientId: clientId, token: token);
     for (var server in devices) {
       if (server.clientIdentifier == server.clientIdentifier) {
-        server.useRelay = !await server.ping(_dio);
+        server.useRelay = !await server.ping(client);
       }
     }
   }
 
   @override
   Future<void> rateItem(String id, double rating) async {
-    await _dio.put("${server.address}/:/rate", queryParameters: {
+    await client.put("${server.address}/:/rate", queryParameters: {
       "identifier": "com.plexapp.plugins.library",
       "key": id,
       "rating": rating * 2,
@@ -329,9 +328,6 @@ extension PlexApiHelpers on PlexRepository {
   }
 
   MediaItemType? _pickType(dynamic e) {
-    if (e["type"] == "collection" && (e["title"] as String).startsWith("Series: ")) {
-      return MediaItemType.series;
-    }
     if (e["type"] == "collection") return MediaItemType.collection;
     if (e["type"] == "album") return MediaItemType.audioBook;
     if (e["type"] == "genre") return MediaItemType.genre;
@@ -340,8 +336,8 @@ extension PlexApiHelpers on PlexRepository {
   Uri? _makeLink(String str) {
     var x = Uri.parse(server.address + str).replace(
       queryParameters: {
-        "X-Plex-Token": _dio.options.headers["X-Plex-Token"],
-        "X-Plex-Client-Identifier": _dio.options.headers["X-Plex-Client-Identifier"],
+        "X-Plex-Token": client.options.headers["X-Plex-Token"],
+        "X-Plex-Client-Identifier": client.options.headers["X-Plex-Client-Identifier"],
       },
     );
     return x;
