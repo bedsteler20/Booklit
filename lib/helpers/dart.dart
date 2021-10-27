@@ -24,3 +24,7 @@ extension ListExt<E> on List {
 Future<String> mkdir(String path) async {
   return (await Directory(path.replaceAll(" ", "_").toLowerCase()).create(recursive: true)).path;
 }
+
+extension IntExt on int {
+  Duration get seconds => Duration(seconds: this);
+}

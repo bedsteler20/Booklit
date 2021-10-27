@@ -2,9 +2,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:

@@ -1,4 +1,6 @@
 // Dart imports:
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:async';
 
 // Package imports:
@@ -8,9 +10,10 @@ import 'package:miniplayer/miniplayer.dart';
 // Project imports:
 import 'package:plexlit/plexlit.dart';
 
-class AudioProvider extends ChangeNotifierState with AutoRewind {
+final JustAudio = AudioPlayer();
+
+class AudioProvider extends ChangeNotifierState with AutoRewind, SleepTimer {
   late final BuildContext context;
-  static final _audio = AudioPlayer();
 
   PlayerState playerState = PlayerState(false, ProcessingState.buffering);
   Duration position = const Duration(milliseconds: 0);
@@ -29,25 +32,25 @@ class AudioProvider extends ChangeNotifierState with AutoRewind {
       await seek(Duration(seconds: position.inSeconds - autoRewindSeconds));
       stopAutoRemindTimer();
     }
-    await _audio.play();
+    await JustAudio.play();
   }
 
   Future<void> pause() async {
     if (autoRewindEnabled) startAutoRemindTimer();
-    await _audio.pause();
+    await JustAudio.pause();
   }
 
-  Future<void> setSkipSilence(bool b) => _audio.setSkipSilenceEnabled(b);
+  Future<void> setSkipSilence(bool b) => JustAudio.setSkipSilenceEnabled(b);
   void setAutoRewindEnabled(bool b) => setState(() => autoRewindEnabled = b);
 
-  Future<void> setSpeed(double speed) => _audio.setSpeed(speed);
+  Future<void> setSpeed(double speed) => JustAudio.setSpeed(speed);
 
   Future<void> seek(Duration? position, {int? chapterIndex}) async {
     if (chapterIndex != null) {
       this.chapterIndex = chapterIndex;
       notifyListeners();
     }
-    _audio.seek(position, index: chapterIndex);
+    JustAudio.seek(position, index: chapterIndex);
   }
 
   Future<void> load(Audiobook? book) async {
@@ -55,7 +58,7 @@ class AudioProvider extends ChangeNotifierState with AutoRewind {
     current = book;
     saveState();
 
-    await _audio.setAudioSource(
+    await JustAudio.setAudioSource(
       book.toAudioSource(),
       preload: true,
       initialIndex: STORAGE.progress.get(book.id)?["index"],
@@ -70,22 +73,28 @@ class AudioProvider extends ChangeNotifierState with AutoRewind {
   }
 
   @override
+  void startSleepTimer(SleepTimerType type) => setState(() => super.startSleepTimer(type));
+
+  @override
+  void stopSleepTimer() => setState(() => super.stopSleepTimer());
+
+  @override
   Future<AudioProvider> initState() async {
     super.initState();
 
-    _audio.currentIndexStream.listen((e) => setState(() => chapterIndex = e ?? 0));
-    _audio.bufferedPositionStream.listen((e) => setState(() => bufferedPosition = e));
-    _audio.playerStateStream.listen((e) => setState(() => playerState = e));
-    _audio.speedStream.listen((e) => setState(() => speed = e));
-    _audio.skipSilenceEnabledStream.listen((e) => setState(() => skipSilence = e));
-    _audio.positionStream.listen((e) => setState(() => position = e));
+    JustAudio.currentIndexStream.listen((e) => setState(() => chapterIndex = e ?? 0));
+    JustAudio.bufferedPositionStream.listen((e) => setState(() => bufferedPosition = e));
+    JustAudio.playerStateStream.listen((e) => setState(() => playerState = e));
+    JustAudio.speedStream.listen((e) => setState(() => speed = e));
+    JustAudio.skipSilenceEnabledStream.listen((e) => setState(() => skipSilence = e));
+    JustAudio.positionStream.listen((e) => setState(() => position = e));
 
     // Position Tracking
-    _audio.positionStream
+    JustAudio.positionStream
         .timeout(const Duration(seconds: 5))
         .listen((e) => STORAGE.progress.put(current?.id ?? "null", {
-              "position": _audio.position.inMilliseconds,
-              "index": _audio.currentIndex,
+              "position": JustAudio.position.inMilliseconds,
+              "index": JustAudio.currentIndex,
             }));
 
     return this;
@@ -94,7 +103,7 @@ class AudioProvider extends ChangeNotifierState with AutoRewind {
   @override
   Future<void> dispose() async {
     super.dispose();
-    _audio.dispose();
+    JustAudio.dispose();
   }
 
   @override

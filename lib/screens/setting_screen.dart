@@ -40,7 +40,13 @@ class SettingsScreen extends StatelessWidget {
                 onChanged: context.read<AudioProvider>().setSkipSilence,
               ),
               SwitchListTile(
-                title: const Text("Auto-Rewind"),
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    "Auto-Rewind",
+                    style: context.bodyText1?.copyWith(fontSize: 16),
+                  ),
+                ),
                 subtitle: const Text(
                     "When resuming playback, Plexlit will rewind between 0 and 20 seconds depending on how long ago you last listen"),
                 value: context.select<AudioProvider, bool>((v) => v.autoRewindEnabled),
@@ -52,6 +58,27 @@ class SettingsScreen extends StatelessWidget {
             title: "Accounts",
             children: const [
               AccountSettingsTile("plex-account"),
+            ],
+          ),
+          SettingsGroup(
+            title: "Other Stuff",
+            children: [
+              ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(
+                    "reddit.com/r/Plexlit",
+                    style: context.bodyText1?.copyWith(fontSize: 16),
+                  ),
+                ),
+                onTap: () => context.vRouter.toExternal("https://reddit.com/r/Plexlit"),
+                subtitle: const Text(
+                    "Share bug reports, request features, and learn about upcoming features"),
+              ),
+              ListTile(
+                title: const Text("Licencees"),
+                onTap: () => showLicensePage(context: context),
+              )
             ],
           ),
         ],
@@ -100,9 +127,7 @@ class AccountSettingsTile extends StatelessWidget {
         ),
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
-
-    return Container();
   }
 }

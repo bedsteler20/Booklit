@@ -1,8 +1,11 @@
 @JS()
 library plexlit_js_lib;
 
-import 'package:js/js.dart';
+// Dart imports:
 import 'dart:async';
+
+// Package imports:
+import 'package:js/js.dart';
 
 @JS()
 external Future download(String id, List<String> urls);

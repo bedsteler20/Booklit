@@ -214,6 +214,18 @@ class MiniplayerWidget extends StatelessWidget {
                         },
                       ),
                     ),
+                    PopupMenuItem(
+                      child: ListTile(
+                        visualDensity: VisualDensity.compact,
+                        leading: const Icon(Icons.timer_rounded),
+                        contentPadding: const EdgeInsets.all(2),
+                        title: const Text("Sleep Timer"),
+                        onTap: () {
+                          Navigator.pop(context);
+                          SleepTimerDialog.show(context);
+                        },
+                      ),
+                    ),
                   ];
                 },
               ),

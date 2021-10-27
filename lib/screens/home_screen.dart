@@ -34,6 +34,14 @@ class HomeScreenState extends State<HomeScreen> {
         setState(() {});
       });
     }
+
+    // Clear cache when repo changes
+    REPOSITORY.addListener(() {
+      _collectionsLoaded = false;
+      _genresLoaded = false;
+      _collections = null;
+      _genres = null;
+    });
   }
 
   @override

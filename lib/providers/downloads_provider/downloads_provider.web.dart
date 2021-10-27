@@ -1,12 +1,14 @@
 // Dart imports:
 // ignore_for_file: avoid_web_libraries_in_flutter
 
+// Dart imports:
 import 'dart:js_util';
 
 // Package imports:
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:plexlit/helpers/plexlit_js_lib.web.dart' as jslib;
+
 // Project imports:
+import 'package:plexlit/helpers/plexlit_js_lib.web.dart' as jslib;
 import 'package:plexlit/plexlit.dart';
 
 // Project imports:

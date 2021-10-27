@@ -28,7 +28,11 @@ class _NavbarState extends State<Navbar> {
         context.vRouter.to("/library", isReplacement: true);
         break;
       case 2:
-        context.vRouter.to("/downloads", isReplacement: true);
+        if (kDownloadsEnabled) {
+          context.vRouter.to("/downloads", isReplacement: true);
+        } else {
+          context.vRouter.to("/settings", isReplacement: true);
+        }
         break;
       case 3:
         context.vRouter.to("/settings", isReplacement: true);
