@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="testRunner" value="GRADLE" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/audio_service-0.18.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/audio_session-0.1.6+1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/connectivity_plus-2.0.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/flutter_custom_tabs-1.0.3/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/just_audio-0.9.13/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/move_to_background-1.0.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.5/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.8/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.0+4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.0.10/android" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
