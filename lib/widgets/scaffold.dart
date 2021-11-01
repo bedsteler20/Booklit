@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:booklit/plexlit.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -7,7 +8,7 @@ import 'package:provider/src/provider.dart';
 
 // Project imports:
 import 'package:booklit/booklit.dart';
-import 'miniplayer.dart';
+import 'audio_player/miniplayer.dart';
 import 'navbar.dart';
 
 // Project imports:
@@ -45,10 +46,19 @@ class _AppScaffoldState extends State<AppScaffold> {
                 controller: MINIPLAYER_CONTROLLER,
                 minHeight: 80,
                 maxHeight: context.height,
-                builder: (height, percentage) => MiniplayerWidget(
-                  height: height,
-                  percentage: percentage,
-                ),
+                builder: (height, percentage) {
+                  if (context.isTablet && context.isLandscape) {
+                    return MiniplayerWidget(
+                      height: height,
+                      percentage: percentage,
+                    );
+                  } else {
+                    return DesktopMiniplayer(
+                      height: height,
+                      percentage: percentage,
+                    );
+                  }
+                },
               ),
             ),
         ],
