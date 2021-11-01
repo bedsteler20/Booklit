@@ -7,6 +7,7 @@ import 'package:booklit/booklit.dart';
 const _background = Color.fromARGB(255, 32, 26, 28);
 
 final materialYouTheme = ThemeData(
+    accentColor: Color.fromARGB(255, 255, 175, 210),
     buttonColor: const Color.fromARGB(255, 255, 175, 210),
     cardColor: const Color.fromARGB(255, 43, 33, 37),
     cardTheme: CardTheme(

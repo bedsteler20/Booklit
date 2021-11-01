@@ -21,7 +21,6 @@ class GridItem extends StatelessWidget {
                 url: item.thumb,
                 height: 200,
                 width: 200,
-                asspectRatio: 1 / 1,
               ),
               const SizedBox(height: 4),
               Text(

@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:plexlit/widgets/dialogs/conferm_dialog.dart';
 
 // Project imports:
 import 'package:booklit/booklit.dart';

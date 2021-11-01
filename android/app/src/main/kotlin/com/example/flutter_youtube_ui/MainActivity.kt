@@ -1,4 +1,4 @@
-package com.example.flutter_youtube_ui
+package com.bedsteler20.booklit
 
 import io.flutter.embedding.android.FlutterActivity
 

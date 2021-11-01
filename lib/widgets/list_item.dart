@@ -38,7 +38,6 @@ class ListItem extends StatelessWidget {
               ),
               /*----Title----*/
               Container(
-                width: (context.width).clamp(0, 300),
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

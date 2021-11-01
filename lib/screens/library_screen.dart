@@ -12,11 +12,11 @@ class LibraryScreen extends StatefulWidget {
 class LibraryScreenState extends State<LibraryScreen> {
   static const _querySize = 50;
 
-  static List<MediaItem> children = [];
-  static bool isLoading = true;
-  static bool isComplete = false;
-  static bool gridMode = false;
-  static final scrollController = ScrollController();
+  List<MediaItem> children = [];
+  bool isLoading = true;
+  bool isComplete = false;
+  bool gridMode = false;
+  final scrollController = ScrollController();
 
   @override
   void initState() {
@@ -71,28 +71,30 @@ class LibraryScreenState extends State<LibraryScreen> {
           scrollDirection: Axis.vertical,
           controller: scrollController,
           slivers: [
-            SliverAppBar(
-              title: const Text("Library"),
-              actions: [
-                IconButton(
-                    onPressed: () => setState(() => gridMode = !gridMode),
-                    icon: Icon(gridMode ? Icons.grid_on : Icons.list_rounded)),
-              ],
+            const SliverAppBar(
+              title: Text("Library"),
+              //! Grid mode disabled do to GridItem widget bug
+              // actions: [
+              //   IconButton(
+              //       onPressed: () => setState(() => gridMode = !gridMode),
+              //       icon: Icon(gridMode ? Icons.grid_on : Icons.list_rounded)),
+              // ],
             ),
-            if (gridMode)
-              SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 250,
-                    childAspectRatio: 4 / 5,
-                  ),
-                  delegate: SliverChildListDelegate(children.map((e) => GridItem(e)).toList()),
-                ),
-              )
-            else
-              SliverList(
-                  delegate: SliverChildListDelegate(children.map((e) => ListItem(e)).toList())),
+            // if (gridMode)
+            //   SliverPadding(
+            //     padding: EdgeInsets.symmetric(horizontal: 20),
+            //     sliver: SliverGrid(
+            //       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            //         maxCrossAxisExtent: 250,
+            //         crossAxisSpacing: 20,
+            //         childAspectRatio: 0.7,
+            //       ),
+            //       delegate: SliverChildListDelegate(children.map((e) => GridItem(e)).toList()),
+            //     ),
+            //   )
+            // else
+            SliverList(
+                delegate: SliverChildListDelegate(children.map((e) => ListItem(e)).toList())),
             const SliverPadding(
               padding: EdgeInsets.only(bottom: 80),
             )

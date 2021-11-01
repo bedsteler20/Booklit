@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bedsteler.booklit">
+    package="com.bedsteler20.booklit">
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>

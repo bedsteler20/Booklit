@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:plexlit/helpers/context.dart';
 
 // Project imports:
 import 'package:booklit/booklit.dart';
@@ -21,7 +20,7 @@ class ImageWidget extends StatelessWidget {
     this.transcode = false,
     this.borderRadius = 8.0,
     this.elevation = 10,
-    this.asspectRatio = 1,
+    this.aspectRatio,
     this.icon,
   }) : super(key: key);
 
@@ -31,7 +30,7 @@ class ImageWidget extends StatelessWidget {
   final double? height;
   final double elevation;
   final double borderRadius;
-  final double asspectRatio;
+  final double? aspectRatio;
   final IconData? icon;
 
   Widget buildError(BuildContext context) {
@@ -79,10 +78,10 @@ class ImageWidget extends StatelessWidget {
     }
     if (url!.isScheme("https") || url!.isScheme("http")) {
       return Container(
-        constraints: BoxConstraints(
-          maxHeight: height ?? double.infinity,
-          maxWidth: width ?? double.infinity,
-        ),
+        // constraints: BoxConstraints(
+        //   maxHeight: height ?? double.infinity,
+        //   maxWidth: width ?? double.infinity,
+        // ),
         child: Image.network(
           url.toString(),
           height: height,
@@ -106,10 +105,10 @@ class ImageWidget extends StatelessWidget {
       );
     } else {
       return Container(
-        constraints: BoxConstraints(
-          maxHeight: height ?? double.infinity,
-          maxWidth: width ?? double.infinity,
-        ),
+        // constraints: BoxConstraints(
+        //   maxHeight: height ?? double.infinity,
+        //   maxWidth: width ?? double.infinity,
+        // ),
         child: Image.file(
           File(url!.path),
           errorBuilder: (ctx, e, stack) => Builder(builder: buildError),
