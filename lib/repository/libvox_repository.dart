@@ -1,7 +1,7 @@
 // ignore_for_file: overridden_fields
 
 // Project imports:
-import 'package:plexlit/repository/base_repository.dart';
+import 'package:booklit/repository/base_repository.dart';
 
 const _imageRoot = "https://archive.org/services/get-item-image.php?identifier=";
 const _latestBooksApi =

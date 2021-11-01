@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class ConnectivityProvider extends ChangeNotifier {
   bool isOffline = false;

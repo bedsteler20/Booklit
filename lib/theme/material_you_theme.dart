@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 const _background = Color.fromARGB(255, 32, 26, 28);
 

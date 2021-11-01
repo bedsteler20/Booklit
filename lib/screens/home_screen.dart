@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

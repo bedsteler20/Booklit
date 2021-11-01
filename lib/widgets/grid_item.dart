@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class GridItem extends StatelessWidget {
   const GridItem(this.item, {Key? key}) : super(key: key);

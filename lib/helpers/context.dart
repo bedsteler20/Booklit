@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 extension MediaQueryExt on BuildContext {
   T find<T>({bool listen = false}) => Provider.of<T>(this, listen: listen);

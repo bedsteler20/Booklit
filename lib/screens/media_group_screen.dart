@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class MediaGroupScreen extends StatefulWidget {
   const MediaGroupScreen(this.route, {Key? key}) : super(key: key);
@@ -22,8 +22,6 @@ class _MediaGroupScreenState extends State<MediaGroupScreen> {
     scrollController.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class DownloadButton extends StatelessWidget {
   const DownloadButton(this.book, {Key? key}) : super(key: key);

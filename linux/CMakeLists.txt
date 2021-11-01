@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "Plexlit")
-set(APPLICATION_ID "com.bedsteler20.plexlit")
+set(BINARY_NAME "Booklit")
+set(APPLICATION_ID "com.bedsteler20.booklit")
 
 cmake_policy(SET CMP0063 NEW)
 

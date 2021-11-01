@@ -4,9 +4,11 @@ import 'dart:io';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/plexlit.dart';
+
+// Project imports:
+import 'package:booklit/booklit.dart';
 
 // Package imports:
 

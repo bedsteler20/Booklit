@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class ChapterPicker extends StatelessWidget {
   const ChapterPicker({Key? key}) : super(key: key);

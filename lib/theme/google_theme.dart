@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 /// Generate a theme.
 class GThemeGenerator {
@@ -183,7 +183,8 @@ class GThemeGenerator {
             (states) {
               const pressedState = MaterialState.pressed;
               const hoveredState = MaterialState.hovered;
-              final isHoveredOrPressed = states.where((e) => e == pressedState || e == hoveredState).isNotEmpty;
+              final isHoveredOrPressed =
+                  states.where((e) => e == pressedState || e == hoveredState).isNotEmpty;
 
               if (isHoveredOrPressed) return 3;
               return 0;

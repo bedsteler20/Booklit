@@ -17,10 +17,8 @@ The Linux versions of Booklit currently crashes when trying to play audio.
 - Jellyfin Support
 - Windows port
 
-Join the [r/Booklit](https://reddit.com/r/Booklit) for future updates
-
 ## Downloads 
-[Android / Chrome OS](https://drive.google.com/file/d/1MM4FDus9msqPeCG-Tvjo7uc5fugcEvcZ/view?usp=sharing)
-[Web App](https://plexlit.web.app/#/)
-[Self Hosted Web App](https://plexlit.web.app/download.tar.gz)
-[Linux Binary](https://drive.google.com/file/d/1pPg_7KHM_IwI5awyJUhApH3WuWMmrutc/view?usp=sharing)
+(Web App)[https://plexlit.web.app/#/]
+(Self Hosted Web App)
+(Android / Chrome OS)[https://drive.google.com/file/d/1MM4FDus9msqPeCG-Tvjo7uc5fugcEvcZ/view?usp=sharing]
+(Linux Binary)[https://drive.google.com/file/d/1pPg_7KHM_IwI5awyJUhApH3WuWMmrutc/view?usp=sharing]

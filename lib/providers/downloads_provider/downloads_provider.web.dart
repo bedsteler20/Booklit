@@ -8,8 +8,8 @@ import 'dart:js_util';
 import 'package:hive_flutter/hive_flutter.dart';
 
 // Project imports:
-import 'package:plexlit/helpers/plexlit_js_lib.web.dart' as jslib;
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
+import 'package:booklit/helpers/plexlit_js_lib.web.dart' as jslib;
 
 // Project imports:
 

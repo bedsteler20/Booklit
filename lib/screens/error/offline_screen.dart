@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:vrouter/src/core/extended_context.dart';
 
 // Project imports:
-import 'package:plexlit/helpers/context.dart';
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
+import 'package:booklit/helpers/context.dart';
 
 class OfflineScreen extends StatelessWidget {
   const OfflineScreen({Key? key}) : super(key: key);

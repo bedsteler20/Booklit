@@ -8,13 +8,13 @@ import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 Dio _http = Dio(
   BaseOptions(
     headers: {
       "X-Plex-Version": "2.0",
-      "X-Plex-Product": "Plexlit (Flutter)",
+      "X-Plex-Product": "Booklit",
       "X-Plex-Model": "hosted",
       "X-Plex-Device": kIsWeb ? "Web" : Platform.operatingSystem,
       "X-Plex-Device-Name": kIsWeb ? "Web" : Platform.operatingSystem,
@@ -45,8 +45,6 @@ class PlexOauth {
       ).then((v) {
         authCode = v.data["code"];
         authId = v.data["id"];
-
-        
       });
 
   Future<Account?> checkPin() async {

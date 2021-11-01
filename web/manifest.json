@@ -1,6 +1,6 @@
 {
-    "name": "Plexlit",
-    "short_name": "Plexlit",
+    "name": "Booklit",
+    "short_name": "Booklit",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#32272a",

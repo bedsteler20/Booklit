@@ -6,18 +6,15 @@ import 'package:miniplayer/miniplayer.dart';
 import 'package:provider/src/provider.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 import 'miniplayer.dart';
 import 'navbar.dart';
 
 // Project imports:
 
-
 class AppScaffold extends StatefulWidget {
   const AppScaffold(this.child, {Key? key}) : super(key: key);
   final Widget child;
-
-
 
   @override
   _AppScaffoldState createState() => _AppScaffoldState();
@@ -28,7 +25,6 @@ class _AppScaffoldState extends State<AppScaffold> {
   Widget build(BuildContext context) {
     bool showMiniPlayer = context.select<AudioProvider, bool>((v) => v.current != null);
     return Scaffold(
-      
       body: Stack(
         children: [
           Padding(

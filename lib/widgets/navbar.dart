@@ -2,7 +2,7 @@
 import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key, this.direction = Axis.horizontal})

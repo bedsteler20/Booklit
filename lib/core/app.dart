@@ -5,17 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return VRouter(
       theme: materialYouTheme,
       debugShowCheckedModeBanner: false,
-      title: "Plexlit",
+      title: "Booklit",
       onSystemPop: (redirect) async {
         if (redirect.historyCanBack()) redirect.historyBack();
       },

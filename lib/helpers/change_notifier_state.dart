@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 abstract class ChangeNotifierState with ChangeNotifier {
   void setState([VoidCallback? _cb]) {

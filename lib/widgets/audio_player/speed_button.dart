@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class SpeedButton extends StatelessWidget {
   const SpeedButton({Key? key}) : super(key: key);

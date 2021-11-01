@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class SleepTimerDialog extends StatelessWidget {
   const SleepTimerDialog({Key? key}) : super(key: key);

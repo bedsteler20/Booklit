@@ -6,7 +6,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class AudioBookScreen extends StatelessWidget {
   const AudioBookScreen(this.id, {Key? key, this.offline = false}) : super(key: key);

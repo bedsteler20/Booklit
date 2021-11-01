@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class PlayerSpeedDialog extends StatelessWidget {
   const PlayerSpeedDialog({Key? key}) : super(key: key);

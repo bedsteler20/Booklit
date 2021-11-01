@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 double valueFromPercentageInRange({required final double min, max, percentage}) {
   return percentage * (max - min) + min;

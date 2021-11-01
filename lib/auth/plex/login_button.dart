@@ -6,7 +6,7 @@ import 'package:async_button_builder/async_button_builder.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as chrome;
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class PlexLoginButton extends StatefulWidget {
   const PlexLoginButton({

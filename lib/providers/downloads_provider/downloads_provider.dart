@@ -10,7 +10,7 @@ import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 export 'downloads_provider.io.dart' if (dart.library.html) 'downloads_provider.web.dart';
 
@@ -18,7 +18,7 @@ abstract class DownloadsProviderBase with ChangeNotifier {
   Map<MediaItem, double> inProgress = {};
   Map<MediaItem, CancelToken> cancelTokens = {};
 
-  Future<void> init()async{}
+  Future<void> init() async {}
 
   List<MediaItem> get downloaded =>
       STORAGE.downloadsIndex.values.map((e) => MediaItem.fromMap(e)).toList();

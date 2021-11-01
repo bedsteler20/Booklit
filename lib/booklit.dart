@@ -10,7 +10,6 @@ export 'auth/plex/library_picker.dart';
 export 'auth/plex/login_button.dart';
 export 'auth/plex/plex_auth.dart';
 export 'auth/plex/server_picker.dart';
-export 'booklit.dart';
 export 'core/app.dart';
 export 'core/config.dart';
 export 'core/globals.dart';

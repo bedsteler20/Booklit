@@ -10,17 +10,15 @@ import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 // Project imports:
 
 class DownloadsProvider extends DownloadsProviderBase {
-
   final _dio = Dio();
 
   @override
   void download(Audiobook book) async {
-   
     final rootDirectory = (await getApplicationDocumentsDirectory()).path;
     final mediaItem = book.toMediaItem(offline: true)..type = MediaItemType.offlineAudiobook;
     final bookDir = await mkdir("$rootDirectory/downloads/${book.id}");
@@ -86,8 +84,6 @@ class DownloadsProvider extends DownloadsProviderBase {
 
     notifyListeners();
   }
-
- 
 
   @override
   void delete(String id) async {

@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class SeekButton extends StatelessWidget {
   const SeekButton({required this.time, Key? key, this.desktop = false}) : super(key: key);

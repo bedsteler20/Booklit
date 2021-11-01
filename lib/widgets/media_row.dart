@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class MediaRowWidget extends StatelessWidget {
   const MediaRowWidget({
@@ -52,7 +52,7 @@ class MediaRowWidget extends StatelessWidget {
                             maxLines: 2,
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.bodyText2!.copyWith(fontSize: 18),
+                            style: context.textTheme.bodyText2!.copyWith(fontSize: 16),
                           ),
                         ),
                       ],

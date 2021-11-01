@@ -9,7 +9,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 final JustAudio = AudioPlayer();
 

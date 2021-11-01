@@ -2,7 +2,7 @@
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
                   subtitle: const Text(
-                      "When resuming playback, Plexlit will rewind between 0 and 20 seconds depending on how long ago you last listen"),
+                      "When resuming playback, Booklit will rewind between 0 and 20 seconds depending on how long ago you last listen"),
                   value: context.select<AudioProvider, bool>((v) => v.autoRewindEnabled),
                   onChanged: context.read<AudioProvider>().setAutoRewindEnabled,
                 )
@@ -68,11 +68,11 @@ class SettingsScreen extends StatelessWidget {
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
-                      "reddit.com/r/Plexlit",
+                      "reddit.com/r/Booklit",
                       style: context.bodyText1?.copyWith(fontSize: 16),
                     ),
                   ),
-                  onTap: () => context.vRouter.toExternal("https://reddit.com/r/Plexlit"),
+                  onTap: () => context.vRouter.toExternal("https://reddit.com/r/Booklit"),
                   subtitle: const Text(
                       "Share bug reports, request features, and learn about upcoming features"),
                 ),

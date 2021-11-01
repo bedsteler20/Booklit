@@ -2,7 +2,7 @@
 import 'package:just_audio/just_audio.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 class PlayButton extends StatelessWidget {
   const PlayButton({Key? key, this.desktop = false}) : super(key: key);

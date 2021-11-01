@@ -1,0 +1,15 @@
+build:
+  web:
+    - flutter build web
+    - tar -czvf build/web/download.tar.gz build/web
+    - firebase deploy
+  android:
+    - flutter build apk
+    - mv build/app/outputs/apk/release/app-release.apk dist/android.apk
+  electron: 
+    - flutter build web
+    - cp build/web/* electron/flutter
+    - cd electron
+    - npm run
+  
+  

@@ -5,7 +5,7 @@
 import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
-import 'package:plexlit/plexlit.dart';
+import 'package:booklit/booklit.dart';
 
 final REPOSITORY = RepoProvider();
 final MINIPLAYER_CONTROLLER = MiniplayerController();
