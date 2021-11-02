@@ -16,6 +16,7 @@ class Storage {
   late Box settings;
   late Box accounts;
   late LazyBox state;
+  late Box bookmarks;
 
   /// Stores the progress of audiobooks
   /// keys are the books id
@@ -31,6 +32,7 @@ class Storage {
     downloadsIndex = await Hive.openBox("downloads_index");
     settings = await Hive.openBox("settings");
     state = await Hive.openLazyBox("state");
+    bookmarks = await Hive.openBox("bookmarks");
     // plexClients.clear();
   }
 

@@ -1,9 +1,14 @@
+// Package imports:
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+
+// Project imports:
 import 'package:booklit/booklit.dart';
+import 'package:booklit/screens/bookmarks_screen.dart';
 import 'package:booklit/widgets/audio_player/more_button.dart';
 
 class DesktopMiniplayer extends StatelessWidget {
-  const DesktopMiniplayer({    Key? key,
+  const DesktopMiniplayer({
+    Key? key,
     required this.height,
     required this.percentage,
   }) : super(key: key);
@@ -68,7 +73,26 @@ class DesktopMiniplayer extends StatelessWidget {
             Container(
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.all(4.0),
-              child: const MiniplayerMoreButton(),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.list_rounded),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => const Dialog(
+                          insetPadding: EdgeInsets.all(0),
+                          child: BookmarksScreen(),
+                        ),
+                        useRootNavigator: true,
+                      );
+                    },
+                  ),
+                  const MiniplayerMoreButton(),
+                ],
+              ),
             ),
           ],
         ),

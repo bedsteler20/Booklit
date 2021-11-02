@@ -1,4 +1,7 @@
+// Project imports:
 import 'package:booklit/booklit.dart';
+import 'package:booklit/screens/bookmarks_screen.dart';
+import 'package:miniplayer/miniplayer.dart';
 
 class MiniplayerMoreButton extends StatelessWidget {
   const MiniplayerMoreButton({Key? key}) : super(key: key);
@@ -19,15 +22,6 @@ class MiniplayerMoreButton extends StatelessWidget {
               contentPadding: const EdgeInsets.all(2),
               title: const Text("Playback Speed"),
               onTap: () => showDialog(context: context, builder: (_) => const PlayerSpeedDialog()),
-            ),
-          ),
-          PopupMenuItem(
-            child: ListTile(
-              visualDensity: VisualDensity.compact,
-              leading: const Icon(Icons.book_rounded),
-              contentPadding: const EdgeInsets.all(2),
-              title: const Text("Chapter"),
-              onTap: () => showDialog(context: context, builder: (_) => const ChapterPicker()),
             ),
           ),
           PopupMenuItem(

@@ -5,13 +5,13 @@
 import 'dart:ui';
 
 // Package imports:
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:booklit/widgets/audio_player/more_button.dart';
+import 'package:booklit/screens/bookmarks_screen.dart';
 import 'package:miniplayer/miniplayer.dart';
 
 // Project imports:
 import 'package:booklit/booklit.dart';
-import 'package:booklit/middleware/bookmarks.dart';
+import 'package:booklit/widgets/audio_player/more_button.dart';
+import 'package:booklit/widgets/dialogs/new_bookmark_dialog.dart';
 
 class MiniplayerWidget extends StatelessWidget {
   const MiniplayerWidget({
@@ -100,10 +100,24 @@ class MiniplayerWidget extends StatelessWidget {
                   opacity: percentage < 0.3 ? 0.0 : percentage,
                   child: AppBar(
                     actions: [
-                      const MiniplayerMoreButton(),
                       IconButton(
-                          onPressed: player.addBookmark,
-                          icon: const Icon(Icons.bookmark_add_rounded)),
+                        icon: const Icon(Icons.list_rounded),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (_) => const Dialog(
+                              insetPadding: EdgeInsets.all(0),
+                              child: BookmarksScreen(),
+                            ),
+                            useRootNavigator: true,
+                          );
+                        },
+                      ),
+                      IconButton(
+                        onPressed: () => NewBookmarkDialog.open(context),
+                        icon: const Icon(Icons.bookmark_add_rounded),
+                      ),
+                      const MiniplayerMoreButton(),
                     ],
                     title: Text(context.select<AudioProvider, String>((v) => v.current!.title)),
                     backgroundColor: const Color.fromARGB(0, 0, 0, 0),

@@ -13,7 +13,7 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  int currentIndex = 0;
+  static int currentIndex = 0;
 
   void onChange(int i) {
     context

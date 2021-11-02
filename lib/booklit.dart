@@ -69,6 +69,6 @@ export 'widgets/helpers/shimmr.dart';
 export 'widgets/infinite_scroll_view.dart';
 export 'widgets/list_item.dart';
 export 'widgets/media_row.dart';
-export 'widgets/miniplayer.dart';
+export 'widgets/audio_player/miniplayer.dart';
 export 'widgets/navbar.dart';
 export 'widgets/scaffold.dart';

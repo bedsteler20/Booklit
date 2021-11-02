@@ -1,5 +1,8 @@
-import 'package:booklit/booklit.dart';
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
+import 'package:booklit/booklit.dart';
 
 /// Base State class used for making infant scroll pages
 /// The first input type is the [Stateful] widget being implemented
