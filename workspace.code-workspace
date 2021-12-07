@@ -1,0 +1,151 @@
+{
+
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/*.crswap": true,
+			" **/*.g.dart": true,
+			"**/*.inject.dart": true,
+			"**/*.inject.summary ": true,
+			"**/generated_plugin_registrant.dart": true,
+			"**/.gitignore": true,
+			"**/.flutter-plugins": true,
+			"**/.flutter-plugins-dependencies": true,
+			"**/.packages":true,
+			"pubspec.lock": true,
+			".dart_tool":true,
+			".firebaserc":true,
+			"flutter_*.log":true,
+			"build":true,
+
+			// Folders in VS Workspace
+			"lib":true,
+			"assets":true,
+		},
+		"cSpell.words": [
+			"Cindirect",
+			"fullscreen",
+			"jellyfin",
+			"jslib",
+			"lerp",
+			"Miniplayer",
+			"mkdir",
+			"Plex",
+			"Plexlit",
+			"preload",
+			"routemaster",
+			"ryanheise",
+			"toggleable",
+			"vrouter"
+		],
+	
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"presentation": {
+					"echo": true,
+					"reveal": "silent",
+					"focus": false,
+					"panel": "shared",
+					"showReuseMessage": true,
+					"clear": true
+				},
+	
+				"label": "Sort Imports",
+				"type": "flutter",
+				"args": [
+					"pub",
+					"run",
+					"import_sorter:main",
+				],
+				"runOptions": {
+					 "instanceLimit": 1,
+					 "runOn": "folderOpen",
+	
+				},
+			},
+		
+				{
+		
+					"presentation": {
+						"echo": true,
+						"reveal": "silent",
+						"focus": false,
+						"panel": "shared",
+						"showReuseMessage": true,
+						"clear": true
+					},
+		
+					"label": "Make Index file",
+					"type": "dart",
+					"command": "flutter",
+					"args": [
+						"pub",
+						"run",
+						"index_generator",
+					],
+					"runOptions": {
+						 "instanceLimit": 1,
+						 "runOn": "folderOpen",
+					},
+				
+				}
+	
+		]
+	},
+		
+	"launch": {
+	
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Debug",
+				"request": "launch",
+				"type": "dart",
+				"program": "lib/main.dart",
+				"flutterMode": "debug",
+			},
+			{
+				"name": "Rele",
+				"request": "launch",
+				"type": "dart",
+				"program": "lib/main.dart",
+
+				"flutterMode": "release"
+			},
+			{
+				"name": "Profile",
+				"request": "launch",
+				"type": "dart",
+				"program": "lib/main.dart",
+
+				"flutterMode": "profile"
+			}
+		]
+	},
+
+	"folders": [
+		
+		{
+			"path":"./lib",
+			"name":"App"
+		},
+		{
+			"path":"./assets",
+			"name": "Assets"
+		},
+		{
+			"path": ".",
+			"name": "Project Root"
+		},
+		
+	],
+}
